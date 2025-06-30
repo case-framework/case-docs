@@ -1,0 +1,116 @@
+---
+title: Survey Editor Interface Overview
+description: Overview of the survey editor interface
+---
+
+## Survey Editor Dashboard
+
+![Screenshot of survey editor dashboard](../images/dashboardEditor.png)
+
+This dashboard shows you the key content and structure of your survey.
+
+### 🧭 Top Navigation Bar
+- **Survey Editor**: displays the currently open editor.
+- **File**: Click here to generate a new survey, open an existing survey, save survey to disk or exit survey editor.
+- **View**: Click here to go to [Survey Properties](/docs/survey-editor/basics/editor-overview#survey-properties-workspace) section or Survey Simulator.
+- **Survey Name:** Top left shows the unique key name of the current survey. Click on it to change its root key name.
+- **Survey label**: Top center displays the survey label. You can rename the survey label by clicking on it.
+- **Color Selector**: Click here to change the theme color of the survey.
+- **Three-Dot Menu (Top Right):** Provides besides normal mode additional actions for the survey:
+    - `Source code` – View or edit the raw JSON structure of the survey.
+    - `Copy` – Duplicate the survey. You can paste the survey in another survey by adding it as an item to the other survey.
+    - `Move to other group` – Move item to another group of questions.
+    - `Delete item` – Permanently remove the survey.
+
+
+### 📝 Survey Item List
+- **Items**: This section lists all the [items](/docs/survey-editor/basics/item-structure/survey-items) of the survey. Each item has:
+    - an icon symbolizing the type of question (e.g. checkmark in circle for single choice question)
+    - an unique **Item Key** (e.g., `SCG1`).
+    - an optional **Label** text (e.g., `Single Choice Question`).
+- Open an item by clicking on it or its icon shown in the left bar.
+- New items can be added by
+    - Click on **+ Add new item** at the bottom of the item list
+    - Click on **+** in the left sidebar.
+- Items can be ordered by
+    - drag and drop them in the item list or left sidebar or
+    - toggle the switch `Use random ordering` in the **Item ordering** section to random order items when the survey runs.
+- **Condition tab**: Switch to this tab to define conditional logic that controls when items should be shown based on participant responses.
+
+
+## Survey Properties Workspace
+
+The **Survey Properties** workspace allows you to define and manage overall configuration and behavior of your survey.
+Click on **View** dropdown menu and select **Survey Properties** to open this section (shortcut **⌘ Cmd + 1**).
+
+![Screenshot of survey properties workspace basic information](../images/surveyPropertiesBasic.png)
+
+### Overview of Functions
+
+- **Basic Information**
+  - **Title**
+    Enter a title of the survey that will be displayed in the participant app.
+
+  - **Description**
+    Provide a brief summary of the survey’s purpose. This helps users understand the context or objective before starting.
+
+  - **Duration Notice**
+    Add an estimated time required to complete the survey.
+
+  - **Language Selection (Top Right)**
+    Use the language toggle to view and edit content in different languages. This helps manage multilingual surveys efficiently.
+
+
+![Screenshot of survey properties workspace access conditions](../images/surveyPropertiesAccess.png)
+
+- **Access Conditions**
+  Configure who is allowed to access and complete the survey.
+  - **Available for**
+    Select a group of users who should be able to see and access the survey. Common options include:
+        - **Everyone**
+        - **Active participants**
+        - **Temporary participants**
+        - **Assigned participants**
+  - **Submission requires Login**
+    Enable this toggle if participants must be logged in to submit their responses. IF disabled, anyone with access to the survey can submit a response.
+
+![Screenshot of survey properties workspace max items per page](../images/surveyPropertiesMaxItems.png)
+
+- **Max Items per Page**
+  Set the maximum number of question or content items that should appear on a single survey page for small and large screens.
+  This is useful for optimizing readability and user experience across different devices.
+  Instead you can use page breaks to control the number of items per page if the number of items per page is variable.
+
+
+## Survey Item Interface
+
+![Overview of single choice item content](../images/overviewSinglechoice.png)
+
+### 🧭 Top Navigation Bar
+
+- **Survey Name:** Top left shows the name of the current survey.
+- **Item Type:** Move your mouse over the item icon to see the type of the currently selected item.
+- **Item Key:** You can change the item key by clicking on it and entering a new key.
+- **Add Item Label:** Enter an item label for easier identification.
+- **Three-Dot Menu (Top Right):** Provides besides normal mode additional actions for the current item:
+    - `Source code` – View or edit the raw JSON structure of the item.
+    - `Copy` – Duplicate the item.
+    - `Move to other group` – Move item to another group of questions.
+    - `Delete item` – Permanently remove the item from the survey.
+- **Tabs:**
+    - `Content` – active tab where item text, options and structure is edited.
+    - `Condition` – define logic for when the item should be shown.
+    - `Validation` – add rules to validate user responses.
+    - `Advanced` – set advanced options such as confidential mode or prefill rules.
+
+### 📝 Content Section (Left Side)
+
+All item components are listed here (read more about [item components](/docs/survey-editor/basics/item-structure#survey-item-structure-and-functions)). Select any component by clicking on it to view and edit its settings.
+
+### 🔍 Preview Section (Right Side)
+
+- Shows a live **preview** of the item layout.
+- **Language Switch:** Toggle between available languages (e.g., `nl` for Dutch and `en` for English).
+
+
+

@@ -1,0 +1,195 @@
+---
+title: Conditions and Expressions
+description: Understanding Conditional Logic Expressions in Surveys
+---
+
+## Understanding Conditional Logic Expressions in Surveys
+
+Expressions are used to define **conditional logic** for displaying survey items. This means that a specific item (and its children for groups) will only be shown to a participant if certain conditions related to their previous answers or their properties evaluate to `true`.
+
+### Logical Operators
+
+These operators allow you to combine two or more individual conditions to form a single, more complex condition.
+
+#### 1. "and (`AND` operator)"
+    * **Meaning:** This operator requires *all* the conditions it connects to be `true` for the overall combined condition to be `true`. If even one of the connected conditions is `false`, the entire `and` condition becomes `false`.
+    * **Use Case:** To display a question only when *multiple specific criteria* are met from different parts of the survey.
+        * **Example:** Display the question 'Please describe the onset and progression of the rash' **if** (participant selected 'Yes' to 'Have you experienced fever in the last 24 hours?') **AND** (participant selected 'Yes' to 'Do you have a new skin rash?')
+    * **How it works:** Wrap two or more individual conditions with an `and` operator.
+
+---
+
+#### 2. "or (`OR` operator)"
+    * **Meaning:** This operator requires *at least one* of the conditions it connects to be `true` for the overall combined condition to be `true`. The entire `or` condition is only `false` if *all* of the connected conditions are `false`.
+    * **Use Case:** To display a question if any of several possible situations applies.
+        * **Example:** Display the alert 'Requires urgent physician review' **if** (participant's 'Heart Rate' > 100 bpm) OR (participant's 'Systolic Blood Pressure' `< 90 mmHg') **OR** (participant reports 'Severe Chest Pain').
+    * **How it works:** Wrap two or more individual conditions with an `or` operator.
+
+---
+
+#### 3. "not (`NOT` operator)"
+    * **Meaning:** This operator inverts the truth value of a single condition. If the original condition is `true`, `not` makes it `false`. If the original condition is `false`, `not` makes it `true`.
+    * **Use Case:** To display a question when a specific criterion is *not* met, or when a user *didn't* select a particular option.
+        * **Example:** Display question 'Please specify your allergies or sensitivities to common medications' **if** (`not` (participant selected 'No known allergies' to 'Do you have any known allergies?')). This means if the participant selected anything other than 'No known allergies'.
+    * **How it works:** Apply the `not` operator directly to another condition.
+
+---
+
+### Comparison Operators
+
+These operators are used to compare the value of a respondent's answer (Left side, `L`) against a specific target value or another answer (Right side, `R`). They are primarily used for numerical, date, or sometimes alphabetical string comparisons.
+
+#### 1. "Equals (L `==` R)"
+    * **Meaning:** Checks if the value on the left side (`L`) is exactly equal to the value on the right side (`R`).
+    * **Use Case:** To display a question if a numerical input matches a precise value.
+        * **Example:** Display 'Initiate emergency protocol for hypoglycemia' if (participant's `'Blood Glucose Level' == 70 mg/dL`). (Assuming 70 is a critical threshold).
+    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+
+---
+
+#### 2. "Less than or equal (L `<=` R)"
+    * **Meaning:** Checks if the value on the left side (`L`) is less than or equal to the value on the right side (`R`).
+    * **Use Case:** To group respondents numerical thresholds (e.g. age ranges).
+        * **Example:** Display question 'Is the child's vaccination record up to date?' **if** (participant's 'Age' `<= 12 years`)
+    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+
+---
+
+#### 3. "Less than (L < R)"
+    * **Meaning:** Checks if the value on the left side (`L`) is strictly less than the value on the right side (`R`).
+    * **Use Case:** Similar to "less than or equal," but excludes the threshold value itself.
+        * **Example:** Display recommendation 'Consider iron supplementation' **if** (participant's 'Hemoglobin Level' < 12.0 g/dL).
+    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+
+---
+
+#### 4. "Greater than or equal (L `>=` R)"
+    * **Meaning:** Checks if the value on the left side (`L`) is greater than or equal to the value on the right side (`R`).
+    * **Use Case:** To filter respondents based on minimum requirements or thresholds.
+        * **Example:** Display warning 'Requires immediate physician review for hypertension' **if** (participant's 'Systolic Blood Pressure' `>= 160 mmHg`).
+    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+
+---
+
+#### 5. "Greater than (L > R)"
+    * **Meaning:** Checks if the value on the left side (`L`) is strictly greater than the value on the right side (`R`).
+    * **Use Case:** Similar to "greater than or equal," but excludes the threshold value itself.
+        * **Example:** Display recommendation 'Consider weight management program' **if** (participant's 'BMI' > 25.0).
+    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+
+
+---
+
+### Participant flags
+
+These conditions evaluate the presence and value of specific pre-existing flags (key-value pairs) assigned to the survey participant.
+
+#### 1. "Participant flag with key exists"
+    * **Meaning:** This condition checks if a particular "flag" (a named attribute or marker) has been assigned to the current participant. It doesn't care *what* the value of that flag is (or even if it has an explicit value beyond its mere existence), only that the flag with the specified name (key) is present for this participant.
+    * **Use Case:** To display specific sections or questions only to participants who have been categorized or tagged with a certain status.
+        * **Example:** Display section 'High-Risk Patient Protocol Questions' **if** (Participant flag 'high_risk_category' `with key exists`). This would show a set of questions designed for high-risk participants if the participant has simply been marked with a flag called 'high_risk_category'.
+    * **How it works:** You specify the name (key) of the participant flag you are looking for. The condition evaluates to `true` if that flag is attached to the current participant.
+
+---
+
+#### 2. "Participant flag with key and value exists"
+    * **Meaning:** This condition is more specific. It checks if a particular "flag" (named attribute) exists for the current participant, **AND** that flag has a *specific, predetermined value*. Both the key and the value must match for the condition to be `true`.
+    * **Use Case:** To tailor the survey very precisely to participants belonging to specific groups or having particular diagnoses/statuses that are defined by a specific flag value.
+        * **Example:** Display survey version 'Pediatric Study Arm B' **if** (Participant flag 'study_group' `with key and value exists` and its value is 'Pediatric_B').
+    * **How it works:** You specify the name (key) of the participant flag and the exact value it must hold. The condition evaluates to `true` only if both the flag exists AND its value matches the one you specified.
+
+---
+
+### Response dependencies
+
+Response dependencies conditions define rules for displaying survey items based directly on how a respondent has answered, or not answered, previous questions within the survey itself.
+
+#### 1. "A specific response is present"
+
+* **Meaning:** This condition evaluates to true if a respondent has selected a specific option or provided an input of a particular previous question:
+    - For Radio Button/Dropdown Questions: the participant has selected the specified option.
+    - For Entry Fields (text, numerical, date, etc.): the participant has entered any characters or data into the field, meaning the field is not empty. The content of the answer is not relevant. This also applies to the subsequent conditions.
+* **Use Case:** You might use this if you want to show a follow-up question only if the user has selected a specific option of a preceding question.
+    * **Example:** Display 'Please describe the location and intensity of your pain (on a scale of 1-10):' only if the participant selected 'Yes' in the question 'Are you currently experiencing any pain?'.
+* **How it works:** Select a previous question item key and specify the option key.
+
+---
+
+#### 2. "Response contains any of these keys"
+
+* **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of options keys. This is particularly useful for multiple-choice questions where a user can select several options.
+* **Use Case:** To display a follow-up question based on one or more specific choices made by the respondent.
+    * **Example:** Display the question 'Please describe the frequency and severity of your attacks' if participant selected 'Epilepsy' OR 'Migraine' OR 'Multiple Sclerosis' (or a combination thereof) in response to the question 'Which chronic conditions do you have?'
+* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` if the respondent's answer for that question matches *any* of the specified keys.
+
+---
+
+#### 3. "Response contains all of these keys"
+
+* **Meaning:** This condition is stricter than "any of these keys." It checks if the response to a specific previous question includes *all* of a predefined set of option keys. Again, this is typically for multiple-choice questions where multiple selections are possible.
+* **Use Case:** To display a question only when a respondent has selected a very specific combination of options.
+    * **Example:** Display the info text 'Please schedule an urgent consultation with the Nephrology department and Cardiology department' if participant, in response to the question 'Which of the following chronic conditions do you have? (Select all that apply)', selected both 'Chronic Kidney Disease' AND 'Congestive Heart Failure'.
+* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` only if the respondent's answer for that question matches *every single one* of the specified keys.
+
+---
+
+#### 4. "Has response but none of these keys:"
+
+* **Meaning:** This condition checks if a respondent has provided an answer to a specific previous question, but that answer *does not* match any of a predefined set of option keys.
+* **Use Case:** To display a question when the respondent has answered a question, but *not* with certain pre-identified responses.
+    * **Example:** Show question 'Please specify your other dietary restrictions:' if the respondent answered 'Dietary Restrictions' in 'Do you have any dietary needs?' but did *not* select 'Vegetarian' or 'Vegan'.
+* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` if the question has a response *and* that response does not match any of the specified keys.
+
+---
+
+#### 5. "Check response value with regex"
+
+* **Meaning:** This is a flexible condition that allows you to validate or check a respondent's text input against a Regular Expression (RegEx). RegEx is a sequence of characters that defines a search pattern.
+* **Use Case:** This is ideal for open-text fields where you need to check the *format* or *pattern* of the input, rather than specific values.
+    * **Example 1 (Email):** "Show question 'We will send a confirmation email' if the respondent's 'Email Address' response matches a valid email format (e.g., `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)."
+    * **Example 2 (Phone Number):** "Show question 'Please confirm your availability' if the 'Phone Number' response matches a standard phone number pattern."
+* **How it works:** You select a previous question item key with text, date or number input or a participant flag value and then provide a regular expression. The condition evaluates to `true` if the respondent's answer (converted to string) matches the defined RegEx pattern.
+
+---
+
+#### 6. "Is survey item validation true"
+
+* **Meaning:** This condition checks if the built-in validation rules for a specific previous survey item have been met.
+* **Use Case:** To ensure data quality or to guide the user if they entered invalid information.
+    * **Example:** "Show question 'Please review your input as it appears to be incorrect' if the 'Postal Code' question's validation is *not* true."
+* **How it works:** You select the item key and validation key of a previous question that has validation rules applied to it. The condition evaluates to `true` if the participant's input for that question passes all its defined validation rules.
+
+---
+
+
+### Advanced
+
+These conditions often interact with the underlying system or data beyond immediate user responses.
+
+#### 1. "Is value defined"
+    * **Meaning:** This condition checks if a data field or variable contains any value. It might be used in older versions of the software and can usually be replaced by "A specific response is present" or "Participant flag with key exists" conditions.
+    * **Use Case:** To confirm pre-existing information if certain participant data is already available in the system, or to ensure that critical fields are populated.
+        * **Example:** Display question 'Please verify your pre-filled medication list from your EHR' if (participant's 'Current Medication List' Is value defined). (The medication list variable could be populated from a participant's electronic health record or answered directly by the participant in the current or previous survey).
+    * **How it works:** You select a specific data field, variable, or parameter. The condition evaluates to `true` if that data element contains any non-null or non-empty value.
+
+#### 2. "Is user logged in"
+    * **Meaning:** This condition checks if the individual currently accessing the survey or application is authenticated (i.e., has successfully logged in).
+    * **Use Case:** To restrict access to sensitive sections, personalize content for registered users, or ensure only authorized users can fill out certain forms.
+        * **Example:** Pre-fill demographic data or ask for follow-up is only accessible if the specific participant is authenticated.
+    * **How it works:** This is a direct check against the user's current session status. It's typically a boolean `true`/`false` based on the authentication state.
+
+---
+
+### Templates
+
+These are pre-configured conditions designed for common scenarios, simplifying the setup of frequently needed logic.
+
+#### 1. "Consent question accepted"
+    * **Meaning:** This is a specialized, ready-to-use condition that specifically checks if a designated "consent" question (usually a legal or ethical agreement) has been affirmatively accepted by the respondent. It simplifies the setup for common consent flows.
+    * **Use Case:** To ensure legal and ethical compliance by only proceeding with data collection or treatment details after explicit participant consent has been given.
+        * **Example:** Display message 'Thank you for your participation in the study' **if** (`Consent question accepted` for 'Clinical Trial Participation Agreement').
+    * **How it works:** You would typically fill in the item key of a specific "Consent" type question within your survey. The system then automatically evaluates if that consent was given.
+
+---
+
+By leveraging these expressions, you can create highly intelligent and user-friendly surveys that only present relevant questions, reducing survey fatigue and improving data quality. Remember to plan your survey flow carefully before implementing complex conditional logic!

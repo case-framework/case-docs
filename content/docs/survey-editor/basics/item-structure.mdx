@@ -1,0 +1,79 @@
+---
+title: Survey Items
+description: Understanding the structure of survey items
+---
+
+## Survey Items
+
+A survey consists of items. An item can belong to either a question type or a non-question type category. A question item is structured by the following **components**:
+
+![Overview of single choice item content](../images/overviewSinglechoice.png)
+
+#### **Header**
+Item header elements consist of:
+- **Title (`H1`)** – Main question or prompt.
+- **Subtitle (`H2`)** – Additional explanation or secondary text.
+- **Help/Info popup** – Optional tooltip for additional guidance.
+
+#### **Body**
+Main content that surrounds the response options:
+- **Top content (before response)** – Text shown above the answer options.
+- **Response options** – Here you define the response options. The type of question determines the available response configurations.
+- **Bottom content (after response)** – Text shown after answer options.
+
+#### **Footnote**
+- Additional information displayed at the bottom of the item.
+
+## Question Types
+
+Some question types are more basic, like the following:
+
+| **Question Type**            | **Participant is allowed to...**                                                          |
+| :--------------------------- | :----------------------------------------------------------------------- |
+| **Single Choice**	           | Choose one option from a radio group.                                    |
+| **Multiple Choice**	       | Select multiple options from a list of checkboxes.                       |
+| **Date Input**	           | Enter a date.                                                            |
+| **Time Input**	           | Enter a time.                                                            |
+| **Text Input**	           | Enter text input.                                                        |
+| **Numeric Input**            | Enter a number.                                                          |
+| **Slider**                   | Select a value within a range using a slider.                            |
+| **Dropdown**                 | Select one option from a list of choices.                                |
+| **Code Validator**           | Enter a code that will be validated.                             |
+| **Consent**                  | Accept or reject a displayed consent.                       |
+| **Contact Form Question**  &nbsp;&nbsp; | Enter name, email, phone, address.                                        |
+
+More complex types are these:
+
+| **Question Type**            | **Description**                                                          |
+| :--------------------------- | :----------------------------------------------------------------------- |
+| **Single Choice Array**      | A list of single choice questions (Likert scale)                         |
+| **Bipolar Likert Array**     | A list of bipolar Likert scale questions.                                |
+| **Adaptive Question Grid** | Response slots of same response type (e.g. input, dropdown, number) arranged in a grid.           |
+| **Matrix**   <br/>          | A table layout where the response type can be set independently for each slot.            |
+| **Cloze Question**           | A mix of text and response slots for mixed style questions.  |
+| **Validated Random Question**| Randomly selects a question, only accepts valid text input responses.   |
+
+
+## Other Item Types in a Survey
+
+Besides question items, a survey can contain several non-question structural or informational items. These help organize and enrich the flow and content of the survey.
+
+**Page Break**
+- **Separates content into different pages.**
+- Improves readability and controls how questions are grouped.
+
+**Response Group**
+- **Groups multiple question items together.**
+- Useful for displaying several related questions under a shared heading or context.
+
+**Info Item**
+- **Displays additional information without asking for input.**
+- Can include text instructions, explanations, or visual content and supports the respondent with guidance or context before a question or section.
+
+**End of Survey Content**
+- **Marks the end of the survey flow.**
+- Typically includes logic to stop collecting further responses and displays a closing message, thank-you note, or redirect.
+
+
+
+
