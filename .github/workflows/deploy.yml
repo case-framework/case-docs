@@ -26,6 +26,8 @@ jobs:
 
       - name: Build
         run: yarn build
+        env:
+          GITHUB_PAGES: true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
