@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          BASE_PATH: /case-docs
+          NEXT_PUBLIC_BASE_PATH: /case-docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

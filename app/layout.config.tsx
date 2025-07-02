@@ -1,7 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import Image from 'next/image';
 
-const basePath = process.env.BASE_PATH || '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 /**
  * Shared layout configurations
