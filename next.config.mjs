@@ -7,9 +7,9 @@ const config = {
   reactStrictMode: true,
   output: 'export',
   trailingSlash: true,
-  ...(process.env.GITHUB_PAGES && {
-    basePath: '/case-docs',
-    assetPrefix: '/case-docs',
+  ...(process.env.BASE_PATH && {
+    basePath: process.env.BASE_PATH,
+    assetPrefix: process.env.BASE_PATH,
   }),
   images: {
     unoptimized: true,

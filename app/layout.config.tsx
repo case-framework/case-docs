@@ -1,6 +1,8 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import Image from 'next/image';
 
+const basePath = process.env.BASE_PATH || '';
+
 /**
  * Shared layout configurations
  *
@@ -12,7 +14,7 @@ export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
       <>
-        <Image src="/images/logo.png" alt="CASE Framework" width={24} height={24} />
+        <Image src={`${basePath}/images/logo.png`} alt="CASE Framework" width={24} height={24} />
         CASE Framework
       </>
     ),
