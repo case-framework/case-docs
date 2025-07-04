@@ -1,0 +1,60 @@
+---
+title: Create a Group
+description: How to create a simple group
+---
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Icon } from '../../../../mdx-components'
+import { CircleCheck, SquareCheck, Clock, MessageCircleQuestionMark, Contact, Info, Shuffle } from "lucide-react"
+
+
+## What are Item Groups?
+
+An **item group** is a collection of questions or information items that are treated as a unit within the survey. Grouping can be used for:
+
+- **Randomization within a group**: Shuffle the order of items inside a group without affecting the global order.
+- **Semantic separation**: Keep logically related items together (e.g., demographics, preferences, follow-up questions).
+- **Conditional logic**: Show or hide entire groups based on earlier answers (e.g., show a group only if the user selected "Yes" to a previous question).
+- **Referencing groups by key**: Groups can be addressed via a unique key, making logic and condition rules easier to manage and maintain.
+
+<Files>
+  <Folder name="Group 1" defaultOpen>
+    <File name="Single Choice Question" icon={<CircleCheck />} />
+    <File name="Multiple Choice Question" icon={<SquareCheck />} />
+    <File name="Time Input Question" icon={<Clock />} />
+  </Folder>
+  <Folder name="Group 2" defaultOpen>
+    <File name="Consent Question" icon={<MessageCircleQuestionMark />}/>
+    <File name="Contact Form Question" icon={<Contact />}/>
+  </Folder>
+</Files>
+
+This example above shows a typical item group structure: Group 1 includes standard question types such as e.g. single choice.
+The order of the items in Group 1 can be randomized independently of other items in the survey.
+Group 2 collects sensitive inputs, like consent and contact form questions, which should be in fixed order.
+By grouping related items, the survey becomes more structured, easier to manage, and flexible for applying randomized order or visibility rules.
+
+## How to set up a simple group
+
+To create a group in the **Survey Editor**:
+
+<Steps>
+<Step>
+Click the **"Add a new item"** button (plus icon in the left toolbar).
+</Step>
+<Step>
+In the menu, select **"Group"**.  
+</Step>
+<Step>
+A new empty group will be added to your item list. Change the key by clicking on the current group key in the top navigation bar and entering a new key.
+You can also add an item label in the middle of the top navigation bar for easier identification.
+</Step>
+<Step>
+Create new items inside the group by clicking on **"Create new item"**.
+</Step>
+<Step>
+You can also add existing items to the group: Select the item, click the three-dot menu in the top-right corner, and choose **“Move to other group”**.
+A popup will open with a dropdown menu, allowing you to select the key of the target group you want the item to be moved into.
+</Step>
+</Steps>
+
