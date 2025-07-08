@@ -9,6 +9,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...defaultMdxComponents,
     img: (props) => <ImageZoom {...(props as ImageProps)}
       className='p-2 bg-neutral-200 rounded-xl'
+      width={props.width || 700} // standard height if not defined in mdx
+      height={props.height || 350} // standard height if not defined in mdx
     />,
     ...components,
   };
