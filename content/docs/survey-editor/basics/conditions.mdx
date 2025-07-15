@@ -43,7 +43,7 @@ These operators are used to compare the value of a respondent's answer (Left sid
     * **Meaning:** Checks if the value on the left side (`L`) is exactly equal to the value on the right side (`R`).
     * **Use Case:** To display a question if a numerical input matches a precise value.
         * **Example:** Display 'Initiate emergency protocol for hypoglycemia' if (participant's `'Blood Glucose Level' == 70 mg/dL`). (Assuming 70 is a critical threshold).
-    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`). For the right side (`R`), enter a specific value, or reference another question’s answer or a participant flag.
 
 ---
 
@@ -51,7 +51,7 @@ These operators are used to compare the value of a respondent's answer (Left sid
     * **Meaning:** Checks if the value on the left side (`L`) is less than or equal to the value on the right side (`R`).
     * **Use Case:** To group respondents numerical thresholds (e.g. age ranges).
         * **Example:** Display question 'Is the child's vaccination record up to date?' **if** (participant's 'Age' `<= 12 years`)
-    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
@@ -59,7 +59,7 @@ These operators are used to compare the value of a respondent's answer (Left sid
     * **Meaning:** Checks if the value on the left side (`L`) is strictly less than the value on the right side (`R`).
     * **Use Case:** Similar to "less than or equal," but excludes the threshold value itself.
         * **Example:** Display recommendation 'Consider iron supplementation' **if** (participant's 'Hemoglobin Level' < 12.0 g/dL).
-    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
@@ -67,7 +67,7 @@ These operators are used to compare the value of a respondent's answer (Left sid
     * **Meaning:** Checks if the value on the left side (`L`) is greater than or equal to the value on the right side (`R`).
     * **Use Case:** To filter respondents based on minimum requirements or thresholds.
         * **Example:** Display warning 'Requires immediate physician review for hypertension' **if** (participant's 'Systolic Blood Pressure' `>= 160 mmHg`).
-    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
@@ -75,7 +75,7 @@ These operators are used to compare the value of a respondent's answer (Left sid
     * **Meaning:** Checks if the value on the left side (`L`) is strictly greater than the value on the right side (`R`).
     * **Use Case:** Similar to "greater than or equal," but excludes the threshold value itself.
         * **Example:** Display recommendation 'Consider weight management program' **if** (participant's 'BMI' > 25.0).
-    * **How it works:** Select item key and response slot key of the answer (for `L`) and then provide a specific value or another question's answer (for `R`).
+    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 
 ---
