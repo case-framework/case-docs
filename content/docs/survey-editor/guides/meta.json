@@ -3,7 +3,7 @@
         "setup-survey",
         "add-single-choice",
         "create-group",
-        "add-complex-question",
+        "add-conditional-question",
         "save-survey"
     ]
 }
