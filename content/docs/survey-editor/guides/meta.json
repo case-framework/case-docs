@@ -4,6 +4,7 @@
         "add-single-choice",
         "create-group",
         "add-conditional-question",
+        "show-part-flag-question",
         "save-survey"
     ]
 }
