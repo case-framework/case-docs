@@ -187,9 +187,5 @@ These are pre-configured conditions designed for common scenarios, simplifying t
 #### 1. "Consent question accepted"
     * **Meaning:** This is a specialized, ready-to-use condition that specifically checks if a designated "consent" question (usually a legal or ethical agreement) has been affirmatively accepted by the respondent. It simplifies the setup for common consent flows.
     * **Use Case:** To ensure legal and ethical compliance by only proceeding with data collection or treatment details after explicit participant consent has been given.
-        * **Example:** Display message 'Thank you for your participation in the study' **if** (`Consent question accepted` for 'Clinical Trial Participation Agreement').
+        * **Example:** Display message 'Thank you for your participation in the study' **if** (`Consent question accepted` for 'Clinical Trial Participation Agreement'). [See also this example.](/docs/survey-editor/guides/add-conditional-question#build-a-conditional-contact-form-with-consent)
     * **How it works:** You would typically fill in the item key of a specific "Consent" type question within your survey. The system then automatically evaluates if that consent was given.
-
----
-
-By leveraging these expressions, you can create highly intelligent and user-friendly surveys that only present relevant questions, reducing survey fatigue and improving data quality. Remember to plan your survey flow carefully before implementing complex conditional logic!
