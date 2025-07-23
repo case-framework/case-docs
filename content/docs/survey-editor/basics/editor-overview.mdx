@@ -28,7 +28,7 @@ This dashboard shows you the key content and structure of your survey.
     - an icon symbolizing the type of question (e.g. checkmark in circle for single choice question)
     - an unique **Item Key** (e.g., `SCG1`).
     - an optional **Label** text (e.g., `Single Choice Question`).
-- Open an item by clicking on it or its icon shown in the left bar.
+- Open the [item interface](/docs/survey-editor/basics/item-structure#item-interface) by clicking on the item or its icon shown in the left bar.
 - New items can be added by
     - Click on **+ Add new item** at the bottom of the item list
     - Click on **+** in the left sidebar.
@@ -37,6 +37,7 @@ This dashboard shows you the key content and structure of your survey.
     - toggle the switch `Use random ordering` in the **Item ordering** section to random order items when the survey runs.
 - **Condition tab**: Switch to this tab to define conditional logic that controls when items should be shown based on participant responses.
 
+---
 
 ## Survey Properties Workspace
 
@@ -81,36 +82,51 @@ Click on **View** dropdown menu and select **Survey Properties** to open this se
   This is useful for optimizing readability and user experience across different devices.
   Instead you can use page breaks to control the number of items per page if the number of items per page is variable.
 
+---
 
-## Survey Item Interface
+## Simulator
 
-![Overview of single choice item content](../images/overviewSinglechoice.png)
-
-### Top Navigation Bar
-
-- **Survey Name:** Top left shows the name of the current survey.
-- **Item Type:** Move your mouse over the item icon to see the type of the currently selected item.
-- **Item Key:** You can change the item key by clicking on it and entering a new key.
-- **Add Item Label:** Enter an item label for easier identification.
-- **Three-Dot Menu (Top Right):** Provides besides normal mode additional actions for the current item:
-    - `Source code` – View or edit the raw JSON structure of the item.
-    - `Copy` – Duplicate the item.
-    - `Move to other group` – Move item to another group of questions.
-    - `Delete item` – Permanently remove the item from the survey.
-- **Tabs:**
-    - `Content` – active tab where item text, options and structure is edited.
-    - `Condition` – define logic for when the item should be shown.
-    - `Validation` – add rules to validate user responses.
-    - `Advanced` – set advanced options such as confidential mode or prefill rules.
-
-### Content Section (Left Side)
-
-All item components are listed here (read more about [item components](/docs/survey-editor/basics/item-structure#survey-item-structure-and-functions)). Select any component by clicking on it to view and edit its settings.
-
-### 🔍 Preview Section (Right Side)
-
-- Shows a live **preview** of the item layout.
-- **Language Switch:** Toggle between available languages (e.g., `nl` for Dutch and `en` for English).
+The simulator allows you to preview and test your survey questions under different conditions. This interface helps you simulate participant interactions and verify how your survey behaves in different scenarios, such as varying context variables or translations.
+Below are the key components visible in the interface:
 
 
+![Screenshot of survey simulator](../images/surveySimulator.png)
+
+
+### Survey Items
+
+This section shows the survey items that you have added and configured. It includes:
+
+- **Question components**, such as single-choice, multiple-choice, input fields, consent checkboxes, etc.
+- **Conditional visibility**: Items are shown or hidden based on the current survey context or previous responses.
+- **Section headers and info text** to organize and explain your survey.
+- **Randomized question order** can be tested.
+
+### Simulator Config Panel (Right Side)
+
+#### Language Toggle
+- Allows switching between available languages (e.g. `nl`, `en`).
+
+#### Key Toggle
+- Toggle “Show keys” to display the item keys.
+
+#### Responses
+- Displays how many responses are filled in out of the total.
+- **Clear responses** button resets all current inputs.
+
+#### Survey Context
+- Lists current **context variables** and their values. These variables influence logic and conditional rendering of survey items. You can edit the context variables by clicking on the pencil. 
+[See this example on setting participant flags.](/docs/survey-editor/guides/show-part-flag-question#show-a-question-based-on-a-participant-flag)
+
+####Customize Labels
+- Configure the labels for navigation buttons, including:
+  - **Next button**
+  - **Back button**
+  - **Submit button**
+  - **Invalid response message**
+
+### Navigation & Layout
+
+- A **progress bar** indicates the user's position within the survey flow.
+- A **navigation button** (e.g., "Next") is shown at the bottom to proceed to the next page or submit responses.
 

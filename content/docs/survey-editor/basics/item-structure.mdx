@@ -5,9 +5,9 @@ description: Understanding the structure of survey items
 
 ## Survey Items
 
-A survey consists of items. An item can belong to either a question type or a non-question type category. A question item is structured by the following **components**:
+A survey consists of items. An item can belong to either a question type or a non-question type category. (Read more about [item types](/docs/survey-editor/basics/item-structure#item-types)).
 
-![Overview of single choice item content](../images/overviewSinglechoice.png)
+ A question item is structured by the following **components**:
 
 #### **Header**
 Item header elements consist of:
@@ -24,7 +24,45 @@ Main content that surrounds the response options:
 #### **Footnote**
 - Additional information displayed at the bottom of the item.
 
-## Question Types
+---
+
+## Item Interface
+
+The item editor is displayed when you select an item or its icon in the left sidebar of the main editor.
+
+![Overview of single choice item content](../images/overviewSinglechoice.png)
+
+### Top Navigation Bar
+
+- **Survey Name:** Top left shows the name of the current survey.
+- **Item Type:** Move your mouse over the item icon to see the type of the currently selected item.
+- **Item Key:** You can change the item key by clicking on it and entering a new key.
+- **Add Item Label:** Enter an item label for easier identification.
+- **Three-Dot Menu (Top Right):** Provides besides normal mode additional actions for the current item:
+    - `Source code` – View or edit the raw JSON structure of the item.
+    - `Copy` – Duplicate the item.
+    - `Move to other group` – Move item to another group of questions.
+    - `Delete item` – Permanently remove the item from the survey.
+- **Tabs:**
+    - `Content` – active tab where item text, options and structure is edited.
+    - `Condition` – define logic for when the item should be shown.
+    - `Validation` – add rules to validate user responses.
+    - `Advanced` – set advanced options such as confidential mode or prefill rules.
+
+### Content Section (Left Side)
+
+All item components described [above](/docs/survey-editor/basics/item-structure#survey-items) are listed here. Select any component by clicking on it to view and edit its settings.
+
+### Preview Section (Right Side)
+
+- Shows a live **preview** of the item layout.
+- **Language Switch:** Toggle between available languages (e.g., `nl` for Dutch and `en` for English).
+
+---
+
+## Item types
+
+### Question Items
 
 Some question types are more basic, like the following:
 
@@ -54,7 +92,7 @@ More complex types are these:
 | **Validated Random Question**| Randomly selects a question, only accepts valid text input responses.   |
 
 
-## Other Item Types in a Survey
+### Other Item Types in a Survey
 
 Besides question items, a survey can contain several non-question structural or informational items. These help organize and enrich the flow and content of the survey.
 
