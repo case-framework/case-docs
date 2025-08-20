@@ -1,6 +1,7 @@
 {
     "pages": [
         "setup-survey",
+        "edit-survey",
         "add-single-choice",
         "create-group",
         "add-conditional-question",
