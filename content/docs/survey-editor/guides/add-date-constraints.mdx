@@ -29,7 +29,13 @@ Enter optional **Label** and  **Placeholder text**, such as *"select date here"*
 Under **Earliest**, you can define the minimum possible date. For a birth date question, this is usually left open, since the child may be any age. 
 </Step> 
 <Step> 
-Under **Latest**, set the maximum possible date. - Choose **Get timestamp**. - Keep the **Offset** at *0 days*, so that the latest valid date is today. This ensures that participants cannot select a date in the future.
+Under **Latest**, set the maximum possible date. Click **+ add value**. 
+</Step> 
+<Step> 
+In the dropdown menu, scroll to the  **Misc** section and select **“Get timestamp"**. Keep the **Offset** at *0 days*, so that the latest valid date is today. This ensures that participants cannot select a date in the future.
+
+![Response Options overview of date input item](../images/addDateInput.png)
+
 </Step> 
 <Step>
 Create another date question. In our example, the title text is:  
@@ -39,7 +45,7 @@ Create another date question. In our example, the title text is:
 Set the **Date input mode** to *Year, Month & Day*. 
 </Step>
 <Step> 
-In the **Earliest** field, click **+ add value** and select **"Get response value as number".
+In the **Earliest** field, click **+ add value** and select **"Get response value as number" in the **Response dependencies** section.
 </Step>
 <Step> 
 In the **Item key** field, click **+ add value** and then **"Available item keys"**. Choose the **item key** of the previous date question. For response slot key add "rg.date". This ensures that the vaccination date cannot be set earlier than the child’s date of birth. 
