@@ -54,9 +54,11 @@ In the **Item key** field, click **+ add value** and then **"Available item keys
 In the **Latest** section, click **+ add value**. 
 </Step> 
 <Step> 
-Select **Get timestamp**. Leave the **Offset** at *0 days*. This restricts the latest possible vaccination date to *today*. 
+Select **"Get timestamp"**. Leave the **Offset** at *0 days*. This restricts the latest possible vaccination date to *today*. 
 </Step>
 <Step> 
 Use the survey [simulator](/docs/survey-editor/basics/editor-overview#simulator) to verify that your constraints are as expected.
 </Step> 
 </Steps>
+
+**Note**: “Today” is evaluated in the client’s local timezone. Participants in different timezones may see slightly different date boundaries on the same UTC day.
