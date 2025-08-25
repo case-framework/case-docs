@@ -6,6 +6,7 @@
         "create-group",
         "add-conditional-question",
         "show-part-flag-question",
+        "add-date-constraints",
         "save-survey"
     ]
 }
