@@ -5,21 +5,27 @@ description: Overview of the study rules editor interface
 
 ## Study Rules Editor
 
-The **Study Rules Editor** allows you to define rules that are applied to participants during different stages of a study.  
-Rules are executed when specific **events** are triggered (e.g., when a participant enters or leaves the study, or when a survey is submitted).  
+The **Study Rules Editor** allows you to define rules that are applied to participants during different stages of a study.
+Rules are executed when specific **events** are triggered (e.g., when a participant enters or leaves the study, or when a survey is submitted).
 This makes it possible to automate study workflows and participant management.
 
 ---
+
+### Top Navigation Bar
+
+- **Project**: Click here to open an existing project, save your project or export the study rules.
+- **Context**  
+  The editor context provides access to survey and message keys, participant flags, reports and external event handlers that can be referenced in your rules.  
+  You can import a context from a recent session or [create a new one](/docs/study-rules-editor/basics/editor-overview#context-editor) via the **"Open context editor"** button.
+
 
 ### General
 
 - **Session name**  
   You can give the current session a name to help identify it later.  
-  Example: `Pilot Study Session`  
 
-- **Context**  
-  The editor context provides access to survey and message keys, participant flags, reports and external event handlers that can be referenced in your rules.  
-  You can import a context from a previous session or from a file or create a new one via the **Open context editor** button.
+- **Options**  
+  In the top-right corner, the Options menu lets you save or export your study rules as a file.
 
 ---
 
@@ -35,7 +41,6 @@ Typical use cases:
 - Assigning an intake survey to collect initial data
 - Schedule reminder message for intake survey
 
----
 
 #### 2. Merge event handler
 Rules defined here are applied **when a temporary participant is merged into an active participant account**.  
@@ -44,20 +49,29 @@ Typical use cases:
 - Transferring survey progress
 - Keeping participant metadata consistent
 
----
 
 #### 3. Leave event handler
 Rules defined here are applied **when a participant leaves the study** (e.g., when their account is deleted or deactivated).  
 Typical use cases:
 - Marking the participant as inactive
+- Remove confidential responses
 - Revoking access to study materials
 - Sending a goodbye message
 
----
 
-#### 4. Survey submission handlers
+
+#### 4. Custom Event Handler
+Rules defined here are executed **when a custom event is triggered**, for example when a participant clicks a button to order a test kit.  
+
+Typical use cases include:  
+- Create reports for researcher
+- Enable external event handler
+- Updating participant flags
+
+
+#### 5. Survey submission handlers
 Rules defined here are applied **when a participant submits a survey**.  
-You can define multiple handlers (one for each survey or condition).  
+You can define multiple handlers (one for each survey).  
 Typical use cases:
 - Delete assignment to the survey and trigger new assignments for follow up
 - Send data to external services to evaluate survey answers
@@ -66,32 +80,15 @@ Typical use cases:
 - Create reports
 - Remove scheduled reminder messages and create new ones for follow-up surveys.
 
----
 
-### Options Menu
+#### 6. Timer Event Handler
+Rules defined here are executed **when a study timer event occurs** (e.g., at scheduled intervals or specific times).  
 
-In the top-right corner, the **Options** menu provides additional settings to manage the session and export/import rule definitions.
+Typical use cases include:  
+- Sending periodic reminder messages  
+- Scheduling follow-up surveys  
+- Automatically updating participant data over time  
 
 
-#### Rules in the Study Context  
-
-**Definition:**  
-Rules are automated actions that are triggered when certain conditions on participant data are met. They allow you to define *if–then* logic within your study so that specific operations are executed dynamically.  
-
-**How they work:**  
-- A rule consists of two parts:  
-  1. **Conditional expression** – this is the *if* part. It evaluates participant data (e.g., survey responses, flags, or context variables).  
-  2. **Action** – this is the *then* part. If the condition is true, the action is executed.  
-
-**Example:**  
-- *Condition:* The participant’s age is less than 18.  
-- *Action:* Assign the participant to the *minor* study group.  
-
-**Purpose:**  
-Rules help automate study workflows by:  
-- Enforcing logic across surveys.  
-- Classifying or segmenting participants.  
-- Triggering follow-up tasks or notifications.  
-- Ensuring data consistency and validity.  
 
 ## Context Editor
