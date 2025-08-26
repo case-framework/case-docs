@@ -1,0 +1,39 @@
+---
+title: How to set up ENTRY actions for new participants
+description: Define actions that run when a participant enters the study.
+---
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+This example shows how to configure actions that are executed automatically when a participant enters the study. 
+We’ll use the case where a **welcome message** is sent, the **intake survey** is assigned, and a **reminder message** for submitting the intake survey is scheduled.
+
+## Prerequisite
+Before you can configure ENTRY actions, make sure the Survey keys and Message keys are already defined in the [Survey context](/docs/study-rules-editor/basics/editor-overview/context-editor).
+
+Needed for this example:
+- Survey keys: *intake*
+- Message keys: *Welcome*, *Reminder*
+
+## Follow these steps
+<Steps> 
+<Step> 
+In your study rules dahboard click on the section **Entry event handler**. 
+</Step> <Step> 
+In the ENTRY hanlder editor, click **"+ add value"**. From the list of available actions, select **"Schedule a message"**. 
+</Step> <Step> 
+Choose the message type *"Welcome"* you defined in your survey context. 
+</Step> <Step>
+ Under **Scheduled for**, keep **Get timestamp** and keep the offset at *0 days*. This ensures the welcome message is sent immediately when the participant enters. 
+</Step> <Step> 
+ Add another action by clicking **+ add value** and select **Add new survey**. 
+</Step> <Step>
+  Select the survey key *"intake"*. Keep **Available from** set to *0 days* (current timestamp) and leave **Available until** empty if the survey should remain available. 
+</Step> <Step> 
+  Now, add a third action: click **+ Add action** and select **Schedule a message**. 
+</Step> <Step> 
+  Choose the message *"Reminder"*. 
+</Step> <Step> 
+  Under **Scheduled for**, set an offset such as *3 days*. This ensures the reminder message is sent 3 days after entry. 
+</Step> <Step> 
+  Your ENTRY event will now automatically: 1. Send a welcome message immediately. 2. Assign the intake survey. 3. Schedule a reminder message after the defined delay. 
+</Step> </Steps>
