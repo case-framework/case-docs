@@ -77,7 +77,7 @@ Use these when you want rules to trigger only if numeric or date responses fall 
 ### Advanced
 
 #### 1. Is study code present
-**Meaning:** Checks if a study code has been assigned to the participant.  
+**Meaning:** True if a study code has been assigned to the participant.  
 **Use case:** Use when actions should only apply to coded participants.  
 **How it works:** Condition is true when a specified study code exists in a list of codes.
 
@@ -86,31 +86,31 @@ Use these when you want rules to trigger only if numeric or date responses fall 
 ### Response checkers
 
 #### 1. Response contains any of these keys
-**Meaning:** Checks if a participant’s response includes one of the specified keys.  
+**Meaning:** True if a participant’s response includes one of the specified keys.  
 **Use case:** Use when multiple acceptable responses can trigger the rule.  
 **How it works:** Condition is true if at least one key matches.
 
 
 #### 2. Has response but none of these keys
-**Meaning:** Checks if a response exists but excludes specific keys.  
+**Meaning:** True if a response exists but excludes specific keys.  
 **Use case:** Use when certain answers should be filtered out.  
 **How it works:** Condition is true only if none of the listed keys are present.
 
 
 #### 3. A specific response is present
-**Meaning:** Checks if a participant gave a defined response.  
+**Meaning:** True if a participant gave a defined response.  
 **Use case:** Use when rules should depend on a particular answer.  
 **How it works:** Condition is true when the specified response is detected.
 
 
 #### 4. A specific response key is present and has a specific value
-**Meaning:** Checks if a response key matches a defined value.  
+**Meaning:** True if a response key matches a defined value.  
 **Use case:** Use when precise matching of responses is required.  
 **How it works:** Condition is true only when both key and value match.
 
 
 #### 5. Check condition for old responses
-**Meaning:** Allows conditions to check past responses, not only the latest.  
+**Meaning:** Allows conditions to check past responses from older surveys.  
 **Use case:** Use when earlier answers should influence current rules.  
 **How it works:** Condition is evaluated against stored reponses from old surveys.
 
@@ -129,32 +129,25 @@ Use these when you want rules to trigger only if numeric or date responses fall 
 * **Use Case:** Check whether a survey is already linked to the participant.  
 * **How it works:** Enter the survey key.  
 
----
-
 #### 2. **Is survey in active window (template)**  
-* **Meaning:** True if the assigned survey is currently in its active time window.  
+* **Meaning:** True if the assigned survey is currently available for the participant.  
 * **Use Case:** Trigger actions only while the survey is available to complete.  
-* **How it works:** Define the survey and its time window.  
-
----
+* **How it works:** The condition is true if the current time lies between the survey’s assigned start and end timestamps.
 
 #### 3. **Survey assignment start is before reference time (template)**  
-* **Meaning:** True if the survey assignment start date is before a given reference time.  
-* **Use Case:** Check whether a survey was made available before a specific time.  
-* **How it works:** Provide the survey key and reference time.  
-
----
+* **Meaning:** True if the survey’s assigned start time is earlier than the chosen reference time.  
+* **Use Case:** Trigger actions only after a survey has become available.  
+* **How it works:** The condition is true if the assignment start timestamp of the survey is before the given reference time (e.g. the current time).  
 
 #### 4. **Survey assignment end is before reference time (template)**  
-* **Meaning:** True if the survey assignment end date is before a given reference time.  
-* **Use Case:** Check whether a survey expired before a specific time.  
-* **How it works:** Provide the survey key and reference time.  
-
+* **Meaning:** True if the survey’s assigned end time is earlier than the chosen reference time.  
+* **Use Case:** Trigger actions after a survey’s availability window has ended.  
+* **How it works:** The condition is true if the assignment end timestamp of the survey is before the given reference time (e.g. the current time).  
 
 #### 5. **Has study status**  
 * **Meaning:** True if the participant has the defined study status.  
 * **Use Case:** Apply rules depending on participant’s current study role or status.  
-* **How it works:** Select the study status.  
+* **How it works:** Select the study status (e.g. "active", "inactive", "finished").  
 
 ## Numbers and dates
 
