@@ -115,9 +115,9 @@ Use these when you want rules to trigger only if numeric or date responses fall 
 
 
 #### 5. Check condition for old responses
-**Meaning:** Allows conditions to check past responses from older surveys.  
-**Use case:** Use when earlier answers should influence current rules.  
-**How it works:** Condition is evaluated against stored reponses from old surveys.
+**Meaning:** True if past participant responses from older surveys meet the specified condition.
+**Use case:** Use when rules should evaluate historical responses, for example to detect repeated patterns.
+**How it works:** The condition checks stored responses within an optional time window defined by **"responses since**" and **"responses until"**. You can choose whether **all**, **any**, or a minimum **count** of responses must fulfill the condition.
 
 
 #### 6. Consent accepted
@@ -153,6 +153,69 @@ Use these when you want rules to trigger only if numeric or date responses fall 
 * **Meaning:** True if the participant has the defined study status.  
 * **Use Case:** Apply rules depending on participant’s current study role or status.  
 * **How it works:** Select the study status (e.g. "active", "inactive", "finished").  
+
+#### 6. **Has participant flag key and value**
+* **Meaning:** True if the participant has a specific flag with a matching value.
+* **Use Case:** Target participants based on custom flags or metadata assigned to them.
+* **How it works:** Enter both the flag key and expected value to match against participant flags.
+
+#### 7. **Has linking code**  
+* **Meaning:** True if the participant has been assigned a linking code.  
+* **Use Case:** Use when rules should apply only to participants connected across studies or systems.  
+* **How it works:** Condition is true when a valid linking code exists for the participant.
+
+#### 8. **Last submission date is older than**  
+* **Meaning:** True if the participant’s most recent submission occurred before a specified date.  
+* **Use Case:** Use to identify inactive participants or trigger reminders after a period of inactivity.  
+* **How it works:** Enter a cutoff date; condition is true if the last submission (of an optional survey key) is earlier than that date.
+
+#### 9. **Has message type assigned**  
+* **Meaning:** True if a specific message type has been assigned to the participant.
+* **Use Case:** Use when actions should only trigger for participants who are linked to a certain message type (e.g. reminder).
+* **How it works:** Select the message type to check for; condition is true if it matches the participant’s assigned type.
+
+### Incoming participant state checkers (for merge events)
+
+#### 1. **Incoming state has survey with key assigned (Merge event)**  
+* **Meaning:** True if the temporary participant state being merged includes a survey with the specified key.
+* **Use Case:**  Handle cases where merged participants bring survey assignments that need to be processed or validated.
+* **How it works:** Specify the survey key; condition is true if it matches to the incoming participant’s assigned surveys.
+
+
+#### 2. **Has incoming study status (Merge event)**
+* **Meaning:** True if the incoming participant has a specific study status assigned.
+* **Use Case:** Apply rules only when the incoming participant had a defined study status (active, inactive, finished or exited).
+* **How it works:** The condition is true when the incoming state’s study status matches the expected value.
+
+
+#### 3. **Has incoming participant flag key and value (Merge event)**  
+* **Meaning:** True if the incoming participant has a flag with the specified key and value.  
+* **Use Case:** Use when merging should consider specific flags states from the incoming account.  
+* **How it works:** Provide both key and expected value; condition is true if they match in the incoming data.
+
+
+#### 4. **Has incoming participant flag key (Merge event)**
+* **Meaning:** True if the incoming participant has a specific flag key defined, regardless of its value.
+* **Use Case:** Use when the presence of a flag alone should affect merge actions.  
+* **How it works:** Enter the flag key; condition is true if it exists in the incoming participant’s flags.
+
+
+#### 5. **Incoming last submission date is older than (Merge event)**  
+* **Meaning:** True if the incoming participant’s last submission occurred before a specified date.  
+* **Use Case:** Handle merges differently based on how recently the incoming participant was active.
+* **How it works:** Enter a cutoff date; condition is true if the incoming last submission is earlier than that.
+
+
+#### 6. **Has incoming message type assigned (Merge event)**
+* **Meaning:** True if the incoming (temporary) participant has a specific message type assigned.
+* **Use Case:** Use when actions should only apply if the incoming account already carried a certain message type (e.g., invitation, reminder).
+* **How it works:** Select the message type to check for; condition is true if it exists in the incoming participant's assigned message types.
+
+
+#### 7. **Has incoming linking code (Merge event)**  
+* **Meaning:** True if the incoming participant has a linking code assigned.  
+* **Use Case:** Apply rules that depend on participants already being linked across studies or external system connections.  
+* **How it works:** Condition is true when a valid linking code is present in the incoming participant’s profile.
 
 ## Numbers and dates
 
