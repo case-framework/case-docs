@@ -2,7 +2,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 import { ImageProps } from 'next/image';
-import LocaleVideo from './components/content-items/locale-video';
+import LocaleVideo, { LocaleVideoProps } from './components/content-items/locale-video';
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
