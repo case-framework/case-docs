@@ -112,6 +112,17 @@ On the top right corner of the "Reports" card, use the "Open Exporter" button to
 Use the search field to filter the reports by participant ID, report key, or timestamp. The search term should be a MongoDB query in JSON format.
 Clicking the "Start Export" button will start the export process.
 
+
+**Examples:**
+
+```json
+{ "participantID": "89f30cc949cfb380994eb609d83d820be0710d0923b03520" }
+```
+
+```json
+{ "key": "test_kit_ordered", "timestamp": { "$gte": 1725130000, "$lte": 1727818400 } }
+```
+
 ![Open Exporter button](./images/bulk-download.png)
 
 
