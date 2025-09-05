@@ -4,6 +4,10 @@ description: Documentation for reports
 ---
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import downloadOptionsImg from './images/download-options.png';
+import optionalFiltersImg from './images/optional-filters.png';
+import reportKeySelectionImg from './images/report-key-selection.png';
 
 ## Introduction
 
@@ -81,17 +85,35 @@ On this page, you can see a paginated list of reports for the study.
 
 > Note: Simplified table view: flat report structure -> data attributes are included as columns in the table, without the dtype field. Use the bulk download in raw format to get the full report structure.
 
+<div className='block mx-auto w-fit'>
 ![Reports page](./images/reports-page.png)
+</div>
+
 
 #### Filter reports
 
 **Report key selector**: Use the report key selector (top left above the table) to select which reports to show.
 
-![Report key selector](./images/report-key-selection.png)
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={reportKeySelectionImg}
+width={400}
+height={200}
+alt="Report key selector"
+/>
 
 **Additional filters**: Use the additional filters to filter the reports by participant ID or timestamp - available through the button next to the report key selector. These additional filters are added to the report key selector filter, so only reports that match all filters will be shown.
 
-![Additional filters](./images/optional-filters.png)
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={optionalFiltersImg}
+width={400}
+height={200}
+alt="Additional filters"
+/>
+
+
+
 
 #### Pagination / Load more
 
@@ -101,7 +123,14 @@ The table initially shows 100 reports (starting from the most recent). You can l
 
 On the bottom right corner of the "Reports" card, use the "Download current view" which offers options to download the current table as CSV or JSON.
 
-![Download current view as CSV or JSON](./images/download-options.png)
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={downloadOptionsImg}
+width={240}
+height={240}
+alt="Download options"
+/>
 
 
 
@@ -123,7 +152,9 @@ Clicking the "Start Export" button will start the export process.
 { "key": "test_kit_ordered", "timestamp": { "$gte": 1725130000, "$lte": 1727818400 } }
 ```
 
+<div className='block mx-auto w-fit'>
 ![Open Exporter button](./images/bulk-download.png)
+</div>
 
 
 
