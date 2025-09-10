@@ -28,12 +28,19 @@ Rules help automate study workflows by:
 
 ## Conditions
 
-### Comparison Conditions  
+### Logical Operators 
 
-Comparison conditions check whether a value associated with the participant matches or differs from a defined value.  
+Logical conditions allow you to combine multiple expressions into more complex rules.
+They include **AND, OR, and NOT**, which determine whether all, any, or none of the specified conditions must be true.  
+**Example:** assign a test kit only if the participant has clicked the Order button **AND** has given consent.  
+
+### Comparisons 
+
+Comparison conditions check whether a value associated with the participant (e.g., responses, context variables, participant flags, or dates) matches or differs from another value. 
+The value on the right side can either be a fixed input or another participant associated value.
 They include **equals, less than, less than or equal, greater than, and greater than or equal**.  
-Use these when you want rules to trigger only if numeric or date responses fall inside or outside specific thresholds.  
-**Example:** Assign a follow-up survey only if the participant’s age is greater than or equal to 18.  
+Use these when you want rules to trigger only if study data falls inside or outside specific thresholds.  
+**Example:** Assign a follow-up survey only if the participant’s age flag is greater than or equal to 18.  
 
 ---
 
