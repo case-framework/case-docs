@@ -1,14 +1,24 @@
 
+export function joinPath(basePath: string, assetPath?: string): string {
+    if (!assetPath) return "";
 
-export function joinPath(basePath: string, assetPath: string): string {
-    if (!assetPath) return '';
+    const asset = String(assetPath);
 
-    if (/^(https?:)?\/\//.test(assetPath)) {
-        return assetPath;
+    if (/^(?:https?:)?\/\//i.test(asset) || /^(?:data|blob):/i.test(asset)) {
+        return asset;
     }
 
-    if (basePath && assetPath.startsWith(basePath.replace(/\/+$/, ''))) {
-        return assetPath.replace(/\/+/g, '/');
+    const base = (basePath || "").replace(/\/+$/, "");
+    const baseNoLead = base.replace(/^\/+/, "");
+    const assetNorm = asset.replace(/\/+/g, "/").replace(/^\/+/, "");
+
+    if (!baseNoLead) {
+        return `/${assetNorm}`;
     }
-    return `${basePath}/${assetPath}`.replace(/\/+/g, '/');
+
+    if (assetNorm === baseNoLead || assetNorm.startsWith(`${baseNoLead}/`)) {
+        return `/${assetNorm}`;
+    }
+
+    return `/${baseNoLead}/${assetNorm}`.replace(/\/+/g, "/");
 }
