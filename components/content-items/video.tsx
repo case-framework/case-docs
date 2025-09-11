@@ -11,6 +11,7 @@ export default function Video(props: VideoProps) {
                 width={props.width || 700}
                 height={props.height}
                 controls
+                style={{ maxWidth: '100%' }}
             >
                 <source
                     src={props.videoPath}
