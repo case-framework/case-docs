@@ -5,18 +5,18 @@ description: Actions and expressions supported by the study engine
 
 ## Study engine
 
-The study engine is the core component of the study running on the server. It's main responsibility is to handle study events based on each study's own rule set.
+The study engine is the core component of the study running on the server. Its main responsibility is to handle study events based on each study's own rule set.
 
 When a specific event occurs (e.g. a participant submits a survey), the study engine evaluates the participant's data against the study's rules and executes the appropriate actions.
-These rules encode the study flow. The engine supports a large set of actions and expressions, providing high level of freedom in the study design.
+These rules encode the study flow. The engine supports a large set of actions and expressions, providing a high level of freedom in the study design.
 
 **Actions:** typically used to mutate the participant's state, e.g. assign a survey, send a message, create a report, etc.
 
 **Expressions:** typically used to evaluate the participant's state, e.g. check if the participant has a specific flag, check if the participant has answered a specific question, etc.
 
 **Example of a conditional rule:**
-- *Condition:* The participant's age is less than 18. -> expression to compare a response value with the current date
-- *Action:* Set the participant's age category to *child*. -> action to set a participant flag
+- *Condition:* Participant's age is less than 18. -> expression comparing a numeric value against a threshold
+- *Action:* Set the participant's age category to *child*. -> action setting a participant flag
 
 
 ## Expressions
