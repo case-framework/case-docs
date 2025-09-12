@@ -1,92 +1,85 @@
 ---
-title: Rules in Study Context 
-description: How study rules work
+title: Methods of the study engine
+description: Actions and expressions supported by the study engine
 ---
 
-####  Rules in the Study Context 
+## Study engine
+
+The study engine is the core component of the study running on the server. It's main responsibility is to handle study events based on each study's own rule set.
+
+When a specific event occurs (e.g. a participant submits a survey), the study engine evaluates the participant's data against the study's rules and executes the appropriate actions.
+These rules encode the study flow. The engine supports a large set of actions and expressions, providing high level of freedom in the study design.
+
+**Actions:** typically used to mutate the participant's state, e.g. assign a survey, send a message, create a report, etc.
+
+**Expressions:** typically used to evaluate the participant's state, e.g. check if the participant has a specific flag, check if the participant has answered a specific question, etc.
+
+**Example of a conditional rule:**
+- *Condition:* The participant's age is less than 18. -> expression to compare a response value with the current date
+- *Action:* Set the participant's age category to *child*. -> action to set a participant flag
 
 
-**Definition:**  
-Rules are automated actions that are triggered when certain conditions on participant data are met. They allow you to define *if–then* logic within your study so that specific operations are executed dynamically.  
+## Expressions
 
-**How they work:**  
-- A rule consists of two parts:  
-  1. **Conditional expression** – this is the *if* part. It evaluates participant data (e.g., survey responses, flags, or context variables).  
-  2. **Action** – this is the *then* part. If the condition is true, the action is executed.  
-
-**Example:**  
-- *Condition:* The participant's age is less than 18.  
-- *Action:* Set the participant's age category to *child*.  
-
-**Purpose:**  
-Rules help automate study workflows by:  
-    - enforcing logic across surveys,
-    - classifying or segmenting participants,
-    - triggering follow-up surveys or notifications,
-    - ensuring data consistency and validity, 
-    - integrating external services.
-
-## Conditions
-
-### Logical Operators 
+### Logical Operators
 
 Logical conditions allow you to combine multiple expressions into more complex rules.
-They include **AND, OR, and NOT**, which determine whether all, any, or none of the specified conditions must be true.  
-**Example:** assign a test kit only if the participant has clicked the Order button **AND** has given consent.  
+They include **AND, OR, and NOT**, which determine whether all, any, or none of the specified conditions must be true.
+**Example:** assign a test kit only if the participant has clicked the Order button **AND** has given consent.
 
-### Comparisons 
+### Comparisons
 
-Comparison conditions check whether a value associated with the participant (e.g., responses, context variables, participant flags, or dates) matches or differs from another value. 
+Comparison conditions check whether a value associated with the participant (e.g., responses, context variables, participant flags, or dates) matches or differs from another value.
 The value on the right side can either be a fixed input or another participant associated value.
-They include **equals, less than, less than or equal, greater than, and greater than or equal**.  
-Use these when you want rules to trigger only if study data falls inside or outside specific thresholds.  
-**Example:** Assign a follow-up survey only if the participant’s age flag is greater than or equal to 18.  
+They include **equals, less than, less than or equal, greater than, and greater than or equal**.
+Use these when you want rules to trigger only if study data falls inside or outside specific thresholds.
+**Example:** Assign a follow-up survey only if the participant’s age flag is greater than or equal to 18.
 
 ---
 
 ### Event Properties
 
-#### 1. **Check event type**  
-* **Meaning:** True if the event matches a specific type (e.g., submit, timer, custom...).  
-* **Use Case:** Run action only for certain event categories.  
-* **How it works:** Select the event type.  
+#### 1. **Check event type**
+* **Meaning:** True if the event matches a specific type (e.g., submit, timer, custom...).
+* **Use Case:** Run action only for certain event categories.
+* **How it works:** Select the event type.
 
 
-#### 2. **Current event is submission of survey with key**  
-* **Meaning:** True if the event is the submission of a defined survey.  
-* **Use Case:** Trigger actions only when a specific survey is completed.  
-* **How it works:** Enter the survey key.  
+#### 2. **Current event is submission of survey with key**
+* **Meaning:** True if the event is the submission of a defined survey.
+* **Use Case:** Trigger actions only when a specific survey is completed.
+* **How it works:** Enter the survey key.
 
 
-#### 3. **Custom event with key**  
-* **Meaning:** True if the event is a custom one identified by its key.  
-* **Use Case:** React to special user actions or system events.  
-* **How it works:** Provide the custom event key.  
+#### 3. **Custom event with key**
+* **Meaning:** True if the event is a custom one identified by its key.
+* **Use Case:** React to special user actions or system events.
+* **How it works:** Provide the custom event key.
 
 
-#### 4. **Has (any) event payload**  
-* **Meaning:** True if the event contains additional data.  
-* **Use Case:** Run actions only when extra information is attached.  
-* **How it works:** No input required.  
+#### 4. **Has (any) event payload**
+* **Meaning:** True if the event contains additional data.
+* **Use Case:** Run actions only when extra information is attached.
+* **How it works:** No input required.
 
 
-#### 5. **Has event payload with key**  
-* **Meaning:** True if the payload includes a given key.  
-* **Use Case:** Check for specific structured data in the event.  
-* **How it works:** Enter the key to check.  
+#### 5. **Has event payload with key**
+* **Meaning:** True if the payload includes a given key.
+* **Use Case:** Check for specific structured data in the event.
+* **How it works:** Enter the key to check.
 
 
-#### 6. **Has event payload with key and value**  
-* **Meaning:** True if the payload contains a key with a matching value.  
-* **Use Case:** Filter events by exact data content.  
-* **How it works:** Enter both key and expected value.  
+#### 6. **Has event payload with key and value**
+* **Meaning:** True if the payload contains a key with a matching value.
+* **Use Case:** Filter events by exact data content.
+* **How it works:** Enter both key and expected value.
 
 ---
 ### Advanced
 
 #### 1. Is study code present
-**Meaning:** True if a study code has been assigned to the participant.  
-**Use case:** Use when actions should only apply to coded participants.  
+**Meaning:** True if a study code has been assigned to the participant.
+**Use case:** Use when actions should only apply to coded participants.
 **How it works:** Condition is true when a specified study code exists in a list of codes.
 
 ---
@@ -94,26 +87,26 @@ Use these when you want rules to trigger only if study data falls inside or outs
 ### Response checkers
 
 #### 1. Response contains any of these keys
-**Meaning:** True if a participant’s response includes one of the specified keys.  
-**Use case:** Use when multiple acceptable responses can trigger the rule.  
+**Meaning:** True if a participant’s response includes one of the specified keys.
+**Use case:** Use when multiple acceptable responses can trigger the rule.
 **How it works:** Condition is true if at least one key matches.
 
 
 #### 2. Has response but none of these keys
-**Meaning:** True if a response exists but excludes specific keys.  
-**Use case:** Use when certain answers should be filtered out.  
+**Meaning:** True if a response exists but excludes specific keys.
+**Use case:** Use when certain answers should be filtered out.
 **How it works:** Condition is true only if none of the listed keys are present.
 
 
 #### 3. A specific response is present
-**Meaning:** True if a participant gave a defined response.  
-**Use case:** Use when rules should depend on a particular answer.  
+**Meaning:** True if a participant gave a defined response.
+**Use case:** Use when rules should depend on a particular answer.
 **How it works:** Condition is true when the specified response is detected.
 
 
 #### 4. A specific response key is present and has a specific value
-**Meaning:** True if a response key matches a defined value.  
-**Use case:** Use when precise matching of responses is required.  
+**Meaning:** True if a response key matches a defined value.
+**Use case:** Use when precise matching of responses is required.
 **How it works:** Condition is true only when both key and value match.
 
 
@@ -124,62 +117,62 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 
 #### 6. Consent accepted
-**Meaning:** Checks if the participant has provided consent.  
-**Use case:** Use when study actions must only apply to consenting participants.  
+**Meaning:** Checks if the participant has provided consent.
+**Use case:** Use when study actions must only apply to consenting participants.
 **How it works:** Condition is true once consent with specified key is recorded.
 
 ---
 
 ### Participant state checkers
 
-#### 1. **Has a survey with key assigned**  
-* **Meaning:** True if the participant has a specific survey assigned.  
-* **Use Case:** Check whether a survey is already linked to the participant.  
-* **How it works:** Enter the survey key.  
+#### 1. **Has a survey with key assigned**
+* **Meaning:** True if the participant has a specific survey assigned.
+* **Use Case:** Check whether a survey is already linked to the participant.
+* **How it works:** Enter the survey key.
 
-#### 2. **Is survey in active window (template)**  
-* **Meaning:** True if the assigned survey is currently available for the participant.  
-* **Use Case:** Trigger actions only while the survey is available to complete.  
+#### 2. **Is survey in active window (template)**
+* **Meaning:** True if the assigned survey is currently available for the participant.
+* **Use Case:** Trigger actions only while the survey is available to complete.
 * **How it works:** The condition is true if the current time lies between the survey’s assigned start and end timestamps.
 
-#### 3. **Survey assignment start is before reference time (template)**  
-* **Meaning:** True if the survey’s assigned start time is earlier than the chosen reference time.  
-* **Use Case:** Trigger actions only after a survey has become available.  
-* **How it works:** The condition is true if the assignment start timestamp of the survey is before the given reference time (e.g. the current time).  
+#### 3. **Survey assignment start is before reference time (template)**
+* **Meaning:** True if the survey’s assigned start time is earlier than the chosen reference time.
+* **Use Case:** Trigger actions only after a survey has become available.
+* **How it works:** The condition is true if the assignment start timestamp of the survey is before the given reference time (e.g. the current time).
 
-#### 4. **Survey assignment end is before reference time (template)**  
-* **Meaning:** True if the survey’s assigned end time is earlier than the chosen reference time.  
-* **Use Case:** Trigger actions after a survey’s availability window has ended.  
-* **How it works:** The condition is true if the assignment end timestamp of the survey is before the given reference time (e.g. the current time).  
+#### 4. **Survey assignment end is before reference time (template)**
+* **Meaning:** True if the survey’s assigned end time is earlier than the chosen reference time.
+* **Use Case:** Trigger actions after a survey’s availability window has ended.
+* **How it works:** The condition is true if the assignment end timestamp of the survey is before the given reference time (e.g. the current time).
 
-#### 5. **Has study status**  
-* **Meaning:** True if the participant has the defined study status.  
-* **Use Case:** Apply rules depending on participant’s current study role or status.  
-* **How it works:** Select the study status (e.g. "active", "inactive", "finished").  
+#### 5. **Has study status**
+* **Meaning:** True if the participant has the defined study status.
+* **Use Case:** Apply rules depending on participant’s current study role or status.
+* **How it works:** Select the study status (e.g. "active", "inactive", "finished").
 
 #### 6. **Has participant flag key and value**
 * **Meaning:** True if the participant has a specific flag with a matching value.
 * **Use Case:** Target participants based on custom flags or metadata assigned to them.
 * **How it works:** Enter both the flag key and expected value to match against participant flags.
 
-#### 7. **Has linking code**  
-* **Meaning:** True if the participant has been assigned a linking code.  
-* **Use Case:** Use when rules should apply only to participants connected across studies or systems.  
+#### 7. **Has linking code**
+* **Meaning:** True if the participant has been assigned a linking code.
+* **Use Case:** Use when rules should apply only to participants connected across studies or systems.
 * **How it works:** Condition is true when a valid linking code exists for the participant.
 
-#### 8. **Last submission date is older than**  
-* **Meaning:** True if the participant’s most recent submission occurred before a specified date.  
-* **Use Case:** Use to identify inactive participants or trigger reminders after a period of inactivity.  
+#### 8. **Last submission date is older than**
+* **Meaning:** True if the participant’s most recent submission occurred before a specified date.
+* **Use Case:** Use to identify inactive participants or trigger reminders after a period of inactivity.
 * **How it works:** Enter a cutoff date; condition is true if the last submission (of an optional survey key) is earlier than that date.
 
-#### 9. **Has message type assigned**  
+#### 9. **Has message type assigned**
 * **Meaning:** True if a specific message type has been assigned to the participant.
 * **Use Case:** Use when actions should only trigger for participants who are linked to a certain message type (e.g. reminder).
 * **How it works:** Select the message type to check for; condition is true if it matches the participant’s assigned type.
 
 ### Incoming participant state checkers (for merge events)
 
-#### 1. **Incoming state has survey with key assigned (Merge event)**  
+#### 1. **Incoming state has survey with key assigned (Merge event)**
 * **Meaning:** True if the temporary participant state being merged includes a survey with the specified key.
 * **Use Case:**  Handle cases where merged participants bring survey assignments that need to be processed or validated.
 * **How it works:** Specify the survey key; condition is true if it matches to the incoming participant’s assigned surveys.
@@ -191,20 +184,20 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **How it works:** The condition is true when the incoming state’s study status matches the expected value.
 
 
-#### 3. **Has incoming participant flag key and value (Merge event)**  
-* **Meaning:** True if the incoming participant has a flag with the specified key and value.  
-* **Use Case:** Use when merging should consider specific flags states from the incoming account.  
+#### 3. **Has incoming participant flag key and value (Merge event)**
+* **Meaning:** True if the incoming participant has a flag with the specified key and value.
+* **Use Case:** Use when merging should consider specific flags states from the incoming account.
 * **How it works:** Provide both key and expected value; condition is true if they match in the incoming data.
 
 
 #### 4. **Has incoming participant flag key (Merge event)**
 * **Meaning:** True if the incoming participant has a specific flag key defined, regardless of its value.
-* **Use Case:** Use when the presence of a flag alone should affect merge actions.  
+* **Use Case:** Use when the presence of a flag alone should affect merge actions.
 * **How it works:** Enter the flag key; condition is true if it exists in the incoming participant’s flags.
 
 
-#### 5. **Incoming last submission date is older than (Merge event)**  
-* **Meaning:** True if the incoming participant’s last submission occurred before a specified date.  
+#### 5. **Incoming last submission date is older than (Merge event)**
+* **Meaning:** True if the incoming participant’s last submission occurred before a specified date.
 * **Use Case:** Handle merges differently based on how recently the incoming participant was active.
 * **How it works:** Enter a cutoff date; condition is true if the incoming last submission is earlier than that.
 
@@ -215,11 +208,11 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **How it works:** Select the message type to check for; condition is true if it exists in the incoming participant's assigned message types.
 
 
-#### 7. **Has incoming linking code (Merge event)**  
-* **Meaning:** True if the incoming participant has a linking code assigned.  
-* **Use Case:** Apply rules that depend on participants already being linked across studies or external system connections.  
+#### 7. **Has incoming linking code (Merge event)**
+* **Meaning:** True if the incoming participant has a linking code assigned.
+* **Use Case:** Apply rules that depend on participants already being linked across studies or external system connections.
 * **How it works:** Condition is true when a valid linking code is present in the incoming participant’s profile.
 
-## Numbers and dates
+### Numbers and dates
 
 ## Actions
