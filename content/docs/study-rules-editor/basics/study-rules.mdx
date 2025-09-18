@@ -221,7 +221,12 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 #### 1. **Date picker**  
 * **Meaning:** Provides a manual way to select and return a specific date.  
 * **Use Case:** Useful if you want to compare against or calculate with a fixed date.  
-* **How it works:** A date is chosen via the picker and stored as a date value.  
+* **How it works:** Select a date from a calendar interface.
+
+#### 2. **Number input**
+* **Meaning:** Allows you to input a fixed numeric value.
+* **Use Case:** Useful when you need a constant number for comparisons or calculations.
+* **How it works:** Enter the desired numeric value directly.
 
 
 ### Mathematical Operators
@@ -239,14 +244,14 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 ### Event properties
 
-#### 3. **Get event payload value as number**  
+#### 1. **Get event payload value as number**  
 * **Meaning:** Extracts a value from an event payload and returns it as a number.  
 * **Use Case:** Use when incoming event data needs to be used in numeric comparisons or calculations.  
-* **How it works:** The key of the event payload is accessed, and the specified value is parsed into a number.  
+* **How it works:** Enter the key of the event payload.
 
 ### Misc
 
-#### 5. **Get timestamp**  
+#### 1. **Get timestamp**  
 * **Meaning:** Returns a timestamp based on the current date and time or a defined reference date.  
 * **Use Case:** Useful for scheduling, comparing deadlines, or calculating relative dates (e.g., setting a reminder 7 days after survey submission).  
 * **How it works:**  
@@ -254,60 +259,113 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
   - **Reference date:** Define a custom date/time as the starting point. If none is provided, the current time is used.  
 
 #### 2. **Parse value as number**  
-* **Meaning:** Converts a given value (e.g., a string or response) into a numeric value.  
+* **Meaning:** Converts a given value (e.g., a flag or response value) into a numeric value.  
 * **Use Case:** Helpful when participant input needs to be treated as a number for calculations or comparisons.  
-* **How it works:** Enter the value or response key; the expression attempts to parse it into a number.  
+* **How it works:** Enter the value to be parsed into a number.  
 
 ### Advanced
 
-#### 3. **Use external service to evaluate event data (return float)**  
+#### 1. **Use external service to evaluate event data (return float)**  
 * **Meaning:** Sends event data to an external service, which returns a floating-point number.  
 * **Use Case:** Can be used for advanced calculations or evaluations that require external logic.  
-* **How it works:** Event data is passed to the configured external service, and the numeric result is returned.  
+* **How it works:** Select service name and route of the external event handler service.
 
-#### 4. **Generate random number**  
+#### 2. **Generate random number**  
 * **Meaning:** Produces a random number within a defined range.  
 * **Use Case:** Useful for randomization tasks, such as assigning participants to different study groups.  
-* **How it works:** Define the range (min/max), and the expression outputs a random number in that range.  
+* **How it works:** Enter a minimum and maximum value. The expression will return a random number within this range.
 
 ### Date helpers
 
-#### 5. **Get ISO week for timestamp**  
+#### 1. **Get ISO week for timestamp**  
 * **Meaning:** Returns the ISO week number for a given timestamp.  
 * **Use Case:** Helpful when rules depend on the calendar week (e.g., weekly schedules or reporting).  
-* **How it works:** Provide a timestamp, and the expression calculates its ISO week number.  
+* **How it works:** Provide a timestamp.
 
-#### 1. **Get timestamp for next occurrence of an ISO week**  
+#### 2. **Get timestamp for next occurrence of an ISO week**  
 * **Meaning:** Calculates the timestamp for the next occurrence of a specified ISO week number.  
 * **Use Case:** Useful for scheduling events or reminders based on calendar weeks.  
 * **How it works:** Provide an ISO week number (e.g., 42), and the expression returns the timestamp for the start of that week in the current or next year.
 
-#### 2. **Get timestamp for next occurrence of a start of month**  
+#### 3. **Get timestamp for next occurrence of a start of month**  
 * **Meaning:** Returns the timestamp for the next start of a specified month.  
 * **Use Case:** Ideal for monthly scheduling, e.g., sending out surveys at the beginning of each month.  
 * **How it works:** Specify the month (e.g., March), and the expression calculates the timestamp for the next occurrence of the first day of that month.
 
----
 
 ### Response Checkers
 
 #### 1. **Get response value as number**  
 * **Meaning:** Extracts a numeric value from a participant’s response.  
 * **Use Case:** Use when responses need to be evaluated numerically, e.g., for scoring or thresholds.  
-* **How it works:** Accesses the response by key and parses it into a number.
+* **How it works:**  Enter the item key and the slot key of the response.
 
 #### 2. **Count response items**  
 * **Meaning:** Counts the number of items in a multi-select or list-type response.  
 * **Use Case:** Useful for determining how many options a participant selected.  
-* **How it works:** Evaluates the response array and returns the count of selected items.
+* **How it works:** Enter the item key and the slot key of the list response. The slot key refers to the response group that contains the list of selected item options whose count will be evaluated.
 
 
 ### Participant State Checkers
 
 #### 1. **Get study entry time**  
-* **Meaning:** Returns the timestamp of when the participant entered the study.  
+* **Meaning:** Returns the timestamp marking the participant’s entry into the study.  
 * **Use Case:** Useful for calculating durations, deadlines, or eligibility based on study entry.  
-* **How it works:** Retrieves the stored entry time for the participant and returns it as a timestamp.
+* **How it works:** No input required.
+
+#### 2. **Get survey key assigned from timestamp**  
+* **Meaning:** Retrieves the timestamp from which a specific survey was assigned to the participant.  
+* **Use Case:** Useful for determining when a survey became available or tracking assignment history.  
+* **How it works:** Enter the survey key. 
+
+#### 3. **Get survey key assigned until timestamp**  
+* **Meaning:** Retrieves the timestamp until which a specific survey remains assigned to the participant.  
+* **Use Case:** Useful for checking survey availability windows or expiration. 
+* **How it works:** Enter the survey key. 
+
+#### 4. **Get participant flag value as number**  
+* **Meaning:** Converts a participant flag value into a number.  
+* **Use Case:** Useful for evaluating participant flags numerically, e.g., numerical comparison or progress tracking.  
+* **How it works:** Provide the flag key. 
+
+#### 5. **Get last submission date**  
+* **Meaning:** Returns the timestamp of the participant’s most recent survey submission.  
+* **Use Case:** Useful for tracking activity or triggering follow-ups.  
+* **How it works:** Specify the survey key. The expression returns the timestamp of the last submission for that survey.
+
+#### 6. **Get message next time**  
+* **Meaning:** Retrieves the next timestamp for when a specific message is scheduled to be sent.  
+* **Use Case:** Useful for managing message timing, reminders, or notifications.  
+* **How it works:** Enter the message key. 
+
+
+### Incoming Participant State Checkers (Merge Events)
+
+#### 1. **Get incoming study entry time**  
+* **Meaning:** Retrieves the study entry timestamp of the incoming (merged) participant.  
+* **Use Case:** Useful for comparing entry times or preserving historical context during a merge.  
+* **How it works:** No input required. 
+
+#### 2. **Get incoming survey key assigned from timestamp (Merge event)**  
+* **Meaning:** Returns the timestamp from which a specific survey was assigned to the incoming participant.  
+* **Use Case:** Useful for tracking survey availability prior to a merge.  
+* **How it works:** Enter the survey key. 
+
+#### 3. **Get incoming survey key assigned until timestamp (Merge event)**  
+* **Meaning:** Returns the timestamp until which a specific survey was assigned to the incoming participant.  
+* **Use Case:** Useful for checking if a survey was still active at the time of merge.  
+* **How it works:** Enter the survey key. 
+
+#### 4. **Get incoming last submission date (Merge event)**  
+* **Meaning:** Retrieves the timestamp of the last survey submission made by the incoming participant.  
+* **Use Case:** Useful for evaluating recent activity before the merge.  
+* **How it works:** Enter the survey key. 
+
+#### 5. **Get incoming message next time (Merge event)**  
+* **Meaning:** Returns the next scheduled time for a message assigned to the incoming participant.  
+* **Use Case:** Useful for preserving message timing or rescheduling after a merge.  
+* **How it works:** Enter the message key.
+
 
 
 ## Actions
