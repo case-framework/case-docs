@@ -369,3 +369,143 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 
 ## Actions
+
+**Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions. 
+
+### General Study Actions
+
+#### 1. **Update study status**  
+* **Meaning:** Changes the current status of the study for the participant.  
+* **Use Case:** Use to reflect progress, transitions, or milestones in the study.  
+* **How it works:** Select the new status value to assign.
+
+#### 2. **Stop participation**  
+* **Meaning:** Ends the participant’s involvement in the study.  
+* **Use Case:** Use when a participant should no longer continue, e.g., due to withdrawal or exclusion.  
+* **How it works:** No input required. The participant is marked as no longer active in the study.
+
+#### 3. **Finish participation**  
+* **Meaning:** Marks the participant’s study journey as complete.  
+* **Use Case:** Use when all required tasks are done and the study is formally concluded.  
+* **How it works:** No input required. The participant is marked as finished.
+
+#### 4. **Start new study session**
+* **Meaning:** Assigns a new study ID to the participant, starting a fresh session within the same study.  
+* **Use Case:** Use when you want to group a new set of surveys or activities under a unique session for the participant.  
+* **How it works:** No input required. A new, unique study ID is automatically generated.
+
+#### 5. **Remove entry from study-wide code list**  
+* **Meaning:** Deletes a specific code entry associated with the participant from a global list.  
+* **Use Case:** Use to revoke access, remove tags, or clean up data.  
+* **How it works:** Provide the list key and the code to be removed.
+
+#### 6. **Notify researchers (Email)**  
+* **Meaning:** Sends an email notification to designated researchers.  
+* **Use Case:** Use to inform about events like e.g. consent withdrawal or survey completion.  
+* **How it works:** Provide the message type and optional payload as key-value pair.
+
+
+### Change Participant State
+
+#### 1. **Update participant flag**  
+* **Meaning:** Sets or updates a flag value for the participant.  
+* **Use Case:** Use to track states like eligibility, completion, or custom markers.  
+* **How it works:** Provide the flag key and the value to assign.
+
+#### 2. **Remove participant flag**  
+* **Meaning:** Deletes a specific flag from the participant’s record.  
+* **Use Case:** Use to reset or clean up participant state markers.  
+* **How it works:** Provide the flag key to be removed.
+
+#### 3. **Add new survey**  
+* **Meaning:** Assigns a new survey to the participant.  
+* **Use Case:** Use to trigger follow-up surveys or add new tasks.  
+* **How it works:** Specify the survey key and optional scheduling parameters.
+
+#### 3. **Add new survey**
+* **Meaning:** Assigns a new survey to the participant.  
+* **Use Case:** Use to trigger follow-up surveys or add new tasks.  
+* **How it works:** Specify the survey key, and select a category (normal, priority, immediate, optional) to control its assignment type. Optionally, you can set “available from” and “available until” timestamps to define the survey’s availability window.
+
+#### 4. **Remove all assigned surveys**  
+* **Meaning:** Deletes all surveys currently assigned to the participant.  
+* **Use Case:** Use to reset the survey queue or clear outdated assignments.  
+* **How it works:** No input required. 
+
+#### 5. **Remove one assigned survey**  
+* **Meaning:** Deletes a specific survey from the participant’s assignments.  
+* **Use Case:** Use to cancel a particular survey without affecting others.  
+* **How it works:** Provide the survey key to be removed and specify if the first or the last survey should be removed.
+
+#### 6. **Remove all surveys of a specific key**  
+* **Meaning:** Deletes all surveys with a given key, regardless of assignment time.  
+* **Use Case:** Use to remove repeated or recurring surveys of the same type.  
+* **How it works:** Enter the survey key. 
+
+#### 7. **Schedule a message**  
+* **Meaning:** Plans a message to be send to the participant at a future time.  
+* **Use Case:** Use for reminders, notifications, or timed instructions.  
+* **How it works:** Provide the message key and the [scheduled timestamp](#1-get-timestamp).
+
+#### 8. **Remove all scheduled messages**  
+* **Meaning:** Deletes all messages currently scheduled for the participant.  
+* **Use Case:** Use to reset the message queue or cancel all pending notifications.  
+* **How it works:** No input required. 
+
+#### 9. **Remove scheduled messages of a specific type**  
+* **Meaning:** Deletes scheduled messages that match a specific message key.  
+* **Use Case:** Use to cancel a particular type of message without affecting others.  
+* **How it works:** Enter the message key.
+
+#### 10. **Set linking code**  
+* **Meaning:** Assigns a specific linking code to the participant.  
+* **Use Case:** Use to establish connections between participants or datasets.  
+* **How it works:** Select linking code key and enter the code as value.
+
+#### 11. **Delete linking code**  
+* **Meaning:** Removes the currently assigned linking code from the participant.  
+* **Use Case:** Use to break links or reset participant associations.  
+* **How it works:** No input required. Specify optional keys if only linking code of these keys should be deleted.
+
+#### 12. **Draw study code as linking code**  
+* **Meaning:** Uses the participant’s study code as their linking code.  
+* **Use Case:** Use when the study code should serve as a unique identifier across systems.  
+* **How it works:** Select the study code key. Specify optionally the linking code key to assign the study code to.
+
+#### 13. **Remove confidential response by key**  
+* **Meaning:** Deletes a specific confidential response from the participant’s data.  
+* **Use Case:** Use to remove sensitive information selectively.  
+* **How it works:** Provide the response key to be removed.
+
+#### 14. **Remove all confidential responses**  
+* **Meaning:** Deletes all confidential responses associated with the participant.  
+* **Use Case:** Use to fully clear sensitive data.  
+* **How it works:** No input required. 
+
+#### 15. **External event handler**  
+* **Meaning:** Triggers an external event or integration.  
+* **Use Case:** Use to connect with external systems or services.  
+* **How it works:** Provide the service name and route.
+
+#### 16. **Initialize report**  
+* **Meaning:** Starts a new report for the participant.  
+* **Use Case:** Use to begin tracking or compiling summarized participant data.  
+* **How it works:** Specify the report key.
+
+#### 17. **Cancel report**  
+* **Meaning:** Cancels an active report for the participant for the current event.  
+* **Use Case:** Use to stop and discard reports.  
+* **How it works:** Provide the report key to cancel.
+
+#### 18. **Update report data**
+* **Meaning:** Modifies or adds data to an existing report.  
+* **Use Case:** Use to keep reports current or add new findings.  
+* **How it works:**  
+  Specify the report key and the attribute you want to update. Enter the new value for the attribute. Optionally, you can select how the value should be interpreted (e.g., as a date, float, integer, raw message, or list of keys).
+
+#### 19. **Remove report data by attribute key**
+* **Meaning:** Deletes specific data from a report based on the attribute key.  
+* **Use Case:** Use to selectively remove report entries without canceling the entire report.  
+* **How it works:** Provide the report key and the attribute to be removed from the report.
+
+
