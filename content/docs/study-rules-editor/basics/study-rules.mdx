@@ -251,7 +251,8 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 ### Misc
 
-#### 1. **Get timestamp**  
+<a id="get-timestamp"></a>
+#### 1. **Get timestamp** 
 * **Meaning:** Returns a timestamp based on the current date and time or a defined reference date.  
 * **Use Case:** Useful for scheduling, comparing deadlines, or calculating relative dates (e.g., setting a reminder 7 days after survey submission).  
 * **How it works:**  
@@ -435,11 +436,6 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Use Case:** Use to reset or clean up participant state markers.  
 * **How it works:** Provide the flag key to be removed.
 
-#### 3. **Add new survey**  
-* **Meaning:** Assigns a new survey to the participant.  
-* **Use Case:** Use to trigger follow-up surveys or add new tasks.  
-* **How it works:** Specify the survey key and optional scheduling parameters.
-
 #### 3. **Add new survey**
 * **Meaning:** Assigns a new survey to the participant.  
 * **Use Case:** Use to trigger follow-up surveys or add new tasks.  
@@ -463,7 +459,7 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 #### 7. **Schedule a message**  
 * **Meaning:** Plans a message to be send to the participant at a future time.  
 * **Use Case:** Use for reminders, notifications, or timed instructions.  
-* **How it works:** Provide the message key and the [scheduled timestamp](#1-get-timestamp).
+* **How it works:** Provide the message key and the [scheduled timestamp](#get-timestamp).
 
 #### 8. **Remove all scheduled messages**  
 * **Meaning:** Deletes all messages currently scheduled for the participant.  
