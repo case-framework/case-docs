@@ -372,6 +372,24 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 **Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions. 
 
+### Control Flow
+
+#### 1. **If - else**  
+* **Meaning:** Executes one set of actions if a condition is true, and another set if it is false.  
+* **Use Case:** Use when different outcomes should be triggered depending on whether a condition is met.  
+* **How it works:** Define a condition. If it evaluates to true, the “then” actions are executed; otherwise, the “else” actions are triggered.
+
+#### 2. **Conditional action set (IF-THEN)**  
+* **Meaning:** Executes a set of actions only if a specified condition is true.  
+* **Use Case:** Use to trigger actions selectively based on participant data or study state.  
+* **How it works:** Provide a condition. If it evaluates to true, the defined actions are executed. No actions are triggered if the condition is false.
+
+#### 3. **Group of actions (DO)**  
+* **Meaning:** Executes multiple actions together as a single block.  
+* **Use Case:** Use to organize and run several related actions in sequence.  
+* **How it works:** Add all desired actions to the group. They will be executed in the order listed when the group is triggered.
+
+
 ### General Study Actions
 
 #### 1. **Update study status**  
