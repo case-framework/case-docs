@@ -18,8 +18,10 @@ These rules encode the study flow. The engine supports a large set of actions an
 - *Condition:* Participant's age is less than 18. -> expression comparing a numeric value against a threshold
 - *Action:* Set the participant's age category to *child*. -> action setting a participant flag
 
+---
+## Logical Expressions
 
-## Expressions
+Expressions are used to evaluate the participant's state and return a boolean (true/false), number, or date value.
 
 ### Logical Operators
 
@@ -180,7 +182,7 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 #### 2. **Has incoming study status (Merge event)**
 * **Meaning:** True if the incoming participant has a specific study status assigned.
-* **Use Case:** Apply rules only when the incoming participant had a defined study status (active, inactive, finished or exited).
+* **Use Case:** Apply rules only when the incoming participant has a defined study status (active, inactive, finished or exited).
 * **How it works:** Select the study status (e.g. "active", "inactive", "finished", "exited").
 
 #### 3. **Has incoming participant flag key and value (Merge event)**
@@ -212,6 +214,7 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **Use Case:** Apply rules that depend on participants already being linked across studies or external system connections.
 * **How it works:** Select the linking code to check for.
 
+---
 ## Numbers and Dates
 
 Some expressions return numbers and dates that can e.g. be used for comparisons. Note that Dates are always represented in **Unix timestamp format**, which means they are also integer numbers.  
@@ -368,7 +371,7 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **How it works:** Enter the message key.
 
 
-
+---
 ## Actions
 
 **Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions. 
@@ -457,7 +460,7 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **How it works:** Enter the survey key. 
 
 #### 7. **Schedule a message**  
-* **Meaning:** Plans a message to be send to the participant at a future time.  
+* **Meaning:** Plans a message to be sent to the participant at a future time.  
 * **Use Case:** Use for reminders, notifications, or timed instructions.  
 * **How it works:** Provide the message key and the [scheduled timestamp](#get-timestamp).
 
