@@ -83,3 +83,56 @@ Typical use cases:
 
 
 ## Context Editor
+
+The **Context Editor** is a configuration interface within the **Study Rules Editor**. It allows you to define the keys and identifiers that are used in **event handlers**, **conditions**, and **actions** throughout your study logic. These definitions ensure that all references to surveys, messages, flags, and other elements are valid and consistent.
+
+![Overview of context editor](../images/contextEditor.png)
+
+### How to Access the Context Editor
+
+1. Open the **Study Rules Editor**.
+2. Click on the **“Context”** tab in the top navigation bar.
+3. Select **"Open Context Editor"**.
+4. You will now see a structured overview of all configurable keys used in your study.
+
+### Sections of the Context Editor
+Each section corresponds to a different type of key or identifier used in your study logic:
+
+#### 1. Survey Keys
+- Define all surveys that can be referenced in rules.
+- **Use Case:** Assign or remove surveys, check submission status, or schedule based on survey keys.
+
+#### 2. Participant Flags
+- Define flags that represent participant states or attributes.
+- **Use Case:** Set or check flags like eligibility, group assignment, or progress.
+
+#### 3. Message Keys
+- Define all messages (e.g., emails or notifications) that can be scheduled or removed.
+- **Use Case:** Trigger reminders or onboarding messages.
+
+#### 4. Reports
+- Define report keys and their attribute keys.
+- **Use Case:** Initialize, update, or cancel reports with structured data.
+
+#### 5. Custom Event Keys
+- Define custom events that can be handled by the study.
+- **Use Case:** Trigger rules based on external or participant-driven events.
+
+#### 6. Linking Code Keys
+- Define which linking codes or study-wide code lists are available.
+- **Use Case:** Assign or remove codes used for participant grouping or access.
+
+#### 7. External Event Handlers
+- Define external services and their available routes.
+- **Use Case:** Send data to external systems or trigger external workflows.
+
+### Adding or Editing Entries
+- Click the **“+”** button next to any section to add a new key.
+- Edit existing entries by clicking on them directly.
+- For Participant Flags, Reports and External Event Handlers, you can define possible values for corresponding keys.
+- Remove keys by right-clicking on them and selecting the **"Delete Entry"** option.
+
+### Options Menu
+
+- Use the **“Options”** button in the top-right corner to save your context to file or open a new context from file.
+
