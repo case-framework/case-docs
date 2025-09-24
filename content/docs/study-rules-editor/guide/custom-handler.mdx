@@ -1,0 +1,30 @@
+---
+title: How to set up CUSTOM event actions for participants
+description: Define actions that run when a participant enters the study.
+---
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+This guide explains how to set up a custom event handler that triggers an external service. We use an example where a test kit is ordered through an external service when the participant clicks a specific button.
+
+<Video videoPath="/videos/CUSTOM-event.mp4" />
+
+### Follow these steps
+<Steps>
+<Step>
+Open the **"Context Editor"**. Define the event key <code>TestKitButtonClicked</code> under **"Custom event keys"**.
+</Step>
+<Step>
+Define the external event handler key <code>OrderTestKit</code> under **"External event handlers"** in the context editor.
+</Step>
+<Step>
+Exit the **"Context Editor"**. Add the event key <code>TestKitButtonClicked</code> to the **"CUSTOM event handlers"** rules definition.
+</Step>
+<Step>
+Click on <code>TestKitButtonClicked</code> to open its configuration.
+</Step>
+<Step>
+Add an action: Select **"External event handler"** from the action dropdown and choose the key <code>OrderTestKit</code>.
+</Step> <Step>
+  Your CUSTOM event will now automatically order a test kit from an external service when the participant clicks the specific button in the study app.
+</Step>
+</Steps>

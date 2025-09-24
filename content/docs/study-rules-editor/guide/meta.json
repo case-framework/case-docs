@@ -1,5 +1,6 @@
 {
     "pages": [
-        "entry-handler"
+        "entry-handler",
+        "custom-handler"
     ]
 }
