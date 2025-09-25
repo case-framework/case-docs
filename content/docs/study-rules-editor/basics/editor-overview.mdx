@@ -16,7 +16,7 @@ This makes it possible to automate study workflows and participant management.
 
 - **"Project"**: Click here to open an existing project, save your project or export the study rules.
 - **"Context"**: The editor context provides access to study and message keys, participant flags, reports and external event handlers that can be referenced in your rules.
-You can import a context from a recent session or [create a new one](/docs/study-rules-editor/basics/editor-overview#context-editor) via the **"Open context editor"** button.
+You can import a context from a recent session or [create a new one](/docs/study-rules-editor/basics/editor-overview#context-editor) via the **"Open Context Editor"** button.
 
 
 ### General
@@ -37,18 +37,18 @@ Rules defined here are applied **when a participant enters the study**.
 Typical use cases:
 - Sending a welcome message
 - Assigning an intake survey to collect initial data
-- Schedule reminder message for intake survey
+- Scheduling a reminder message for intake survey
 
 #### 2. Survey submission handlers
 Rules defined here are applied **when a participant submits a survey**.
 You can define multiple handlers (one for each survey).
 Typical use cases:
-- Delete assignment to the survey and trigger new assignments for follow-up
+- Deleting assignment to the survey and trigger new assignments for follow-up
 - Updating participant flags based on responses
 - Sending notifications to researchers
-- Create reports
-- Remove scheduled reminder messages and create new ones for follow-up surveys.
-- Send data to external services to evaluate survey answers
+- Creating reports
+- Removing scheduled reminder messages and creating new ones for follow-up surveys.
+- Sending data to external services to evaluate survey answers
 
 #### 3. Merge event handler
 Rules defined here are applied **when a temporary (or virtual)participant is merged into an active participant account**.
@@ -57,7 +57,7 @@ Typical use cases:
 - "Virtual participants" created by researcher accept invitation and sign up with their own account
 
 #### 4. Custom Event Handler
-Rules defined here are executed **when a custom event is triggered**, for example when a participant clicks a button to order a test kit. Used for small, occasional actions that don't require a survey response.
+Rules defined here are executed **when a custom event is triggered**, for example, when a participant clicks a button to order a test kit. Used for small, occasional actions that don't require a survey response.
 The handler typically contains methods for:
 - Creating a report
 - Updating participant flags
@@ -76,7 +76,7 @@ Typical use cases include:
 Rules defined here are applied **when a participant leaves the study** (e.g., when their account is deleted or deactivated).
 Typical use cases:
 - Marking the participant as deleted
-- Remove confidential responses from the study database
+- Removing confidential responses from the study database
 - Sending a goodbye message
 
 ---
