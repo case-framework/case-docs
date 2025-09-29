@@ -1,22 +1,24 @@
-export interface LocaleVideoProps {
+export interface VideoProps {
     width?: number;
     height?: number;
     videoPath: string;
 }
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
-export default function LocaleVideo(props: LocaleVideoProps) {
-
+export default function Video(props: VideoProps) {
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <video width={props.width || 700} controls>
+            <video
+                width={props.width || 700}
+                height={props.height}
+                controls
+                style={{ maxWidth: '100%' }}
+            >
                 <source
-                    src={`${basePath}/${props.videoPath}`}
+                    src={props.videoPath}
                     type="video/mp4"
                 />
                 Your browser does not support the video tag.
             </video>
         </div>
-    )
+    );
 }
