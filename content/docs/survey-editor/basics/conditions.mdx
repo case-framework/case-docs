@@ -22,7 +22,7 @@ These operators allow you to combine two or more individual conditions to form a
 #### 2. "or (`OR` operator)"
     * **Meaning:** This operator requires *at least one* of the conditions it connects to be `true` for the overall combined condition to be `true`. The entire `or` condition is only `false` if *all* of the connected conditions are `false`.
     * **Use Case:** To display a question if any of several possible situations applies.
-        * **Example:** Display the alert 'Requires urgent physician review' **if** (participant's 'Heart Rate' > 100 bpm) OR (participant's 'Systolic Blood Pressure' `< 90 mmHg') **OR** (participant reports 'Severe Chest Pain').
+        * **Example:** Display the alert 'Requires urgent physician review' **if** (participant's 'Heart Rate' `> 100 bpm`) OR (participant's 'Systolic Blood Pressure' `< 90 mmHg`) **OR** (participant reports 'Severe Chest Pain').
     * **How it works:** Wrap two or more individual conditions with an `or` operator.
 
 ---
@@ -49,16 +49,16 @@ These operators are used to compare the value of a respondent's answer (Left sid
 
 #### 2. "Less than or equal (L `<=` R)"
     * **Meaning:** Checks if the value on the left side (`L`) is less than or equal to the value on the right side (`R`).
-    * **Use Case:** To group respondents numerical thresholds (e.g. age ranges).
+    * **Use Case:** To segment respondents by numerical thresholds (e.g., age ranges).
         * **Example:** Display question 'Is the child's vaccination record up to date?' **if** (participant's 'Age' `<= 12 years`)
     * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
-#### 3. "Less than (L < R)"
+#### 3. "Less than (L `<` R)"
     * **Meaning:** Checks if the value on the left side (`L`) is strictly less than the value on the right side (`R`).
     * **Use Case:** Similar to "less than or equal," but excludes the threshold value itself.
-        * **Example:** Display recommendation 'Consider iron supplementation' **if** (participant's 'Hemoglobin Level' < 12.0 g/dL).
+        * **Example:** Display recommendation 'Consider iron supplementation' **if** (participant's 'Hemoglobin Level' `< 12.0 g/dL`).
     * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
@@ -71,10 +71,10 @@ These operators are used to compare the value of a respondent's answer (Left sid
 
 ---
 
-#### 5. "Greater than (L > R)"
+#### 5. "Greater than (L `>` R)"
     * **Meaning:** Checks if the value on the left side (`L`) is strictly greater than the value on the right side (`R`).
     * **Use Case:** Similar to "greater than or equal," but excludes the threshold value itself.
-        * **Example:** Display recommendation 'Consider weight management program' **if** (participant's 'BMI' > 25.0).
+        * **Example:** Display recommendation 'Consider weight management program' **if** (participant's 'BMI' `> 25.0`).
     * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 
@@ -117,7 +117,7 @@ Response dependencies conditions define rules for displaying survey items based 
 
 #### 2. "Response contains any of these keys"
 
-* **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of options keys. This is particularly useful for multiple-choice questions where a user can select several options.
+* **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of option keys. This is particularly useful for multiple-choice questions where a user can select several options.
 * **Use Case:** To display a follow-up question based on one or more specific choices made by the respondent.
     * **Example:** Display the question 'Please describe the frequency and severity of your attacks' if participant selected 'Epilepsy' OR 'Migraine' OR 'Multiple Sclerosis' (or a combination thereof) in response to the question 'Which chronic conditions do you have?'
 * **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` if the respondent's answer for that question matches *any* of the specified keys.
@@ -133,7 +133,7 @@ Response dependencies conditions define rules for displaying survey items based 
 
 ---
 
-#### 4. "Has response but none of these keys:"
+#### 4. "Has response but none of these keys"
 
 * **Meaning:** This condition checks if a respondent has provided an answer to a specific previous question, but that answer *does not* match any of a predefined set of option keys.
 * **Use Case:** To display a question when the respondent has answered a question, but *not* with certain pre-identified responses.
