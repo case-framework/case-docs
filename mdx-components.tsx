@@ -4,6 +4,7 @@ import type { MDXComponents } from 'mdx/types';
 import { ImageProps } from 'next/image';
 import Video, { VideoProps } from './components/content-items/video';
 import { joinPath } from './components/utils';
+import ExampleBox, { ExampleBoxProps } from './components/content-items/example-box';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -20,6 +21,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Video: (props) => <Video {...(props as VideoProps)}
       videoPath={joinPath(basePath, (props as VideoProps).videoPath)}
     />,
+    ExampleBox: (props) => <ExampleBox {...(props as ExampleBoxProps)} />,
     ...components,
   };
 }
