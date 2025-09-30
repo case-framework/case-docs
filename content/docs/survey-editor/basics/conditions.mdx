@@ -111,7 +111,7 @@ Response dependencies conditions define rules for displaying survey items based 
     - For Entry Fields (text, numerical, date, etc.): the participant has entered any characters or data into the field, meaning the field is not empty. The content of the answer is not relevant. This also applies to the subsequent conditions.
 * **Use Case:** You might use this if you want to show a follow-up question only if the user has selected a specific option of a preceding question.
     * **Example:** Display 'Please describe the location and intensity of your pain (on a scale of 1-10):' only if the participant selected 'Yes' in the question 'Are you currently experiencing any pain?'.
-* **How it works:** Select a previous question item key and specify the option key.
+* **How it works:** Provide the item key and the response slot key.
 
 ---
 
@@ -120,7 +120,7 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of option keys. This is particularly useful for multiple-choice questions where a user can select several options.
 * **Use Case:** To display a follow-up question based on one or more specific choices made by the respondent.
     * **Example:** Display the question 'Please describe the frequency and severity of your attacks' if participant selected 'Epilepsy' OR 'Migraine' OR 'Multiple Sclerosis' (or a combination thereof) in response to the question 'Which chronic conditions do you have?'
-* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` if the respondent's answer for that question matches *any* of the specified keys.
+* **How it works:** Provide the item key and a list of slot keys.
 
 ---
 
@@ -208,6 +208,14 @@ These conditions evaluate numeric values derived from participant flags, respons
 * **How it works:** Enter the numeric value. 
 ---
 
+#### 2. **"Date picker"**
+* **Meaning:** Allows you to select a fixed date. This date remains static and is used as a constant in the expression.
+* **Use Case:** To create conditions that compare dynamic values (like the current date or a response date) against a specific fixed date.
+  * **Example:** Display **"Show follow-up questions"** **if** (Current date `>` **2025-10-01**), where **2025-10-01** is selected using the date picker.
+* **How it works:** Select a date from the calendar in the condition editor.
+
+---
+
 ### Participant flags
 
 #### 1. **"Parse participant flag as number"**
@@ -266,8 +274,6 @@ These conditions evaluate numeric values derived from participant flags, respons
 
 ### Templates
 
----
-
 #### 1. **"Single choice get numeric or date option value"**
 * **Meaning:** Retrieves the numeric or date value associated with the selected option in a single-choice question.
 * **Use Case:** To branch logic based on a numeric score or date tied to a specific option.
@@ -297,5 +303,23 @@ These conditions evaluate numeric values derived from participant flags, respons
 * **Use Case:** To calculate time differences or schedule reminders based on a chosen date.
   * **Example:** Display **"Your appointment is overdue"** **if** (Difference between today and `'Last Appointment Date'` `> 180` days).
 * **How it works:** Provide the item key of the date question. Keep the default value of the response slot key for date input questions.
+
+---
+
+### Advanced
+
+#### 1. **"Get attribute"**
+* **Meaning:** Retrieves a participant attribute (e.g., from participamt flags or context). It might be used in older versions of the software and can usually be replaced by "Get response value as string" or "Get participant flag value" expressions
+* **Use Case:** To personalize the survey or apply logic based on participant characteristics.
+  * **Example:** Display **"Pediatric questions"** **if** (Attribute `'age'` `< 18`).
+* **How it works:** Specify the setting from which the attribute is extracted (survey context, part flag value, response value) and provide the attribute key.
+
+---
+
+#### 2. **"Get context"**
+* **Meaning:** Accesses the survey context, for values from metadata or runtime variables (e.g., survey key, report key, message key).
+* **Use Case:** To adapt survey behavior based on the survey’s configuration or runtime environment.
+  * **Example:** Display **"Your survey key is: [key]"** **if** (`get attribute` retrieves the participant's assigned survey key using `get context`).
+* **How it works:** No input required. `get context` is typically used with `get attribute` to retrieve contextual values.
 
 ---
