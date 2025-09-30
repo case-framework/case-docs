@@ -120,7 +120,7 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of option keys. This is particularly useful for multiple-choice questions where a user can select several options.
 * **Use Case:** To display a follow-up question based on one or more specific choices made by the respondent.
     * **Example:** Display the question 'Please describe the frequency and severity of your attacks' if participant selected 'Epilepsy' OR 'Migraine' OR 'Multiple Sclerosis' (or a combination thereof) in response to the question 'Which chronic conditions do you have?'
-* **How it works:** Provide the item key and a list of slot keys.
+* **How it works:** Provide the item key and the slot key if necessary and enter a list of option keys.
 
 ---
 
@@ -129,16 +129,16 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Meaning:** This condition is stricter than "any of these keys." It checks if the response to a specific previous question includes *all* of a predefined set of option keys. Again, this is typically for multiple-choice questions where multiple selections are possible.
 * **Use Case:** To display a question only when a respondent has selected a very specific combination of options.
     * **Example:** Display the info text 'Please schedule an urgent consultation with the Nephrology department and Cardiology department' if participant, in response to the question 'Which of the following chronic conditions do you have? (Select all that apply)', selected both 'Chronic Kidney Disease' AND 'Congestive Heart Failure'.
-* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` only if the respondent's answer for that question matches *every single one* of the specified keys.
+* **How it works:** Select a previous question item key, select slot keys if necessary and specify a list of option keys. 
 
 ---
 
 #### 4. "Has response but none of these keys"
 
-* **Meaning:** This condition checks if a respondent has provided an answer to a specific previous question, but that answer *does not* match any of a predefined set of option keys.
+* **Meaning:** This condition checks if a respondent has provided an answer to a specific question, but that answer *does not* match any of a predefined set of option keys.
 * **Use Case:** To display a question when the respondent has answered a question, but *not* with certain pre-identified responses.
     * **Example:** Show question 'Please specify your other dietary restrictions:' if the respondent answered 'Dietary Restrictions' in 'Do you have any dietary needs?' but did *not* select 'Vegetarian' or 'Vegan'.
-* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. The condition evaluates to `true` if the question has a response *and* that response does not match any of the specified keys.
+* **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. 
 
 ---
 
@@ -148,7 +148,7 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Use Case:** This is ideal for open-text fields where you need to check the *format* or *pattern* of the input, rather than specific values.
     * **Example 1 (Email):** "Show question 'We will send a confirmation email' if the respondent's 'Email Address' response matches a valid email format (e.g., `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)."
     * **Example 2 (Phone Number):** "Show question 'Please confirm your availability' if the 'Phone Number' response matches a standard phone number pattern."
-* **How it works:** You select a previous question item key with text, date or number input or a participant flag value and then provide a regular expression. The condition evaluates to `true` if the respondent's answer (converted to string) matches the defined RegEx pattern.
+* **How it works:** Select a previous question item key with text, date or number input or a participant flag value and then provide a regular expression. The condition evaluates to `true` if the respondent's answer (converted to string) matches the defined RegEx pattern.
 
 ---
 
@@ -157,7 +157,7 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Meaning:** This condition checks if the built-in validation rules for a specific previous survey item have been met.
 * **Use Case:** To ensure data quality or to guide the user if they entered invalid information.
     * **Example:** "Show question 'Please review your input as it appears to be incorrect' if the 'Postal Code' question's validation is *not* true."
-* **How it works:** You select the item key and validation key of a previous question that has validation rules applied to it. The condition evaluates to `true` if the participant's input for that question passes all its defined validation rules.
+* **How it works:** Select the item key and validation key of a previous question that has validation rules applied to it.
 
 ---
 
