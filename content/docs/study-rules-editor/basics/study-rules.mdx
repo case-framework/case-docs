@@ -77,7 +77,7 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 ### Advanced
 
-#### 1. Is study code present
+#### 1. **Is study code present**
 **Meaning:** True if a specific study code has been assigned to the participant.
 **Use case:** Use when actions should only apply to coded participants.
 **How it works:** Select the study code to check for.
@@ -279,6 +279,16 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Use Case:** Useful for randomization tasks, such as assigning participants to different study groups.  
 * **How it works:** Enter a minimum and maximum value. The expression will return a random number within this range.
 
+#### 3. **Get current study counter value**
+* **Meaning:** Retrieves the current value of a study-level counter.  
+* **Use Case:** Use to display the current count or apply logic based on it.  
+* **How it works:** Enter the counter scope key.
+
+#### 4. **Increment and get study counter value**  
+* **Meaning:** Increases a study-level counter and retrieves the new value.  
+* **Use Case:** Use to generate sequential values or trigger logic after incrementing.  
+* **How it works:** Enter the counter scope key.
+
 ### Date helpers
 
 #### 1. **Get ISO week for timestamp**  
@@ -372,6 +382,96 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 
 ---
+## Strings
+
+Some expressions return strings that can be used for various purposes, such as displaying messages or formatting output. 
+
+### Variables
+
+#### 1. **Text constant**  
+* **Meaning:** Allows you to input a fixed text value.  
+* **Use Case:** Use to define labels or keys.  
+* **How it works:** Enter the desired text directly.
+
+### Event properties
+
+#### 1. **Get event payload as string**
+* **Meaning:** Extracts a value from an event payload and returns it as a string.
+* **Use Case:** Use to inspect or process incoming event data.  
+* **How it works:** Enter the key of the event payload.
+
+### Advanced
+
+#### 1. **Use external service to evaluate event data**  
+* **Meaning:** Sends event data to an external service for evaluation, which returns a string.  
+* **Use Case:** Use to validate or process data using external logic.  
+* **How it works:** Select service name and route of the external event handler service.
+
+### Date helpers
+
+#### 1. **Convert date to string**  
+* **Meaning:** Transforms a date value into a formatted string.  
+* **Use Case:** Use to display dates in readable formats or pass them to external systems.  
+* **How It Works:** Provide a date value and specify the desired format using placeholders. Examples:
+  - `yyyy-MM-dd HH:mm:ss` → `"2023-12-25 14:30:45"`  
+  - `MM/dd/yy hh:mm a` → `"12/25/23 02:30 PM"`
+  -  **Supported Format Tokens:**
+
+| Token | Description              | Example      |
+| ---- | ---- | ----------- |
+| `yyyy` | 4-digit year             | `2006`      | 
+| `yy`   | 2-digit year             | `06`        |
+| `MM`   | 2-digit month            | `01-12`   |
+| `M`    | 1-digit month            | `1-12`    |
+| `dd`   | 2-digit day              | `01-31`   |
+| `d`    | 1-digit day              | `1-31`    |
+| `HH`   | 2-digit hour (24h)       | `00-23`   |
+| `hh`   | 2-digit hour (12h)       | `01-12`   |
+| `mm`   | 2-digit minute           | `00-59`   |
+| `m`    | 1-digit minute           | `0-59`    |
+| `ss`   | 2-digit second           | `00-59`   |
+| `s`    | 1-digit second           | `0-59`    |
+| `a`    | AM/PM indicator          | `AM`        |
+
+### Response Checkers
+
+#### 1. **Get response value as string**  
+* **Meaning:** Retrieves a participant’s response as a string.  
+* **Use Case:** Use to display or process responses in text format.  
+* **How it works:** Enter the item key and the slot key of the response.  
+
+#### 2. **Get selected keys**
+* **Meaning:** Retrieves the selected keys from a multi-select or list-type response as a comma-separated string.
+* **Use Case:** Useful for displaying or processing multiple selected options in a single string format.
+* **How it works:** Enter the item key and the slot key of the list response.
+
+### Participant State Checkers
+
+#### 1. **Get participant flag value**
+* **Meaning:** Returns the value of a specific participant flag as a string.
+* **Use Case:** Useful for displaying or using flag values in logic or communications.
+* **How it works:** Provide the flag key.
+
+#### 2. **Get linking code**  
+* **Meaning:** Retrieves the linking code assigned to the participant.  
+* **Use Case:** Use to connect data across studies or systems.  
+* **How it works:** Enter the linking code or study code list key.
+
+
+### Incoming Participant State Checkers (Merge Events)
+
+#### 1. **Get incoming participant flag value (Merge event)**
+* **Meaning:** Returns the value of a specific participant flag from the incoming (merged) participant as a string.
+* **Use Case:** Use to transfer participant data between studies.  
+* **How it works:** Provide the flag key.
+
+#### 2. **Get incoming linking code value (Merge event)**
+* **Meaning:** Retrieves the linking code assigned to the incoming (merged) participant.
+* **Use Case:** Use to maintain participant identity across merged studies. 
+* **How it works:** Enter the linking code or study code list key.
+
+
+---
 ## Actions
 
 **Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions. 
@@ -426,6 +526,11 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Use Case:** Use to inform about events like e.g. consent withdrawal or survey completion.  
 * **How it works:** Provide the message type and optional payload as key-value pair.
 
+#### 7. **Reset study counter**  
+* **Meaning:** Sets a study-level counter back to zero.  
+* **Use Case:** Use to restart counting for a new phase or time period.  
+* **How it works:** Enter the scope key of the counter to reset.
+
 
 ### Change Participant State
 
@@ -459,70 +564,84 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Use Case:** Use to remove repeated or recurring surveys of the same type.  
 * **How it works:** Enter the survey key. 
 
-#### 7. **Schedule a message**  
+#### 7. **Send message now (immediately)**
+* **Meaning:** Sends a message to the participant without delay.  
+* **Use Case:** Use to deliver instant feedback or instructions.  
+* **How it works:** Select the message to be sent immediately.
+
+#### 8. **Schedule a message**  
 * **Meaning:** Plans a message to be sent to the participant at a future time.  
 * **Use Case:** Use for reminders, notifications, or timed instructions.  
 * **How it works:** Provide the message key and the [scheduled timestamp](#get-timestamp).
 
-#### 8. **Remove all scheduled messages**  
+#### 9. **Remove all scheduled messages**  
 * **Meaning:** Deletes all messages currently scheduled for the participant.  
 * **Use Case:** Use to reset the message queue or cancel all pending notifications.  
 * **How it works:** No input required. 
 
-#### 9. **Remove scheduled messages of a specific type**  
+#### 10. **Remove scheduled messages of a specific type**  
 * **Meaning:** Deletes scheduled messages that match a specific message key.  
 * **Use Case:** Use to cancel a particular type of message without affecting others.  
 * **How it works:** Enter the message key.
 
-#### 10. **Set linking code**  
+#### 11. **Set linking code**  
 * **Meaning:** Assigns a specific linking code to the participant.  
 * **Use Case:** Use to establish connections between participants or datasets.  
 * **How it works:** Select linking code key and enter the code as value.
 
-#### 11. **Delete linking code**  
+#### 12. **Delete linking code**  
 * **Meaning:** Removes the currently assigned linking code from the participant.  
 * **Use Case:** Use to break links or reset participant associations.  
 * **How it works:** No input required. Specify optional keys if only linking code of these keys should be deleted.
 
-#### 12. **Draw study code as linking code**  
+#### 13. **Draw study code as linking code**  
 * **Meaning:** Uses the participant’s study code as their linking code.  
 * **Use Case:** Use when the study code should serve as a unique identifier across systems.  
 * **How it works:** Select the study code key. Specify optionally the linking code key to assign the study code to.
 
-#### 13. **Remove confidential response by key**  
+#### 14. **Remove confidential response by key**  
 * **Meaning:** Deletes a specific confidential response from the participant’s data.  
 * **Use Case:** Use to remove sensitive information selectively.  
 * **How it works:** Provide the response key to be removed.
 
-#### 14. **Remove all confidential responses**  
+#### 15. **Remove all confidential responses**  
 * **Meaning:** Deletes all confidential responses associated with the participant.  
 * **Use Case:** Use to fully clear sensitive data.  
 * **How it works:** No input required. 
 
-#### 15. **External event handler**  
+#### 16. **Increment and store study counter as flag**  
+* **Meaning:** Increases a study-level counter and saves the value as part of a participant flag.  
+* **Use Case:** Use to assign sequential IDs or track event counts.  
+* **How it works:** Enter the counter scope key and the flag key. Optionally, define a prefix to prepend to the value and padding to ensure a minimum number of digits (e.g., `ST-0005`).
+
+#### 17. **Increment and store study counter as linking code**
+* **Meaning:** Increases a study-level counter and stores the result as part of a linking code for the participant.  
+* **Use Case:** Use to generate unique codes for linking data across systems or studies.  
+* **How it works:** Enter the counter scope key and the linking code key. Optionally, define a prefix to prepend to the code and padding to ensure a minimum number of digits (e.g., `LC-0007`).
+
+#### 18. **External event handler**  
 * **Meaning:** Triggers an external event or integration.  
 * **Use Case:** Use to connect with external systems or services.  
 * **How it works:** Provide the service name and route.
 
-#### 16. **Initialize report**  
+#### 19. **Initialize report**  
 * **Meaning:** Starts a new report for the participant.  
 * **Use Case:** Use to begin tracking or compiling summarized participant data.  
 * **How it works:** Specify the report key.
 
-#### 17. **Cancel report**  
+#### 20. **Cancel report**  
 * **Meaning:** Cancels an active report for the participant for the current event.  
 * **Use Case:** Use to stop and discard reports.  
 * **How it works:** Provide the report key to cancel.
 
-#### 18. **Update report data**
+#### 21. **Update report data**
 * **Meaning:** Modifies or adds data to an existing report.  
 * **Use Case:** Use to keep reports current or add new findings.  
 * **How it works:**  
   Specify the report key and the attribute you want to update. Enter the new value for the attribute. Optionally, you can select how the value should be interpreted (e.g., as a date, float, integer, raw message, or list of keys).
 
-#### 19. **Remove report data by attribute key**
+#### 22. **Remove report data by attribute key**
 * **Meaning:** Deletes specific data from a report based on the attribute key.  
 * **Use Case:** Use to selectively remove report entries without canceling the entire report.  
 * **How it works:** Provide the report key and the attribute to be removed from the report.
-
 
