@@ -11,27 +11,33 @@ Expressions are used to define **conditional logic** for displaying survey items
 
 These operators allow you to combine two or more individual conditions to form a single, more complex condition.
 
-#### 1. "and (`AND` operator)"
-    * **Meaning:** This operator requires *all* the conditions it connects to be `true` for the overall combined condition to be `true`. If even one of the connected conditions is `false`, the entire `and` condition becomes `false`.
-    * **Use Case:** To display a question only when *multiple specific criteria* are met from different parts of the survey.
-        * **Example:** Display the question 'Please describe the onset and progression of the rash' **if** (participant selected 'Yes' to 'Have you experienced fever in the last 24 hours?') **AND** (participant selected 'Yes' to 'Do you have a new skin rash?')
-    * **How it works:** Wrap two or more individual conditions with an `and` operator.
+#### 1. **and (`AND` operator)**
+* **Meaning:** This operator requires *all* the conditions it connects to be `true` for the overall combined condition to be `true`. If even one of the connected conditions is `false`, the entire `and` condition becomes `false`.
+* **Use Case:** To display a question only when *multiple specific criteria* are met from different parts of the survey.
+  <ExampleBox title="Example">
+  Display the question **"Please describe the onset and progression of the rash"** **if** (participant selected `'Yes'` to **"Have you experienced fever in the last 24 hours?"**) **AND** (participant selected `'Yes'` to **"Do you have a new skin rash?"**)
+  </ExampleBox>
+* **How it works:** Wrap two or more individual conditions with an `and` operator.
 
 ---
 
-#### 2. "or (`OR` operator)"
-    * **Meaning:** This operator requires *at least one* of the conditions it connects to be `true` for the overall combined condition to be `true`. The entire `or` condition is only `false` if *all* of the connected conditions are `false`.
-    * **Use Case:** To display a question if any of several possible situations applies.
-        * **Example:** Display the alert 'Requires urgent physician review' **if** (participant's 'Heart Rate' `> 100 bpm`) OR (participant's 'Systolic Blood Pressure' `< 90 mmHg`) **OR** (participant reports 'Severe Chest Pain').
-    * **How it works:** Wrap two or more individual conditions with an `or` operator.
+#### 2. **or (`OR` operator)**
+* **Meaning:** This operator requires *at least one* of the conditions it connects to be `true` for the overall combined condition to be `true`. The entire `or` condition is only `false` if *all* of the connected conditions are `false`.
+* **Use Case:** To display a question if any of several possible situations applies.
+  <ExampleBox title="Example">
+  Display the alert **"Requires urgent physician review"** **if** (participant's `'Heart Rate'` `> 100 bpm`) OR (participant's `'Systolic Blood Pressure'` `< 90 mmHg`) **OR** (participant reports **"Severe Chest Pain"**).
+  </ExampleBox>
+* **How it works:** Wrap two or more individual conditions with an `or` operator.
 
 ---
 
-#### 3. "not (`NOT` operator)"
-    * **Meaning:** This operator inverts the truth value of a single condition. If the original condition is `true`, `not` makes it `false`. If the original condition is `false`, `not` makes it `true`.
-    * **Use Case:** To display a question when a specific criterion is *not* met, or when a user *didn't* select a particular option.
-        * **Example:** Display question 'Please specify your allergies or sensitivities to common medications' **if** (`not` (participant selected 'No known allergies' to 'Do you have any known allergies?')). This means if the participant selected anything other than 'No known allergies'.
-    * **How it works:** Apply the `not` operator directly to another condition.
+#### 3. **not (`NOT` operator)**
+* **Meaning:** This operator inverts the truth value of a single condition. If the original condition is `true`, `not` makes it `false`. If the original condition is `false`, `not` makes it `true`.
+* **Use Case:** To display a question when a specific criterion is *not* met, or when a user *didn't* select a particular option.
+  <ExampleBox title="Example">
+  Display question **"Please specify your allergies or sensitivities to common medications"** **if** (`not` (participant selected `'No known allergies'` to **"Do you have any known allergies?"**)). This means **if** the participant selected anything other than `'No known allergies'`.
+  </ExampleBox>
+* **How it works:** Apply the `not` operator directly to another condition.
 
 ---
 
@@ -39,43 +45,53 @@ These operators allow you to combine two or more individual conditions to form a
 
 These operators are used to compare the value of a respondent's answer (Left side, `L`) against a specific target value or another answer (Right side, `R`). They are primarily used for numerical, date, or sometimes alphabetical string comparisons.
 
-#### 1. "Equals (L `==` R)"
-    * **Meaning:** Checks if the value on the left side (`L`) is exactly equal to the value on the right side (`R`).
-    * **Use Case:** To display a question if a numerical input matches a precise value.
-        * **Example:** Display 'Initiate emergency protocol for hypoglycemia' if (participant's `'Blood Glucose Level' == 70 mg/dL`). (Assuming 70 is a critical threshold).
-    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`). For the right side (`R`), enter a specific value, or reference another question’s answer or a participant flag.
+#### 1. **Equals (L `==` R)**
+* **Meaning:** Checks if the value on the left side (`L`) is exactly equal to the value on the right side (`R`).
+* **Use Case:** To display a question if a numerical input matches a precise value.
+  <ExampleBox title="Example">
+  Display **"Initiate emergency protocol for hypoglycemia"** **if** (participant's `'Blood Glucose Level' == 70 mg/dL`). (Assuming 70 is a critical threshold).
+  </ExampleBox>
+* **How it works:** Choose a response value, participant flag, or similar for the left side (`L`). For the right side (`R`), enter a specific value, or reference another question’s answer or a participant flag.
 
 ---
 
-#### 2. "Less than or equal (L `<=` R)"
-    * **Meaning:** Checks if the value on the left side (`L`) is less than or equal to the value on the right side (`R`).
-    * **Use Case:** To segment respondents by numerical thresholds (e.g., age ranges).
-        * **Example:** Display question 'Is the child's vaccination record up to date?' **if** (participant's 'Age' `<= 12 years`)
-    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
+#### 2. **Less than or equal (L `<=` R)**
+* **Meaning:** Checks if the value on the left side (`L`) is less than or equal to the value on the right side (`R`).
+* **Use Case:** To segment respondents by numerical thresholds (e.g., age ranges).
+  <ExampleBox title="Example">
+  Display question **"Is the child's vaccination record up to date?"** **if** (participant's `'Age'` `<= 12 years`)
+  </ExampleBox>
+* **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
-#### 3. "Less than (L `<` R)"
-    * **Meaning:** Checks if the value on the left side (`L`) is strictly less than the value on the right side (`R`).
-    * **Use Case:** Similar to "less than or equal," but excludes the threshold value itself.
-        * **Example:** Display recommendation 'Consider iron supplementation' **if** (participant's 'Hemoglobin Level' `< 12.0 g/dL`).
-    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
+#### 3. **Less than (L `<` R)**
+* **Meaning:** Checks if the value on the left side (`L`) is strictly less than the value on the right side (`R`).
+* **Use Case:** Similar to "less than or equal," but excludes the threshold value itself.
+  <ExampleBox title="Example">
+  Display recommendation **"Consider iron supplementation"** **if** (participant's `'Hemoglobin Level'` `< 12.0 g/dL`).
+  </ExampleBox>
+* **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
-#### 4. "Greater than or equal (L `>=` R)"
-    * **Meaning:** Checks if the value on the left side (`L`) is greater than or equal to the value on the right side (`R`).
-    * **Use Case:** To filter respondents based on minimum requirements or thresholds.
-        * **Example:** Display warning 'Requires immediate physician review for hypertension' **if** (participant's 'Systolic Blood Pressure' `>= 160 mmHg`).
-    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
+#### 4. **Greater than or equal (L `>=` R)**
+* **Meaning:** Checks if the value on the left side (`L`) is greater than or equal to the value on the right side (`R`).
+* **Use Case:** To filter respondents based on minimum requirements or thresholds.
+  <ExampleBox title="Example">
+  Display warning **"Requires immediate physician review for hypertension"** **if** (participant's `'Systolic Blood Pressure'` `>= 160 mmHg`).
+  </ExampleBox>
+* **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 ---
 
-#### 5. "Greater than (L `>` R)"
-    * **Meaning:** Checks if the value on the left side (`L`) is strictly greater than the value on the right side (`R`).
-    * **Use Case:** Similar to "greater than or equal," but excludes the threshold value itself.
-        * **Example:** Display recommendation 'Consider weight management program' **if** (participant's 'BMI' `> 25.0`).
-    * **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
+#### 5. **Greater than (L `>` R)**
+* **Meaning:** Checks if the value on the left side (`L`) is strictly greater than the value on the right side (`R`).
+* **Use Case:** Similar to "greater than or equal," but excludes the threshold value itself.
+  <ExampleBox title="Example">
+  Display recommendation **"Consider weight management program"** **if** (participant's `'BMI'` `> 25.0`).
+  </ExampleBox>
+* **How it works:** Choose a response value, participant flag, or similar for the left side (`L`) and then provide a specific value or another question's answer for the right side (`R`).
 
 
 ---
@@ -84,19 +100,23 @@ These operators are used to compare the value of a respondent's answer (Left sid
 
 These conditions evaluate the presence and value of specific pre-existing flags (key-value pairs) assigned to the survey participant.
 
-#### 1. "Participant flag with key exists"
-    * **Meaning:** This condition checks if a particular "flag" (a named attribute or marker) has been assigned to the current participant. It doesn't care *what* the value of that flag is (or even if it has an explicit value beyond its mere existence), only that the flag with the specified name (key) is present for this participant.
-    * **Use Case:** To display specific sections or questions only to participants who have been categorized or tagged with a certain status.
-        * **Example:** Display section 'High-Risk Patient Protocol Questions' **if** (Participant flag 'high_risk_category' `with key exists`). This would show a set of questions designed for high-risk participants if the participant has simply been marked with a flag called 'high_risk_category'.
-    * **How it works:** Enter the key of the participant flag you are looking for. 
+#### 1. **Participant flag with key exists**
+* **Meaning:** This condition checks if a particular "flag" (a named attribute or marker) has been assigned to the current participant. It doesn't care *what* the value of that flag is (or even if it has an explicit value beyond its mere existence), only that the flag with the specified name (key) is present for this participant.
+* **Use Case:** To display specific sections or questions only to participants who have been categorized or tagged with a certain status.
+  <ExampleBox title="Example">
+  Display section **"High-Risk Patient Protocol Questions"** **if** (Participant flag `'high_risk_category'` `with key exists`). This would show a set of questions designed for high-risk participants **if** the participant has simply been marked with a flag called `'high_risk_category'`.
+  </ExampleBox>
+* **How it works:** Enter the key of the participant flag you are looking for. 
 
 ---
 
-#### 2. "Participant flag with key and value exists"
-    * **Meaning:** This condition is more specific. It checks if a particular "flag" (named attribute) exists for the current participant, **AND** that flag has a *specific, predetermined value*. Both the key and the value must match for the condition to be `true`.
-    * **Use Case:** To tailor the survey very precisely to participants belonging to specific groups or having particular diagnoses/statuses that are defined by a specific flag value.
-        * **Example:** Display survey version 'Pediatric Study Arm B' **if** (Participant flag 'study_group' `with key and value exists` and its value is 'Pediatric_B').
-    * **How it works:** Enter the key of the participant flag and the exact value it must hold. 
+#### 2. **Participant flag with key and value exists**
+* **Meaning:** This condition is more specific. It checks if a particular "flag" (named attribute) exists for the current participant, **AND** that flag has a *specific, predetermined value*. Both the key and the value must match for the condition to be `true`.
+* **Use Case:** To tailor the survey very precisely to participants belonging to specific groups or having particular diagnoses/statuses that are defined by a specific flag value.
+  <ExampleBox title="Example">
+  Display survey version **"Pediatric Study Arm B"** **if** (Participant flag `'study_group'` `with key and value exists` and its value is `'Pediatric_B'`).
+  </ExampleBox>
+* **How it works:** Enter the key of the participant flag and the exact value it must hold. 
 
 ---
 
@@ -104,59 +124,72 @@ These conditions evaluate the presence and value of specific pre-existing flags 
 
 Response dependencies conditions define rules for displaying survey items based directly on how a respondent has answered, or not answered, previous questions within the survey itself.
 
-#### 1. "A specific response is present"
+#### 1. **A specific response is present**
 
 * **Meaning:** This condition evaluates to true if a respondent has selected a specific option or provided an input of a particular previous question:
     - For Radio Button/Dropdown Questions: the participant has selected the specified option.
     - For Entry Fields (text, numerical, date, etc.): the participant has entered any characters or data into the field, meaning the field is not empty. The content of the answer is not relevant. This also applies to the subsequent conditions.
 * **Use Case:** You might use this if you want to show a follow-up question only if the user has selected a specific option of a preceding question.
-    * **Example:** Display 'Please describe the location and intensity of your pain (on a scale of 1-10):' only if the participant selected 'Yes' in the question 'Are you currently experiencing any pain?'.
+  <ExampleBox title="Example">
+  Display **"Please describe the location and intensity of your pain (on a scale of 1-10):"** only **if** the participant selected `'Yes'` in the question **"Are you currently experiencing any pain?"**.
+  </ExampleBox>
 * **How it works:** Provide the item key and the response slot key.
 
 ---
 
-#### 2. "Response contains any of these keys"
+#### 2. **Response contains any of these keys**
 
 * **Meaning:** This condition checks if the response to a specific previous question includes *at least one* of a predefined set of option keys. This is particularly useful for multiple-choice questions where a user can select several options.
 * **Use Case:** To display a follow-up question based on one or more specific choices made by the respondent.
-    * **Example:** Display the question 'Please describe the frequency and severity of your attacks' if participant selected 'Epilepsy' OR 'Migraine' OR 'Multiple Sclerosis' (or a combination thereof) in response to the question 'Which chronic conditions do you have?'
+  <ExampleBox title="Example">
+  Display the question **"Please describe the frequency and severity of your attacks"** **if** participant selected `'Epilepsy'` OR `'Migraine'` OR `'Multiple Sclerosis'` (or a combination thereof) in response to the question **"Which chronic conditions do you have?"**
+  </ExampleBox> 
 * **How it works:** Provide the item key and the slot key if necessary and enter a list of option keys.
 
 ---
 
-#### 3. "Response contains all of these keys"
+#### 3. **Response contains all of these keys**
 
 * **Meaning:** This condition is stricter than "any of these keys." It checks if the response to a specific previous question includes *all* of a predefined set of option keys. Again, this is typically for multiple-choice questions where multiple selections are possible.
 * **Use Case:** To display a question only when a respondent has selected a very specific combination of options.
-    * **Example:** Display the info text 'Please schedule an urgent consultation with the Nephrology department and Cardiology department' if participant, in response to the question 'Which of the following chronic conditions do you have? (Select all that apply)', selected both 'Chronic Kidney Disease' AND 'Congestive Heart Failure'.
+  <ExampleBox title="Example">
+  Display the info text **"Please schedule an urgent consultation with the Nephrology department and Cardiology department"** **if** participant, in response to the question **"Which of the following chronic conditions do you have? (Select all that apply)"**, selected both `'Chronic Kidney Disease'` AND `'Congestive Heart Failure'`.
+  </ExampleBox>
 * **How it works:** Select a previous question item key, select slot keys if necessary and specify a list of option keys. 
 
 ---
 
-#### 4. "Has response but none of these keys"
+#### 4. **Has response but none of these keys**
 
 * **Meaning:** This condition checks if a respondent has provided an answer to a specific question, but that answer *does not* match any of a predefined set of option keys.
 * **Use Case:** To display a question when the respondent has answered a question, but *not* with certain pre-identified responses.
-    * **Example:** Show question 'Please specify your other dietary restrictions:' if the respondent answered 'Dietary Restrictions' in 'Do you have any dietary needs?' but did *not* select 'Vegetarian' or 'Vegan'.
+  <ExampleBox title="Example">
+  Show question **"Please specify your other dietary restrictions:"** **if** the respondent answered **"Dietary Restrictions"** in **"Do you have any dietary needs?"** but did *not* select `'Vegetarian'` or `'Vegan'`.
+  </ExampleBox>
 * **How it works:** Select a previous question item key, select slot keys if necessary and then specify a list of option keys. 
 
 ---
 
-#### 5. "Check response value with regex"
+#### 5. **Check response value with regex**
 
 * **Meaning:** This is a flexible condition that allows you to validate or check a respondent's text input against a Regular Expression (RegEx). RegEx is a sequence of characters that defines a search pattern.
 * **Use Case:** This is ideal for open-text fields where you need to check the *format* or *pattern* of the input, rather than specific values.
-    * **Example 1 (Email):** "Show question 'We will send a confirmation email' if the respondent's 'Email Address' response matches a valid email format (e.g., `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)."
-    * **Example 2 (Phone Number):** "Show question 'Please confirm your availability' if the 'Phone Number' response matches a standard phone number pattern."
+  <ExampleBox title="Example">
+  **Email:** Show question **"We will send a confirmation email"** **if** the respondent's **"Email Address"** response matches a valid email format (e.g., `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).
+  
+  **Phone Number:** Show question **"Please confirm your availability"** **if** the **"Phone Number"** response matches a standard phone number pattern.
+  </ExampleBox>
 * **How it works:** Select a previous question item key with text, date or number input or a participant flag value and then provide a regular expression. The condition evaluates to `true` if the respondent's answer (converted to string) matches the defined RegEx pattern.
 
 ---
 
-#### 6. "Is survey item validation true"
+#### 6. **Is survey item validation true**
 
 * **Meaning:** This condition checks if the built-in validation rules for a specific previous survey item have been met.
 * **Use Case:** To ensure data quality or to guide the user if they entered invalid information.
-    * **Example:** "Show question 'Please review your input as it appears to be incorrect' if the 'Postal Code' question's validation is *not* true."
+  <ExampleBox title="Example">
+  Show question **"Please review your input as it appears to be incorrect"** **if** the **"Postal Code"** question's validation is *not* true.
+  </ExampleBox>
 * **How it works:** Select the item key and validation key of a previous question that has validation rules applied to it.
 
 ---
@@ -165,19 +198,23 @@ Response dependencies conditions define rules for displaying survey items based 
 
 These conditions often interact with the underlying system or data beyond immediate user responses.
 
-#### 1. "Is value defined"
-    * **Meaning:** This condition checks if a data field or variable contains any value. It might be used in older versions of the software and can usually be replaced by "A specific response is present" or "Participant flag with key exists" conditions.
-    * **Use Case:** To confirm pre-existing information if certain participant data is already available in the system, or to ensure that critical fields are populated.
-        * **Example:** Display question 'Please verify your pre-filled medication list from your EHR' if (participant's 'Current Medication List' Is value defined). (The medication list variable could be populated from a participant's electronic health record or answered directly by the participant in the current or previous survey).
-    * **How it works:** Apply this condition directly to another expression. It evaluates to `true` if that data element contains any non-null or non-empty value.
+#### 1. **Is value defined**
+* **Meaning:** This condition checks if a data field or variable contains any value. It might be used in older versions of the software and can usually be replaced by "A specific response is present" or "Participant flag with key exists" conditions.
+* **Use Case:** To confirm pre-existing information if certain participant data is already available in the system, or to ensure that critical fields are populated.
+  <ExampleBox title="Example">
+  Display question **"Please verify your pre-filled medication list from your EHR"** **if** (participant's **"Current Medication List"** Is value defined). (The medication list variable could be populated from a participant's electronic health record or answered directly by the participant in the current or previous survey).
+  </ExampleBox>
+* **How it works:** Apply this condition directly to another expression. It evaluates to `true` if that data element contains any non-null or non-empty value.
 
 ---
 
-#### 2. "Is user logged in"
-    * **Meaning:** This condition checks if the user currently accessing the survey or application is authenticated (i.e., has successfully logged in).
-    * **Use Case:** To restrict access to sensitive sections, personalize content for registered users, or ensure only authorized users can fill out certain forms.
-        * **Example:** Pre-fill demographic data or ask for follow-up is only accessible if the specific participant is authenticated.
-    * **How it works:** No input required.
+#### 2. **Is user logged in**
+* **Meaning:** This condition checks if the user currently accessing the survey or application is authenticated (i.e., has successfully logged in).
+* **Use Case:** To restrict access to sensitive sections, personalize content for registered users, or ensure only authorized users can fill out certain forms.
+  <ExampleBox title="Example">
+  Pre-fill demographic data or ask for follow-up is only accessible **if** the specific participant is authenticated.
+  </ExampleBox>
+* **How it works:** No input required.
 
 ---
 
@@ -185,11 +222,13 @@ These conditions often interact with the underlying system or data beyond immedi
 
 These are pre-configured conditions designed for common scenarios, simplifying the setup of frequently needed logic.
 
-#### 1. "Consent question accepted"
-    * **Meaning:** This is a specialized, ready-to-use condition that specifically checks if a designated "consent" question (usually a legal or ethical agreement) has been affirmatively accepted by the respondent. It simplifies the setup for common consent flows.
-    * **Use Case:** To ensure legal and ethical compliance by only proceeding with data collection or treatment details after explicit participant consent has been given.
-        * **Example:** Display message 'Thank you for your participation in the study' **if** (`Consent question accepted` for 'Clinical Trial Participation Agreement'). [See also this example.](/docs/survey-editor/guides/add-conditional-question#build-a-conditional-contact-form-with-consent)
-    * **How it works:** Specify the item key and the response slot key of the consent question.
+#### 1. **Consent question accepted**
+* **Meaning:** This is a specialized, ready-to-use condition that specifically checks if a designated "consent" question (usually a legal or ethical agreement) has been affirmatively accepted by the respondent. It simplifies the setup for common consent flows.
+* **Use Case:** To ensure legal and ethical compliance by only proceeding with data collection or treatment details after explicit participant consent has been given.
+  <ExampleBox title="Example">
+  Display message **"Thank you for your participation in the study"** **if** (`Consent question accepted` for `'Clinical Trial Participation Agreement'`). [See also this example.](/docs/survey-editor/guides/add-conditional-question#build-a-conditional-contact-form-with-consent)
+  </ExampleBox>
+* **How it works:** Specify the item key and the response slot key of the consent question.
 
 ---
 
@@ -201,148 +240,182 @@ These conditions evaluate numeric and string values derived from participant fla
 
 ### Variables
 
-#### 1. **"Number input"**
+#### 1. **Number input**
 * **Meaning:** Allows you to enter a fixed numeric value. This is not linked to any participant response; it’s a constant value you define for comparison or calculation.
 * **Use Case:** To create conditions that compare dynamic values (like a response or timestamp) against a specific number.
-  * **Example:** Display **"High blood pressure warning"** **if** (Response to `'Systolic BP'` `>=` **140**), where **140** is entered as a number input.
+  <ExampleBox title="Example">
+  Display **"High blood pressure warning"** **if** (Response to `'Systolic BP'` `>=` **140**), where **140** is entered as a number input.
+  </ExampleBox>
 * **How it works:** Enter the numeric value. 
 ---
 
-#### 2. **"Date picker"**
+#### 2. **Date picker**
 * **Meaning:** Allows you to select a fixed date. This date remains static and is used as a constant in the expression.
 * **Use Case:** To create conditions that compare dynamic values (like the current date or a response date) against a specific fixed date.
-  * **Example:** Display **"Show follow-up questions"** **if** (Current date `>` **2025-10-01**), where **2025-10-01** is selected using the date picker.
+  <ExampleBox title="Example">
+  Display **"Show follow-up questions"** **if** (Current date `>` **2025-10-01**), where **2025-10-01** is selected using the date picker.
+  </ExampleBox>
 * **How it works:** Select a date from the calendar in the condition editor.
 ---
 
-#### 3. **"Text input"**
+#### 3. **Text input**
 * **Meaning:** Allows you to enter a custom text value manually.  
 * **Use Case:** To specify keys, exact string matches, or other text-based comparisons in conditions.  
-  * **Example:** Display question **"Are you currently pregnant?"** **if** (Text input equals participant flag `'gender'`), where the text input is `'female'`.
+  <ExampleBox title="Example">
+  Display question **"Are you currently pregnant?"** **if** (Text input equals participant flag `'gender'`), where the text input is `'female'`.
+  </ExampleBox>
 * **How it works:** Enter the desired text directly into the editor.
 
 ---
 
 ### Participant flags
 
-#### 1. **"Get participant flag value"**
+#### 1. **Get participant flag value**
 * **Meaning:** Retrieves the value of a participant flag as a string.  
 * **Use Case:** To use stored participant data in conditions or messages.  
-  * **Example:** Display question **"Are you currently pregnant?"** **if** (Participant flag `'gender'` equals `'female'`).
+  <ExampleBox title="Example">
+  Display question **"Are you currently pregnant?"** **if** (Participant flag `'gender'` equals `'female'`).
+  </ExampleBox>
 * **How it works:** Specify the participant flag key. 
 
 ---
 
-#### 2. **"Parse participant flag as number"**
+#### 2. **Parse participant flag as number**
 * **Meaning:** Converts the value of a participant flag into a numeric type so it can be compared or used in calculations.
 * **Use Case:** To show a question only if a participant’s numeric attribute (e.g., age, score) meets a threshold.
-  * **Example:** Display section **"Senior Health Screening"** **if** (Participant flag `'age'` parsed as number `>= 65`).
+  <ExampleBox title="Example">
+  Display section **"Senior Health Screening"** **if** (Participant flag `'age'` parsed as number `>= 65`).
+  </ExampleBox>
 * **How it works:** Specify the participant flag key. 
 
 ---
 
 ### Response dependencies
 
-#### 1. **"Get response value as number"**
+#### 1. **Get response value as number**
 * **Meaning:** Retrieves the numeric value from a previous question’s response.
 * **Use Case:** To branch logic based on a numeric answer provided earlier.
-  * **Example:** Show **"Please describe your symptoms in detail"** **if** (Response to `'Pain Level'` parsed as number `>= 7`).
+  <ExampleBox title="Example">
+  Show **"Please describe your symptoms in detail"** **if** (Response to `'Pain Level'` parsed as number `>= 7`).
+  </ExampleBox>
 * **How it works:** Provide the item key and the response slot key. The item key can be entered as text or selected from a list of available item keys.
 
 ---
 
-#### 2. **"Get response value as string"**
+#### 2. **Get response value as string**
 * **Meaning:** Retrieves a participant’s response as a string value.  
 * **Use Case:** To display or evaluate text-based responses in logic.  
-  * **Example:** Display **"Thank you for your feedback!"** **if** (Response to `'Comments'` is not empty).  
+  <ExampleBox title="Example">
+  Display **"Thank you for your feedback!"** **if** (Response to `'Comments'` is not empty).
+  </ExampleBox>
 * **How it works:** Provide the item key and response slot key. The item key can be entered as text or selected from a list of available item keys.
 
 ---
 
-#### 3. **"Count response items"**
+#### 3. **Count response items**
 * **Meaning:** Counts how many options a participant selected in a multi-select or list-type response.
 * **Use Case:** To trigger follow-up questions when a participant selects more than a certain number of options.
-  * **Example:** Display **"Please prioritize your top 3 conditions"** **if** (Count of selected items in `'Chronic Conditions'` `> 3`).
+  <ExampleBox title="Example">
+  Display **"Please prioritize your top 3 conditions"** **if** (Count of selected items in `'Chronic Conditions'` `> 3`).
+  </ExampleBox>
 * **How it works:** Enter the item key and the slot key of the list response. The slot key refers to the response group that contains the list of selected item options whose count will be evaluated.
 
 ---
 
-#### 4. **"Get date response diff from now"**
+#### 4. **Get date response diff from now**
 * **Meaning:** Calculates the difference between a date provided in a response and the current date.
 * **Use Case:** To show reminders or follow-ups based on how long ago an event occurred.
-  * **Example:** Display **"Please schedule your next appointment"** **if** (Difference between **today** and `'Last Check-up Date'` `> 180` **days**).
+  <ExampleBox title="Example">
+  Display **"Please schedule your next appointment"** **if** (Difference between **today** and `'Last Check-up Date'` `> 180` **days**).
+  </ExampleBox>
 * **How it works:** Provide the item key and the response slot key of the date response question. Choose the date unit (e.g., **days**) in which the system should calculate the difference from the current date.
 
 ---
 
 ### Misc
 
-#### 1. **"Get timestamp"**
+#### 1. **Get timestamp**
 * **Meaning:** Returns a timestamp based on the current date and time or a defined reference date. 
 * **Use Case:** To compare the current time with stored timestamps for scheduling or time-sensitive logic.
-  * **Example:** Display questions only **if** (`'Birth date'` is smaller than current timestamp with offset `-18 years` or `-6570 days`).
+  <ExampleBox title="Example">
+  Display questions only **if** (`'Birth date'` is smaller than current timestamp with offset `-18 years` or `-6570 days`).
+  </ExampleBox>
 * **How it works:** 
   - **Offset:** Add or subtract time (e.g., +3 days, -2 weeks) from the reference point.  
   - **Reference date:** Define a custom date/time as the starting point. If none is provided, the current time is used.  
 
 ---
 
-#### 2. **"Parse value as number"**
+#### 2. **Parse value as number**
 * **Meaning:** Converts any given value (string or variable) into a numeric type for calculations or comparisons.
 * **Use Case:** To ensure numeric operations can be performed on dynamic values used in custom expressions.
-  * **Example:** Use in expressions where a variable must be treated as a number before applying comparisons or arithmetic.
+  <ExampleBox title="Example">
+  Use in expressions where a variable must be treated as a number before applying comparisons or arithmetic.
+  </ExampleBox>
 * **How it works:** Provide the value that should be parsed into a number.
 
 ---
 
 ### Templates
 
-#### 1. **"Single choice get numeric or date option value"**
+#### 1. **Single choice get numeric or date option value**
 * **Meaning:** Retrieves the numeric or date value associated with the selected option in a single-choice question.
 * **Use Case:** To branch logic based on a numeric score or date tied to a specific option.
-  * **Example:** Display **"Seek medical attention immediately"** message **if** (Number of days since tick bite `≥` 3 **and** `'Redness around bite'` is selected).
+  <ExampleBox title="Example">
+  Display **"Seek medical attention immediately"** message **if** (Number of days since tick bite `≥` 3 **and** `'Redness around bite'` is selected).
+  </ExampleBox>
 * **How it works:** Provide the item key. Append the option key to the prefilled slot key (`rg.scg`).
 
 ---
 
-#### 2. **"Multiple choice get numeric or date option value"**
+#### 2. **Multiple choice get numeric or date option value**
 * **Meaning:** Retrieves the numeric or date value associated with the selected option in a multiple-choice question.
 * **Use Case:** To apply conditions based on a value linked to a single selected option.
-  * **Example:** Display **"Schedule your next visit"** **if** (Numeric value of selected option in `'Follow-up Interval'` `≥` 90 days).
+  <ExampleBox title="Example">
+  Display **"Schedule your next visit"** **if** (Numeric value of selected option in `'Follow-up Interval'` `≥` 90 days).
+  </ExampleBox>
 * **How it works:** Provide the item key. Append the option key to the prefilled slot key (`rg.mcg`).
 
 ---
 
-#### 3. **"Count number of selected options in multiple choice"**
+#### 3. **Count number of selected options in multiple choice**
 * **Meaning:** Counts how many options a participant selected in a multiple-choice question.
 * **Use Case:** To enforce limits or trigger follow-up questions when too many or too few options are chosen.
-  * **Example:** Display **"Please narrow your selection to 3 items"** **if** (Count of selected options in `'Preferred Activities'` `> 3`).
+  <ExampleBox title="Example">
+  Display **"Please narrow your selection to 3 items"** **if** (Count of selected options in `'Preferred Activities'` `> 3`).
+  </ExampleBox>
 * **How it works:** Provide the item key. Keep the default value of the response slot key for multiple-choice questions.
 
 ---
 
-#### 4. **"Get date picker response value"**
+#### 4. **Get date picker response value**
 * **Meaning:** Retrieves the date entered by the participant in a date input question.
 * **Use Case:** To calculate time differences or schedule reminders based on a chosen date.
-  * **Example:** Display **"Your appointment is overdue"** **if** (Difference between today and `'Last Appointment Date'` `> 180` days).
+  <ExampleBox title="Example">
+  Display **"Your appointment is overdue"** **if** (Difference between today and `'Last Appointment Date'` `> 180` days).
+  </ExampleBox>
 * **How it works:** Provide the item key of the date question. Keep the default value of the response slot key for date input questions.
 
 ---
 
 ### Advanced
 
-#### 1. **"Get attribute"**
+#### 1. **Get attribute**
 * **Meaning:** Retrieves a participant attribute (e.g., from participamt flags or context). It might be used in older versions of the software and can usually be replaced by "Get response value as string" or "Get participant flag value" expressions
 * **Use Case:** To personalize the survey or apply logic based on participant characteristics.
-  * **Example:** Display **"Pediatric questions"** **if** (Attribute `'age'` `< 18`).
+  <ExampleBox title="Example">
+  Display **"Pediatric questions"** **if** (Attribute `'age'` `< 18`).
+  </ExampleBox>
 * **How it works:** Specify the setting from which the attribute is extracted (survey context, part flag value, response value) and provide the attribute key.
 
 ---
 
-#### 2. **"Get context"**
+#### 2. **Get context**
 * **Meaning:** Accesses the survey context, for values from metadata or runtime variables (e.g., survey key, report key, message key).
 * **Use Case:** To adapt survey behavior based on the survey’s configuration or runtime environment.
-  * **Example:** Display **"Your survey key is: [key]"** **if** (`get attribute` retrieves the participant's assigned survey key using `get context`).
+  <ExampleBox title="Example">
+  Display **"Your survey key is: [key]"** **if** (`get attribute` retrieves the participant's assigned survey key using `get context`).
+  </ExampleBox>
 * **How it works:** No input required. `get context` is typically used with `get attribute` to retrieve contextual values.
 
 ---
