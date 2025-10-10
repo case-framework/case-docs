@@ -193,9 +193,9 @@ These are pre-configured conditions designed for common scenarios, simplifying t
 
 ---
 
-## Numerical Expressions
+## Numerical and Text Expressions
 
-These conditions evaluate numeric values derived from participant flags, responses, or system data. They allow you to create rules based on quantities, counts, timestamps or time differences.
+These conditions evaluate numeric and string values derived from participant flags, responses, or system data. They allow you to create rules based on text, comparisons, quantities, counts, timestamps or time differences.
 
 ---
 
@@ -213,12 +213,27 @@ These conditions evaluate numeric values derived from participant flags, respons
 * **Use Case:** To create conditions that compare dynamic values (like the current date or a response date) against a specific fixed date.
   * **Example:** Display **"Show follow-up questions"** **if** (Current date `>` **2025-10-01**), where **2025-10-01** is selected using the date picker.
 * **How it works:** Select a date from the calendar in the condition editor.
+---
+
+#### 3. **"Text input"**
+* **Meaning:** Allows you to enter a custom text value manually.  
+* **Use Case:** To specify keys, exact string matches, or other text-based comparisons in conditions.  
+  * **Example:** Display question **"Are you currently pregnant?"** **if** (Text input equals participant flag `'gender'`), where the text input is `'female'`.
+* **How it works:** Enter the desired text directly into the editor.
 
 ---
 
 ### Participant flags
 
-#### 1. **"Parse participant flag as number"**
+#### 1. **"Get participant flag value"**
+* **Meaning:** Retrieves the value of a participant flag as a string.  
+* **Use Case:** To use stored participant data in conditions or messages.  
+  * **Example:** Display question **"Are you currently pregnant?"** **if** (Participant flag `'gender'` equals `'female'`).
+* **How it works:** Specify the participant flag key. 
+
+---
+
+#### 2. **"Parse participant flag as number"**
 * **Meaning:** Converts the value of a participant flag into a numeric type so it can be compared or used in calculations.
 * **Use Case:** To show a question only if a participant’s numeric attribute (e.g., age, score) meets a threshold.
   * **Example:** Display section **"Senior Health Screening"** **if** (Participant flag `'age'` parsed as number `>= 65`).
@@ -236,7 +251,15 @@ These conditions evaluate numeric values derived from participant flags, respons
 
 ---
 
-#### 2. **"Count response items"**
+#### 2. **"Get response value as string"**
+* **Meaning:** Retrieves a participant’s response as a string value.  
+* **Use Case:** To display or evaluate text-based responses in logic.  
+  * **Example:** Display **"Thank you for your feedback!"** **if** (Response to `'Comments'` is not empty).  
+* **How it works:** Provide the item key and response slot key. The item key can be entered as text or selected from a list of available item keys.
+
+---
+
+#### 3. **"Count response items"**
 * **Meaning:** Counts how many options a participant selected in a multi-select or list-type response.
 * **Use Case:** To trigger follow-up questions when a participant selects more than a certain number of options.
   * **Example:** Display **"Please prioritize your top 3 conditions"** **if** (Count of selected items in `'Chronic Conditions'` `> 3`).
@@ -244,7 +267,7 @@ These conditions evaluate numeric values derived from participant flags, respons
 
 ---
 
-#### 3. **"Get date response diff from now"**
+#### 4. **"Get date response diff from now"**
 * **Meaning:** Calculates the difference between a date provided in a response and the current date.
 * **Use Case:** To show reminders or follow-ups based on how long ago an event occurred.
   * **Example:** Display **"Please schedule your next appointment"** **if** (Difference between **today** and `'Last Check-up Date'` `> 180` **days**).
