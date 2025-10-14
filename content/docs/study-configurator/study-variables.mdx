@@ -13,6 +13,7 @@ import studyVariablesConfig2Img from './images/variable-config-2.png';
 
 
 Study variables add the capability for study administrators to dynamically steer the behavior of the study system, without the need to change the study rules or questionnaires.
+While the "participant flags" provide a way for individualised logic, study variables provide a simple way for dynamic "global" (study/ cohort specific) behavior.
 
 A study variable has a reference key (unique within the study), a value and a value type.
 The value type can be one of the following:
@@ -109,3 +110,14 @@ Click "Create" / "Save" to create / update the study variable.
 </div>
 
 ## Using Study Variables
+
+Values of the study variables can be used in the following places:
+- **Study rules / study actions** (server-side):
+    - expressions: retrieve and use the value of the study variable in a condition or as a parameter of an expression
+    - actions: update the value of the study variable
+    - available study expressions: (todo: link)
+- **Survey conditions** (client-side):
+    - expressions: retrieve and use the value of the study variable in the condition
+    - available survey expressions: (todo: link)
+
+Other applications specific usage might be available if the application supports it.
