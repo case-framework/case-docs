@@ -21,18 +21,16 @@ Needed for this example:
 <Step> 
 In your study rules dashboard, click the **"Entry event handler"** section.
 </Step> <Step> 
-In the ENTRY handler editor, click **"+ add value"**. From the list of available actions, select **"Schedule a message"**. 
+In the ENTRY handler editor, click **"+ add value"**. From the list of available actions, select **"Send a message now (immediately)"**. 
 </Step> <Step> 
-Choose the message type `Welcome` you defined in your survey context. 
-</Step> <Step>
- Under **"Scheduled for"**, keep **"Get timestamp"** and keep the **offset** at *0 days*. This ensures the welcome message is sent immediately when the participant enters. 
- ![Screenshot of first action for ENTRY handler](../images/entryHandler1.png)
+Choose the message type `Welcome` you defined in your survey context. Optionally, you can use the **"Use language"** setting to specify a language that should be used instead of the template's default language (e.g. write `nl` as text input).
 </Step> <Step> 
  Add another action by clicking **"+ add value"** and select **"Add new survey"**. 
+![Screenshot of first action for ENTRY handler](../images/entryHandler.png)
 </Step> <Step>
   Select the survey key `intake`. 
 </Step> <Step>
-Use the **"Available from"** field if you want the survey to become available at a specific future time: Add the expression **"Get timestamp"** to insert the current time, then adjust the offset (e.g., add *30 minutes* or any desired delay).  
+Use the **"Available from"** field **if** you want the survey to become available at a specific future time: Add the expression **"Get timestamp"** to insert the current time, then adjust the offset (e.g., add *30 minutes* or any desired delay).  
    Leave **"Available until"** empty if the survey should remain available indefinitely.
 </Step> <Step> 
   Add a third action: click **"+ add value"** and select **"Schedule a message"**. 
