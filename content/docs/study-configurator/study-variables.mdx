@@ -13,16 +13,16 @@ import studyVariablesConfig2Img from './images/variable-config-2.png';
 
 
 Study variables add the capability for study administrators to dynamically steer the behavior of the study system, without the need to change the study rules or questionnaires.
-While the "participant flags" provide a way for individualised logic, study variables provide a simple way for dynamic "global" (study specific) behavior.
+While "participant flags" provide a way for individualized logic, study variables provide a simple way to control dynamic “global” (study specific) behavior.
 
 A study variable has a reference key (unique within the study), a value and a value type.
 The value type can be one of the following:
 - String
-- Number, more specifically: integer or float
+- Number (integer or float)
 - Boolean
 - Date
 
-Studies can have its own set of study variables. The study administrator can manage (create, edit value or configuration, delete) study variables.
+Each study can have its own set of study variables. The study administrator can manage them (create, edit value or configuration, delete).
 For improved readability, the study administrator can also assign a human-readable label and description to each study variable.
 
 <ExampleBox title="Use Cases">
@@ -60,7 +60,7 @@ alt="Study variables configuration 1"
 </Step>
 
 <Step>
-Select the value type of the study variable. (string, integer, float, boolean, date)
+Select the value type of the study variable. (`string`, `integer`, `float`, `boolean`, `date`)
 </Step>
 
 <Step>
@@ -87,7 +87,7 @@ alt="Study variables configuration 2"
 </Step>
 
 <Step>
-Type specific configuration for the study variable, depending on the value type. For example, for numbers and dates you can define a minimum and maximum value. For strings, you can define if a select with options should be used or if a text input should be used.
+Type-specific configuration for the study variable, depending on the value type. For example, for numbers and dates you can define a minimum and maximum value. For strings, you can define if a select with options should be used or if a text input should be used.
 </Step>
 
 <Step>
