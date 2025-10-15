@@ -117,9 +117,42 @@ These conditions evaluate the presence and value of specific pre-existing flags 
   Display survey version **"Pediatric Study Arm B"** **if** (Participant flag `'study_group'` `with key and value exists` and its value is `'Pediatric_B'`).
   </ExampleBox>
 * **How it works:** Enter the key of the participant flag and the exact value it must hold. 
+---
+
+### Study variables
+
+These conditions evaluate the presence and value of specific study-level variables (key-value pairs) that are defined for the entire study.
+
+#### 1. **Study variable string equals**
+
+* **Meaning:** Compares the value of a study variable (as a string) to a specific text value.
+* **Use Case:** Use to conditionally display questions or trigger logic based on a study-level string setting.
+    <ExampleBox title="Example">
+    Display question **"Do you agree to the updated terms?"** **if** (Study variable `'terms_version'` equals `'v3.0'`).
+    </ExampleBox>
+* **How it works:** Enter the study variable key and the string value to compare. The condition is true if the values match exactly.
 
 ---
 
+#### 2. **Study variable key exists**
+* **Meaning:** Checks whether a specific study variable key is present.
+* **Use Case:** Use to conditionally display questions or messages only if a variable has been defined.
+    <ExampleBox title="Example">
+    Display question **"Please confirm your study group"** **if** (Study variable key `'group_assignment'` exists).
+    </ExampleBox>
+* **How it works:** Enter the study variable key to check for its existence.
+
+---
+
+#### 3. **Get study variable as boolean**
+* **Meaning:** Retrieves the value of a study variable and interprets it as a boolean (true or false).
+* **Use Case:** Use to control logic based on binary flags or toggles defined at the study level.
+    <ExampleBox title="Example">
+    Display question **"Do you agree to participate?"** if (Study variable `'consent_required'` is `true`).
+    </ExampleBox>
+* **How it works:** Enter the study variable key.
+
+---
 ### Response dependencies
 
 Response dependencies conditions define rules for displaying survey items based directly on how a respondent has answered, or not answered, previous questions within the survey itself.
@@ -188,7 +221,7 @@ Response dependencies conditions define rules for displaying survey items based 
 * **Meaning:** This condition checks if the built-in validation rules for a specific previous survey item have been met.
 * **Use Case:** To ensure data quality or to guide the user if they entered invalid information.
   <ExampleBox title="Example">
-  Show text **"Please review your input as it appears to be incorrect"** **if** the **"Postal Code"** question's validation is **false**.
+  Show text **"Please review your input as it appears to be incorrect"** **if** the **"Postal Code"** question's validation is `false`.
   </ExampleBox>
 * **How it works:** Select the item key and validation key of a previous question that has validation rules applied to it.
 
@@ -287,6 +320,47 @@ These conditions evaluate numeric and string values derived from participant fla
   Display section **"Senior Health Screening"** **if** (Participant flag `'age'` parsed as number `>= 65`).
   </ExampleBox>
 * **How it works:** Specify the participant flag key. 
+
+---
+### Study variables
+
+#### 1. **Get study variable as string**
+* **Meaning:** Retrieves the value of a study variable as a string.
+* **Use Case:** Use to compare or display text-based study-level settings.
+    <ExampleBox title="Example">
+     Display question **"Do you agree to the updated terms?"** **if** (Study variable `'terms_version'` equals `'v3.0'`).
+    </ExampleBox>
+* **How it works:** Enter the study variable key.
+
+---
+
+#### 2. **Get study variable as integer**
+* **Meaning:** Retrieves the value of a study variable and interprets it as an integer.
+* **Use Case:** Use to apply numeric logic based on study-level configuration.
+    <ExampleBox title="Example">
+    Display info text **"Enrollment limit reached."** **if** (Study variable `'max_participants'` parsed as integer `>= 100`).
+    </ExampleBox>
+* **How it works:** Enter the study variable key.
+
+---
+
+#### 3. **Get study variable as float**
+* **Meaning:** Retrieves the value of a study variable and interprets it as a floating-point number.
+* **Use Case:** Use for calculations or thresholds involving decimal values.
+    <ExampleBox title="Example">
+    Display request to load an image of erythema migrans if participant reports an EM diameter greater than (Study variable `'EM_diameter'` parsed as float `>= 4.5`).
+    </ExampleBox>
+* **How it works:** Enter the study variable key.
+
+---
+
+#### 4. **Get study variable as date (POSIX seconds)**
+* **Meaning:** Retrieves the value of a study variable and interprets it as a date in POSIX time (seconds since epoch).
+* **Use Case:** Use to compare dates for scheduling, deadlines, or time-based logic.
+    <ExampleBox title="Example">
+    Display follow-up questions **if** (Current timestamp > Study variable `'follow_up_start'` parsed as POSIX date).
+    </ExampleBox>
+* **How it works:** Enter the study variable key.
 
 ---
 
