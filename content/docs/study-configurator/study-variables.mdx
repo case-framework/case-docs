@@ -1,26 +1,28 @@
 ---
-title: Study Variables
-description: For study-wide dynamic configuration
+title: Study Variables and Counters
+description: Configuring study-wide variables, viewing and editing counter values
 ---
 
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
 
 import studyVariablesConfig1Img from './images/variable-config-1.png';
 import studyVariablesConfig2Img from './images/variable-config-2.png';
 
+<div className='block mx-auto w-fit'>
+![Study variables empty](./images/study-variables-empty.png)
+</div>
+
+
 ## Introduction
 
-
+### Study Variables
 Study variables add the capability for study administrators to dynamically steer the behavior of the study system, without the need to change the study rules or questionnaires.
 While "participant flags" provide a way for individualized logic, study variables provide a simple way to control dynamic “global” (study specific) behavior.
 
 A study variable has a reference key (unique within the study), a value and a value type.
-The value type can be one of the following:
-- String
-- Number (integer or float)
-- Boolean
-- Date
+The value type can be one of the following: `string`, `integer`, `float`, `boolean`, `date`
 
 Each study can have its own set of study variables. The study administrator can manage them (create, edit value or configuration, delete).
 For improved readability, the study administrator can also assign a human-readable label and description to each study variable.
@@ -32,13 +34,38 @@ For improved readability, the study administrator can also assign a human-readab
 - **Threshold:** Set a threshold for a numeric value to trigger a specific action (e.g., if study-counter reaches the threshold, send a researcher notification.)
 </ExampleBox>
 
+### Counters
+
+A study counter is always an integer number and can be incremented by study rules or study actions [(see also)](/docs/study-rules-editor/basics/study-rules/#4-increment-and-get-study-counter-value). Each counter has a scope key, which is used to identify the counter within the study.
+
+
+<TypeTable
+  type={{
+    scope: {
+      description: 'Scope of the counter within the study',
+      type: 'string',
+      required: true,
+    },
+    value: {
+      description: 'Current value of the counter',
+      type: 'integer',
+      default: '0',
+    },
+  }}
+/>
+
+
+Counters can be used to track different aspects of the study, and their values can be accessed by study expressions in the study engine [(see also)](/docs/study-rules-editor/basics/study-rules/#3-get-current-study-counter-value).
+
+<ExampleBox title="Use Cases">
+- **Event count:** Track the number of events that have occurred in the study. E.g., if a participant sends in a specific combination of answers, increment the counter.
+- **Participant counter:** Track the number of participants in the study. Count all or eligible participants. This was used for example to assign a unique study code to each participant.
+</ExampleBox>
+
 ## Managing Study Variables
 
 The management of study variables is available in the **"Study Configurator"** module, under the **"Variables"** tab.
 
-<div className='block mx-auto w-fit'>
-![Study variables empty](./images/study-variables-empty.png)
-</div>
 
 ### Creating a Study Variable
 
