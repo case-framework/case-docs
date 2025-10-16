@@ -148,3 +148,16 @@ Values of the study variables can be used in the following places:
     - available survey expressions: (todo: link)
 
 Other applications specific usage might be available if the application supports it.
+
+## Managing Counters
+
+The view to manage study counters is available in the **"Study Configurator"** module, under the **"Variables"** tab, next to the study variables.
+Currently supported are the following features:
+- View all counters with their scope key and value
+- Initialize a new counter for a scope with a specific starting value
+- Change the value of a counter to a specific value: use this action carefully, considering the impact on the study flow and the study rules. (E.g., if you are using a counter to generate a sequential ID for a participant, changing the value of the counter will affect the ID assignment.)
+- Delete a counter: this will remove the counter from the study, until it is initialized again. Initialisation might happen through a study rule or study action, so the counter value for the scope might appear again automatically.
+
+<div className='block mx-auto w-fit'>
+![Study variables with entries](./images/study-counters.png)
+</div>
