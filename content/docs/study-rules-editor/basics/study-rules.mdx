@@ -75,26 +75,46 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **Use Case:** Filter events by exact data content.
 * **How it works:** Enter both key and expected value.
 
+<a id="study-bool-study-variables"></a>
+### Study variables
+
+#### 1. **Get study variable as boolean**  
+* **Meaning:** Retrieves the value of a study variable and returns it as a boolean (`true` or `false`).  
+* **Use Case:** Useful for evaluating binary conditions such as visibility of certain components or surveys, eligibility, or activating study flows.  
+* **How it works:** Provide the variable key.
+
+#### 2. **Study variable string equals**  
+* **Meaning:** Compares the value of a study variable (as a string) to a specified string and checks for equality.  
+* **Use Case:** Ideal for branching logic or conditional workflows based on group assignments, study phases, or other string-based values.  
+* **How it works:** Provide the variable key and the string to compare.
+
+
 ### Advanced
 
 #### 1. **Is study code present**
-**Meaning:** True if a specific study code has been assigned to the participant.
-**Use case:** Use when actions should only apply to coded participants.
-**How it works:** Select the study code to check for.
+* **Meaning:** True if a specific study code has been assigned to the participant.
+* **Use case:** Use when actions should only apply to coded participants.
+* **How it works:** Select the study code to check for.
 
+### Templates
+
+#### 1. **Study variable string equals**  
+* **Meaning:** Compares the value of a study variable (as a string) to a specified string and checks for equality.  
+* **Use Case:** Ideal for branching logic or conditional workflows based on group assignments, study phases, or other string-based values.  
+* **How it works:** Provide the variable key and the string to compare.
 
 ### Response checkers
 
 #### 1. **Response contains any of these keys**
-**Meaning:** True if a participant’s response includes one of the specified keys.
-**Use case:** Use when multiple acceptable responses can trigger the rule.
-**How it works:** Provide the item key and a list of slot keys.
+* **Meaning:** True if a participant’s response includes one of the specified keys.
+* **Use case:** Use when multiple acceptable responses can trigger the rule.
+* **How it works:** Provide the item key and a list of slot keys.
 
 
 #### 2. **Has response but none of these keys**
-**Meaning:** True if a response exists but excludes specific keys.
-**Use case:** Use when certain answers should be filtered out.
-**How it works:** Provide the item key and a list of slot keys to exclude.
+* **Meaning:** True if a response exists but excludes specific keys.
+* **Use case:** Use when certain answers should be filtered out.
+* **How it works:** Provide the item key and a list of slot keys to exclude.
 
 
 #### 3. **A specific response key is present**  
@@ -104,21 +124,21 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 
 #### 4. **A specific response key is present and has a specific value**
-**Meaning:** True if a response key matches a defined value.
-**Use case:** Use when precise matching of responses is required.
-**How it works:** Provide the item and slot key and enter the expected value.
+* **Meaning:** True if a response key matches a defined value.
+* **Use case:** Use when precise matching of responses is required.
+* **How it works:** Provide the item and slot key and enter the expected value.
 
 
 #### 5. **Check condition for old responses**
-**Meaning:** True if past participant responses from older surveys meet the specified condition.
-**Use case:** Use when rules should evaluate historical responses, for example to detect repeated patterns.
-**How it works:** The condition checks stored responses within an optional time window defined by **"responses since**" and **"responses until"**. You can choose whether **all**, **any**, or a minimum **count** of responses must fulfill the condition.
+* **Meaning:** True if past participant responses from older surveys meet the specified condition.
+* **Use case:** Use when rules should evaluate historical responses, for example to detect repeated patterns.
+* **How it works:** The condition checks stored responses within an optional time window defined by **"responses since**" and **"responses until"**. You can choose whether **all**, **any**, or a minimum **count** of responses must fulfill the condition.
 
 
 #### 6. **Consent accepted**
-**Meaning:** Checks if the participant has provided consent.
-**Use case:** Use when study actions must only apply to consenting participants.
-**How it works:** Provide the consent key to check.
+* **Meaning:** Checks if the participant has provided consent.
+* **Use case:** Use when study actions must only apply to consenting participants.
+* **How it works:** Provide the consent key to check.
 
 
 ### Participant state checkers
@@ -251,6 +271,24 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Meaning:** Extracts a value from an event payload and returns it as a number.  
 * **Use Case:** Use when incoming event data needs to be used in numeric comparisons or calculations.  
 * **How it works:** Enter the key of the event payload.
+
+<a id="study-int-study-variables"></a>
+### Study variables
+
+#### 1. **Get study variable as integer**  
+* **Meaning:** Retrieves the value of a study variable and returns it as an integer.  
+* **Use Case:** Ideal for numeric data like age, visit counts, thresholds, or scoring logic.  
+* **How it works:** Provide the variable key.
+
+#### 2. **Get study variable as float**  
+* **Meaning:** Retrieves the value of a study variable and returns it as a floating-point number.  
+* **Use Case:** Use for precise numeric values such as weight, dosage, or percentages.  
+* **How it works:** Provide the variable key.
+
+#### 3. **Get study variable as date (POSIX seconds)**  
+* **Meaning:** Retrieves the value of a study variable and returns it as a date in POSIX seconds (Unix timestamp).  
+* **Use Case:** Commonly used for scheduling survey availability, triggering automated messages, or recording time-based events like birthdate or visit date.  
+* **How it works:** Provide the variable key.
 
 ### Misc
 
@@ -400,6 +438,15 @@ Some expressions return strings that can be used for various purposes, such as d
 * **Use Case:** Use to inspect or process incoming event data.  
 * **How it works:** Enter the key of the event payload.
 
+<a id="study-string-study-variables"></a>
+### Study variables
+
+#### 1. **Get study variable as string**  
+* **Meaning:** Retrieves the value of a study variable and returns it as a string.  
+* **Use Case:** Useful for workflows based on textual data such as participant group labels, phases of study flow, or other string-based values.
+* **How it works:** Provide the variable key. 
+
+
 ### Advanced
 
 #### 1. **Use external service to evaluate event data**  
@@ -530,6 +577,32 @@ Some expressions return strings that can be used for various purposes, such as d
 * **Meaning:** Sets a study-level counter back to zero.  
 * **Use Case:** Use to restart counting for a new phase or time period.  
 * **How it works:** Enter the scope key of the counter to reset.
+
+<a id="study-update-study-variables"></a>
+#### 8. **Update study variable (boolean)**  
+* **Meaning:** Updates a study variable with a boolean value (`true` or `false`).  
+* **Use Case:** Use for closing access to survey components if a threshold of maximal participants is reached.
+* **How it works:** Select the variable key and assign a boolean value.
+
+#### 9. **Update study variable (string)**  
+* **Meaning:** Updates a study variable with a text value.  
+* **Use Case:** Use to update the currently active study phase (e.g., from **"phase1"** to  **"phase2"**) if a threshold of participants is reached.
+* **How it works:** Select the variable key and assign a string value.
+
+#### 10. **Update study variable (integer)**  
+* **Meaning:** Updates a study variable with a whole number.  
+* **Use Case:** Use to track the number of participants meeting a certain condition (e.g., symptom reported or submitted a survey) or updating thresholds for triggering study-wide actions.
+* **How it works:** Select the variable key and assign an integer value.
+
+#### 11. **Update study variable (float)**  
+* **Meaning:** Updates a study variable with a decimal number.  
+* **Use Case:** Use to track study-wide calculated values from external services or update thresholds for continuous variables (e.g., maximum EM diameter)  
+* **How it works:** Select the variable key and assign a float value.
+
+#### 12. **Update study variable (date)**  
+* **Meaning:** Updates a study variable with a date value in POSIX seconds (Unix timestamp).  
+* **Use Case:** Use to update the start or end date of survey availability when a defined participant threshold is reached.
+* **How it works:** Select the variable key and provide a date value in POSIX format.
 
 
 ### Change Participant State
