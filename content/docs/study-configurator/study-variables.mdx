@@ -11,11 +11,10 @@ import studyVariablesConfig2Img from './images/variable-config-2.png';
 
 ## Introduction
 
+Study variables allow study administrators to dynamically steer the behavior of the study system, without needing to change the study rules or questionnaires.
+While "participant flags" provide a way for individualized logic, study variables provide a simple way to control dynamic "global" (study specific) behavior.
 
-Study variables add the capability for study administrators to dynamically steer the behavior of the study system, without the need to change the study rules or questionnaires.
-While "participant flags" provide a way for individualized logic, study variables provide a simple way to control dynamic “global” (study specific) behavior.
-
-A study variable has a reference key (unique within the study), a value and a value type.
+A study variable has a **reference key** (unique within the study), a **value** and a **value type**.
 The value type can be one of the following:
 - String
 - Number (integer or float)
@@ -42,9 +41,7 @@ The management of study variables is available in the **"Study Configurator"** m
 
 ### Creating a Study Variable
 
-To create a new study variable, click the **"Create variable"** button.
-
-This will open a modal with the editor interface for the study variable.
+To create a new study variable, click the **"Create variable"** button. This will open a modal with the editor interface for the study variable.
 
 <Steps>
 <Step>
@@ -64,15 +61,15 @@ Select the value type of the study variable. (`string`, `integer`, `float`, `boo
 </Step>
 
 <Step>
-(Optional) Enter the "UI priority" of the study variable. This is used to determine the order of the study variables in the list, where higher values are shown first.
+(Optional) Enter the **"UI priority"** of the study variable. This determines the order of study variables in the list — higher values appear first.
 </Step>
 
 <Step>
-Click "Next" to open the "Configuration" tab.
+Click **"Next"** to open the **"Configuration"** tab.
 </Step>
 
 <Step>
-(Optional) Enter a "Label" for improved readability in the list, in case the key is not self-explanatory.
+(Optional) Enter a **"Label"** for improved readability in the list, in case the key is not self-explanatory.
 <ImageZoom
 className='p-2 bg-neutral-200 rounded-xl mx-auto'
 src={studyVariablesConfig2Img}
@@ -83,25 +80,23 @@ alt="Study variables configuration 2"
 </Step>
 
 <Step>
-(Optional) Enter a "Description" for even more context in the list. This will be shown below the value controller in the list.
+(Optional) Enter a **"Description"** for even more context in the list. This will be shown below the value controller in the list.
 </Step>
 
 <Step>
-Type-specific configuration for the study variable, depending on the value type. For example, for numbers and dates you can define a minimum and maximum value. For strings, you can define if a select with options should be used or if a text input should be used.
+Type-specific configuration for the study variable, depending on the value type. For example, for numbers and dates you can define a minimum and maximum value. For string variables, you can choose between a dropdown with predefined options or a free-text input field.
 </Step>
 
 <Step>
-Click "Create" / "Save" to create / update the study variable.
+Click **"Create"** or **"Save"** to add or update the study variable.
 </Step>
 </Steps>
 
 
 
-
-
 ### Editing a Study Variable
 
-- To edit the "value" of a study variable, you can use the value input controller in the variable list directly. Depending on the value type, this might be a simple switch, a datepicker or a text / number input.
+- To edit the "value" of a study variable, you can use the value input controller in the variable list directly. Depending on the value type, this might be a simple switch, a datepicker or a text/number input.
 - To edit the "configuration" of a study variable, use the three-dot menu on the right of the variable's card, and select **"Edit configs"**.
 - To delete a study variable, use the three-dot menu on the right of the variable's card, and select **"Delete"**.
 
@@ -112,12 +107,12 @@ Click "Create" / "Save" to create / update the study variable.
 ## Using Study Variables
 
 Values of the study variables can be used in the following places:
-- **Study rules / study actions** (server-side):
+#### **Study rules/study actions** (server-side):
     - expressions: retrieve and use the value of the study variable in a condition or as a parameter of an expression
-    - actions: update the value of the study variable
-    - available study expressions: (todo: link)
-- **Survey conditions** (client-side):
+    - available study expressions: [conditional expressions](/docs/study-rules-editor/basics/study-rules#study-bool-study-variables) or [numerical](/docs/study-rules-editor/basics/study-rules#study-int-study-variables) and [text](/docs/study-rules-editor/basics/study-rules#study-string-study-variables) expressions.
+    - actions: [update](/docs/study-rules-editor/basics/study-rules#study-update-study-variables) the value of the study variable
+#### **Survey conditions** (client-side):
     - expressions: retrieve and use the value of the study variable in the condition
-    - available survey expressions: (todo: link)
+    - available survey expressions: [conditional expressions](/docs/survey-editor/basics/conditions#survey-bool-study-variables) or [numerical and text expressions](/docs/survey-editor/basics/conditions#survey-num-study-variables).
 
 Other applications specific usage might be available if the application supports it.
