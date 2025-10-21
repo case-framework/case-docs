@@ -1,0 +1,100 @@
+---
+title: Setup Guide
+description: This article guides through the initial setup of an exemplary CASE system.
+---
+
+# What this tutorial entails
+
+This article guides you through an exemplary setup and configuration of a locally run CASE-based system, excluding the participant-facing UI.
+
+We will set up:
+
+- case-backend (the backend server)
+- case-admin (the UI for study administration)
+- an associated MongoDB instance (which stores the study and data)
+
+# Step 1: Database Setup (MongoDB)
+
+CASE is designed to work with MongoDB. For this example we will assume a locally running database.
+
+1. [Install MongoDB](https://www.mongodb.com/docs/manual/installation/).
+
+2. Determine a storage folder path and configure the database by creating a `mongod.conf` file:
+
+```yaml filename="mongod.conf"
+# mongod.conf
+
+# Storage
+storage:
+  dbPath: /your/defined/path/mongodb_data
+
+# Network
+net:
+  bindIp: 127.0.0.1
+  port: 27017
+
+# Authorization
+security:
+  authorization: disabled
+```
+
+3. Launch the MongoDB service using the configuration file. On macOS, this can be done through the terminal as follows:
+
+```sh filename="launch_db.sh"
+# launch_db.sh
+
+# Launch mongod with config file as parameter.
+mongod --config mongod.conf
+```
+
+Tip: You can use a database explorer tool like MongoDB Compass to manually browse the database or perform resets when necessary.
+
+# Step 2: case-backend Setup
+
+1. Clone the **case-backend** repository to a location of your choice.
+
+2. Locate the **test** folder within your copy of **case-backend**.
+
+Within this folder, you will place configuration files for the different sub-modules of your backend service. For each backend service, create two files: a configuration YAML file and a shell script for launching the service.
+
+3. Create a configuration file for the management-api service within the **test** folder named **management-api.yaml**.
+
+Add all necessary variables according to the [Platform Configuration](./configuration-reference.mdx) article. When done, save the file.
+
+4. Create a launch shell script for the management-api service within the **test** folder named **run-management-api.sh**.
+
+Within this script, you may define the immediate environment variables, e.g. credentials for your databases. Verify that the **CONFIG_FILE_PATH** variable is correctly defined. When done, save the file and mark it as executable.
+
+```sh filename="run-management-api.sh"
+# run-management-api.sh
+
+export CONFIG_FILE_PATH="./test/management-api.yaml"
+
+# Management User DB
+export MANAGEMENT_USER_DB_USERNAME="admin"
+export MANAGEMENT_USER_DB_PASSWORD="pw"
+
+# Participant User DB
+export PARTICIPANT_USER_DB_USERNAME="admin"
+export PARTICIPANT_USER_DB_PASSWORD="pw"
+
+# Globalinfos DB
+export GLOBAL_INFOS_DB_USERNAME="admin"
+export GLOBAL_INFOS_DB_PASSWORD="pw"
+
+# Messaging DB
+export MESSAGING_DB_USERNAME="admin"
+export MESSAGING_DB_PASSWORD="pw"
+
+# Study DB
+export STUDY_DB_USERNAME="admin"
+export STUDY_DB_PASSWORD="pw"
+
+go run services/management-api/*.go
+```
+
+5. For production deployments, you would also need to create both a **participant-api.yaml** and a **run-participant-api.sh** following the same process as the management-api service.
+
+6. You can now run the configured services in separate terminal sessions. For example, run **run-management-api.sh** in one terminal and **run-participant-api.sh** in another simultaneously.
+
+When called, the services should continue running and only exit when manually stopped. If a process exits immediately, an error occurred and needs to be addressed.

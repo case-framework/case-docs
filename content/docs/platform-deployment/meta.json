@@ -1,0 +1,11 @@
+{
+  "title": "Platform Deployment",
+  "description": "Guidance for deploying a case-based platform",
+  "root": true,
+  "pages": [
+    "overview.mdx",
+    "step-by-step.mdx",
+    "configuration-reference.mdx",
+    "participant-apps.mdx"
+  ]
+}
