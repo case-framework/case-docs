@@ -14,6 +14,15 @@ export default function HomePage() {
         </Link>{' '}
         and see the documentation.
       </p>
+      <p className="text-fd-muted-foreground">
+        API documentation is available at{' '}
+        <Link
+          href="/tech-docs/smtp-bridge/api"
+          className="text-fd-foreground font-semibold underline"
+        >
+          /tech-docs
+        </Link>
+      </p>
     </main>
   );
 }

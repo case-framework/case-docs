@@ -13,7 +13,7 @@ pnpm dev
 yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Open <http://localhost:3000> with your browser to see the result.
 
 ## Explore
 
@@ -33,6 +33,19 @@ In the project, you can see:
 A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
 
 Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+
+## For API Documentation
+
+Include the openapi spec file in the `public/openapi` directory.
+
+Add a new page with the name `api.mdx` in the `content/tech-docs/[api-name]` directory with the following content:
+
+```mdx
+---
+title: My API
+description: My API Description
+---
+```
 
 ## Learn More
 
