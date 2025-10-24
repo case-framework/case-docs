@@ -3,6 +3,6 @@
 @import 'fumadocs-ui/css/preset.css';
 
 /* Hide the scheme container for Swagger UI */
-.scheme-container {
+.swagger-ui .scheme-container {
     display: none;
 }
