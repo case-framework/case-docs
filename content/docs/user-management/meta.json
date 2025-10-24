@@ -1,5 +1,6 @@
 {
     "title": "User Management",
     "description": "Functionality for managing user accounts and permissions",
-    "root": true
+    "root": true,
+    "icon": "UserRoundCog"
 }
