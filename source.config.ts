@@ -16,6 +16,16 @@ export const docs = defineDocs({
   },
 });
 
+export const techDocs = defineDocs({
+  docs: {
+    schema: frontmatterSchema,
+  },
+  dir: 'content/tech-docs',
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options
