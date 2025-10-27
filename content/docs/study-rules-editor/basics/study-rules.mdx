@@ -78,15 +78,15 @@ Use these when you want rules to trigger only if study data falls inside or outs
 <a id="study-bool-study-variables"></a>
 ### Study variables
 
-#### 1. **Get study variable as boolean**  
-* **Meaning:** Retrieves the value of a study variable and returns it as a boolean (`true` or `false`).  
-* **Use Case:** Useful for evaluating binary conditions such as visibility of certain components or surveys, eligibility, or activating study flows.  
+#### 1. **Get study variable as boolean**
+* **Meaning:** Retrieves the value of a study variable and returns it as a boolean (`true` or `false`).
+* **Use Case:** Useful for evaluating binary conditions such as visibility of certain components or surveys, eligibility, or activating study flows.
 * **How it works:** Provide the variable key.
 
 <a id="study-variables-equals"></a>
-#### 2. **Study variable string equals**  
-* **Meaning:** Compares the value of a study variable (as a string) to a specified string and checks for equality.  
-* **Use Case:** Ideal for branching logic or conditional workflows based on group assignments, study phases, or other string-based values.  
+#### 2. **Study variable string equals**
+* **Meaning:** Compares the value of a study variable (as a string) to a specified string and checks for equality.
+* **Use Case:** Ideal for branching logic or conditional workflows based on group assignments, study phases, or other string-based values.
 * **How it works:** Provide the variable key and the string to compare.
 
 
@@ -99,7 +99,7 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 ### Templates
 
-#### 1. **Study variable string equals**  
+#### 1. **Study variable string equals**
 * see [**Study variables**](#study-variables-equals)
 
 ### Response checkers
@@ -116,9 +116,9 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **How it works:** Provide the item key and a list of slot keys to exclude.
 
 
-#### 3. **A specific response key is present**  
-* **Meaning:** True if a specific response key is included in the participant’s answer.  
-* **Use case:** Use when rules should depend on the presence of a particular question or item.  
+#### 3. **A specific response key is present**
+* **Meaning:** True if a specific response key is included in the participant’s answer.
+* **Use case:** Use when rules should depend on the presence of a particular question or item.
 * **How it works:** Enter the response item and slot key to check for.
 
 
@@ -155,12 +155,12 @@ Use these when you want rules to trigger only if study data falls inside or outs
 #### 3. **Survey assignment start is before reference time (template)**
 * **Meaning:** True if the survey’s assigned start time is earlier than the chosen reference time.
 * **Use Case:** Trigger actions only after a survey has become available.
-* **How it works:** Provide the survey key and a reference time (e.g., current time or a calculated timestamp). 
+* **How it works:** Provide the survey key and a reference time (e.g., current time or a calculated timestamp).
 
 #### 4. **Survey assignment end is before reference time (template)**
 * **Meaning:** True if the survey’s assigned end time is earlier than the chosen reference time.
 * **Use Case:** Trigger actions after a survey’s availability window has ended.
-* **How it works:** Provide the survey key and a reference time (e.g., current time or a calculated timestamp). 
+* **How it works:** Provide the survey key and a reference time (e.g., current time or a calculated timestamp).
 
 #### 5. **Has study status**
 * **Meaning:** True if the participant has the defined study status.
@@ -168,9 +168,9 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **How it works:** Select the study status (e.g. "active", "inactive", "finished", "exited").
 
 #### 6. **Has participant flag key**
-* **Meaning:** This condition evaluates to true if a participant has a flag with the specified key, regardless of its value.  
-* **Use Case:** Useful when you want to check if a participant has been assigned a certain flag without caring about what the value is.  
-* **How it works:** Enter the key of the participant flag you want to check. 
+* **Meaning:** This condition evaluates to true if a participant has a flag with the specified key, regardless of its value.
+* **Use Case:** Useful when you want to check if a participant has been assigned a certain flag without caring about what the value is.
+* **How it works:** Enter the key of the participant flag you want to check.
 
 #### 7. **Has participant flag key and value**
 * **Meaning:** True if the participant has a specific flag with a matching value.
@@ -191,6 +191,10 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **Meaning:** True if a specific message type has been assigned to the participant.
 * **Use Case:** Use when actions should only trigger for participants who are linked to a certain message type (e.g. reminder).
 * **How it works:** Select the message type to check for.
+
+#### 11 ** Get current study session's ID **
+* **Meaning:** Returns the ID of the current study session.
+* **Use Case:** e.g. to store the session ID into a report data object, or compare with participant flags.
 
 ### Incoming participant state checkers (for merge events)
 
@@ -236,13 +240,13 @@ Use these when you want rules to trigger only if study data falls inside or outs
 ---
 ## Numbers and Dates
 
-Some expressions return numbers and dates that can e.g. be used for comparisons. Note that Dates are always represented in **Unix timestamp format**, which means they are also integer numbers.  
+Some expressions return numbers and dates that can e.g. be used for comparisons. Note that Dates are always represented in **Unix timestamp format**, which means they are also integer numbers.
 
 ### Variables
 
-#### 1. **Date picker**  
-* **Meaning:** Provides a manual way to select and return a specific date.  
-* **Use Case:** Useful if you want to compare against or calculate with a fixed date.  
+#### 1. **Date picker**
+* **Meaning:** Provides a manual way to select and return a specific date.
+* **Use Case:** Useful if you want to compare against or calculate with a fixed date.
 * **How it works:** Select a date from a calendar interface.
 
 #### 2. **Number input**
@@ -253,219 +257,219 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 ### Mathematical Operators
 
-#### 1. **Sum**  
-* **Meaning:** Adds together multiple numeric values or expressions.  
-* **Use Case:** Useful for scoring systems or aggregating responses.  
-* **How it works:** All selected values are summed and returned as one number.  
+#### 1. **Sum**
+* **Meaning:** Adds together multiple numeric values or expressions.
+* **Use Case:** Useful for scoring systems or aggregating responses.
+* **How it works:** All selected values are summed and returned as one number.
 
-#### 2. **Negation**  
-* **Meaning:** Multiplies a number by –1 to invert its sign.  
-* **Use Case:** Useful when working with negative offsets or balancing scores.  
-* **How it works:** The input value is returned as its negative equivalent.  
+#### 2. **Negation**
+* **Meaning:** Multiplies a number by –1 to invert its sign.
+* **Use Case:** Useful when working with negative offsets or balancing scores.
+* **How it works:** The input value is returned as its negative equivalent.
 
 
 ### Event properties
 
-#### 1. **Get event payload value as number**  
-* **Meaning:** Extracts a value from an event payload and returns it as a number.  
-* **Use Case:** Use when incoming event data needs to be used in numeric comparisons or calculations.  
+#### 1. **Get event payload value as number**
+* **Meaning:** Extracts a value from an event payload and returns it as a number.
+* **Use Case:** Use when incoming event data needs to be used in numeric comparisons or calculations.
 * **How it works:** Enter the key of the event payload.
 
 <a id="study-int-study-variables"></a>
 ### Study variables
 
-#### 1. **Get study variable as integer**  
-* **Meaning:** Retrieves the value of a study variable and returns it as an integer.  
-* **Use Case:** Ideal for numeric data like age, visit counts, thresholds, or scoring logic.  
+#### 1. **Get study variable as integer**
+* **Meaning:** Retrieves the value of a study variable and returns it as an integer.
+* **Use Case:** Ideal for numeric data like age, visit counts, thresholds, or scoring logic.
 * **How it works:** Provide the variable key.
 
-#### 2. **Get study variable as float**  
-* **Meaning:** Retrieves the value of a study variable and returns it as a floating-point number.  
-* **Use Case:** Use for precise numeric values such as weight, dosage, or percentages.  
+#### 2. **Get study variable as float**
+* **Meaning:** Retrieves the value of a study variable and returns it as a floating-point number.
+* **Use Case:** Use for precise numeric values such as weight, dosage, or percentages.
 * **How it works:** Provide the variable key.
 
-#### 3. **Get study variable as date (POSIX seconds)**  
-* **Meaning:** Retrieves the value of a study variable and returns it as a date in POSIX seconds (Unix timestamp).  
-* **Use Case:** Commonly used for scheduling survey availability, triggering automated messages, or recording time-based events like birthdate or visit date.  
+#### 3. **Get study variable as date (POSIX seconds)**
+* **Meaning:** Retrieves the value of a study variable and returns it as a date in POSIX seconds (Unix timestamp).
+* **Use Case:** Commonly used for scheduling survey availability, triggering automated messages, or recording time-based events like birthdate or visit date.
 * **How it works:** Provide the variable key.
 
 ### Misc
 
 <a id="get-timestamp"></a>
-#### 1. **Get timestamp** 
-* **Meaning:** Returns a timestamp based on the current date and time or a defined reference date.  
-* **Use Case:** Useful for scheduling, comparing deadlines, or calculating relative dates (e.g., setting a reminder 7 days after survey submission).  
-* **How it works:**  
-  - **Offset:** Add or subtract time (e.g., +3 days, -2 weeks) from the reference point.  
-  - **Reference date:** Define a custom date/time as the starting point. If none is provided, the current time is used.  
+#### 1. **Get timestamp**
+* **Meaning:** Returns a timestamp based on the current date and time or a defined reference date.
+* **Use Case:** Useful for scheduling, comparing deadlines, or calculating relative dates (e.g., setting a reminder 7 days after survey submission).
+* **How it works:**
+  - **Offset:** Add or subtract time (e.g., +3 days, -2 weeks) from the reference point.
+  - **Reference date:** Define a custom date/time as the starting point. If none is provided, the current time is used.
 
-#### 2. **Parse value as number**  
-* **Meaning:** Converts a given value (e.g., a flag or response value) into a numeric value.  
-* **Use Case:** Helpful when participant input needs to be treated as a number for calculations or comparisons.  
-* **How it works:** Enter the value to be parsed into a number.  
+#### 2. **Parse value as number**
+* **Meaning:** Converts a given value (e.g., a flag or response value) into a numeric value.
+* **Use Case:** Helpful when participant input needs to be treated as a number for calculations or comparisons.
+* **How it works:** Enter the value to be parsed into a number.
 
 ### Advanced
 
-#### 1. **Use external service to evaluate event data (return float)**  
-* **Meaning:** Sends event data to an external service, which returns a floating-point number.  
-* **Use Case:** Can be used for advanced calculations or evaluations that require external logic.  
+#### 1. **Use external service to evaluate event data (return float)**
+* **Meaning:** Sends event data to an external service, which returns a floating-point number.
+* **Use Case:** Can be used for advanced calculations or evaluations that require external logic.
 * **How it works:** Select service name and route of the external event handler service.
 
-#### 2. **Generate random number**  
-* **Meaning:** Produces a random number within a defined range.  
-* **Use Case:** Useful for randomization tasks, such as assigning participants to different study groups.  
+#### 2. **Generate random number**
+* **Meaning:** Produces a random number within a defined range.
+* **Use Case:** Useful for randomization tasks, such as assigning participants to different study groups.
 * **How it works:** Enter a minimum and maximum value. The expression will return a random number within this range.
 
 #### 3. **Get current study counter value**
-* **Meaning:** Retrieves the current value of a study-level counter.  
-* **Use Case:** Use to display the current count or apply logic based on it.  
+* **Meaning:** Retrieves the current value of a study-level counter.
+* **Use Case:** Use to display the current count or apply logic based on it.
 * **How it works:** Enter the counter scope key.
 
-#### 4. **Increment and get study counter value**  
-* **Meaning:** Increases a study-level counter and retrieves the new value.  
-* **Use Case:** Use to generate sequential values or trigger logic after incrementing.  
+#### 4. **Increment and get study counter value**
+* **Meaning:** Increases a study-level counter and retrieves the new value.
+* **Use Case:** Use to generate sequential values or trigger logic after incrementing.
 * **How it works:** Enter the counter scope key.
 
 ### Date helpers
 
-#### 1. **Get ISO week for timestamp**  
-* **Meaning:** Returns the ISO week number for a given timestamp.  
-* **Use Case:** Helpful when rules depend on the calendar week (e.g., weekly schedules or reporting).  
+#### 1. **Get ISO week for timestamp**
+* **Meaning:** Returns the ISO week number for a given timestamp.
+* **Use Case:** Helpful when rules depend on the calendar week (e.g., weekly schedules or reporting).
 * **How it works:** Provide a timestamp.
 
-#### 2. **Get timestamp for next occurrence of an ISO week**  
-* **Meaning:** Calculates the timestamp for the next occurrence of a specified ISO week number.  
-* **Use Case:** Useful for scheduling events or reminders based on calendar weeks.  
+#### 2. **Get timestamp for next occurrence of an ISO week**
+* **Meaning:** Calculates the timestamp for the next occurrence of a specified ISO week number.
+* **Use Case:** Useful for scheduling events or reminders based on calendar weeks.
 * **How it works:** Provide an ISO week number (e.g., 42), and the expression returns the timestamp for the start of that week in the current or next year.
 
-#### 3. **Get timestamp for next occurrence of a start of month**  
-* **Meaning:** Returns the timestamp for the next start of a specified month.  
-* **Use Case:** Ideal for monthly scheduling, e.g., sending out surveys at the beginning of each month.  
+#### 3. **Get timestamp for next occurrence of a start of month**
+* **Meaning:** Returns the timestamp for the next start of a specified month.
+* **Use Case:** Ideal for monthly scheduling, e.g., sending out surveys at the beginning of each month.
 * **How it works:** Specify the month (e.g., March), and the expression calculates the timestamp for the next occurrence of the first day of that month.
 
 
 ### Response Checkers
 
-#### 1. **Get response value as number**  
-* **Meaning:** Extracts a numeric value from a participant’s response.  
-* **Use Case:** Use when responses need to be evaluated numerically, e.g., for scoring or thresholds.  
+#### 1. **Get response value as number**
+* **Meaning:** Extracts a numeric value from a participant’s response.
+* **Use Case:** Use when responses need to be evaluated numerically, e.g., for scoring or thresholds.
 * **How it works:**  Enter the item key and the slot key of the response.
 
-#### 2. **Count response items**  
-* **Meaning:** Counts the number of selected items in a multi-select or list-type response.  
-* **Use Case:** Useful for determining how many options a participant selected.  
+#### 2. **Count response items**
+* **Meaning:** Counts the number of selected items in a multi-select or list-type response.
+* **Use Case:** Useful for determining how many options a participant selected.
 * **How it works:** Enter the item key and the slot key of the list response. The slot key refers to the response group that contains the list of selected item options whose count will be evaluated.
 
 
 ### Participant State Checkers
 
-#### 1. **Get study entry time**  
-* **Meaning:** Returns the timestamp marking the participant’s entry into the study.  
-* **Use Case:** Useful for calculating durations, deadlines, or eligibility based on study entry.  
+#### 1. **Get study entry time**
+* **Meaning:** Returns the timestamp marking the participant’s entry into the study.
+* **Use Case:** Useful for calculating durations, deadlines, or eligibility based on study entry.
 * **How it works:** No input required.
 
-#### 2. **Get survey key assigned from timestamp**  
-* **Meaning:** Retrieves the timestamp from which a specific survey was assigned to the participant.  
-* **Use Case:** Useful for determining when a survey became available or tracking assignment history.  
-* **How it works:** Enter the survey key. 
+#### 2. **Get survey key assigned from timestamp**
+* **Meaning:** Retrieves the timestamp from which a specific survey was assigned to the participant.
+* **Use Case:** Useful for determining when a survey became available or tracking assignment history.
+* **How it works:** Enter the survey key.
 
-#### 3. **Get survey key assigned until timestamp**  
-* **Meaning:** Retrieves the timestamp until which a specific survey remains assigned to the participant.  
-* **Use Case:** Useful for checking survey availability windows or expiration. 
-* **How it works:** Enter the survey key. 
+#### 3. **Get survey key assigned until timestamp**
+* **Meaning:** Retrieves the timestamp until which a specific survey remains assigned to the participant.
+* **Use Case:** Useful for checking survey availability windows or expiration.
+* **How it works:** Enter the survey key.
 
-#### 4. **Get participant flag value as number**  
-* **Meaning:** Converts a participant flag value into a number.  
-* **Use Case:** Useful for evaluating participant flags numerically, e.g., numerical comparison or progress tracking.  
-* **How it works:** Provide the flag key. 
+#### 4. **Get participant flag value as number**
+* **Meaning:** Converts a participant flag value into a number.
+* **Use Case:** Useful for evaluating participant flags numerically, e.g., numerical comparison or progress tracking.
+* **How it works:** Provide the flag key.
 
-#### 5. **Get last submission date**  
-* **Meaning:** Returns the timestamp of the participant’s most recent survey submission.  
-* **Use Case:** Useful for tracking activity or triggering follow-ups.  
+#### 5. **Get last submission date**
+* **Meaning:** Returns the timestamp of the participant’s most recent survey submission.
+* **Use Case:** Useful for tracking activity or triggering follow-ups.
 * **How it works:** Specify the survey key. The expression returns the timestamp of the last submission for that survey.
 
-#### 6. **Get message next time**  
-* **Meaning:** Retrieves the next timestamp for when a specific message is scheduled to be sent.  
-* **Use Case:** Useful for managing message timing, reminders, or notifications.  
-* **How it works:** Enter the message key. 
+#### 6. **Get message next time**
+* **Meaning:** Retrieves the next timestamp for when a specific message is scheduled to be sent.
+* **Use Case:** Useful for managing message timing, reminders, or notifications.
+* **How it works:** Enter the message key.
 
 
 ### Incoming Participant State Checkers (Merge Events)
 
-#### 1. **Get incoming study entry time**  
-* **Meaning:** Retrieves the study entry timestamp of the incoming (merged) participant.  
-* **Use Case:** Useful for comparing entry times or preserving historical context during a merge.  
-* **How it works:** No input required. 
+#### 1. **Get incoming study entry time**
+* **Meaning:** Retrieves the study entry timestamp of the incoming (merged) participant.
+* **Use Case:** Useful for comparing entry times or preserving historical context during a merge.
+* **How it works:** No input required.
 
-#### 2. **Get incoming survey key assigned from timestamp (Merge event)**  
-* **Meaning:** Returns the timestamp from which a specific survey was assigned to the incoming participant.  
-* **Use Case:** Useful for tracking survey availability prior to a merge.  
-* **How it works:** Enter the survey key. 
+#### 2. **Get incoming survey key assigned from timestamp (Merge event)**
+* **Meaning:** Returns the timestamp from which a specific survey was assigned to the incoming participant.
+* **Use Case:** Useful for tracking survey availability prior to a merge.
+* **How it works:** Enter the survey key.
 
-#### 3. **Get incoming survey key assigned until timestamp (Merge event)**  
-* **Meaning:** Returns the timestamp until which a specific survey was assigned to the incoming participant.  
-* **Use Case:** Useful for checking if a survey was still active at the time of merge.  
-* **How it works:** Enter the survey key. 
+#### 3. **Get incoming survey key assigned until timestamp (Merge event)**
+* **Meaning:** Returns the timestamp until which a specific survey was assigned to the incoming participant.
+* **Use Case:** Useful for checking if a survey was still active at the time of merge.
+* **How it works:** Enter the survey key.
 
-#### 4. **Get incoming last submission date (Merge event)**  
-* **Meaning:** Retrieves the timestamp of the last survey submission made by the incoming participant.  
-* **Use Case:** Useful for evaluating recent activity before the merge.  
-* **How it works:** Enter the survey key. 
+#### 4. **Get incoming last submission date (Merge event)**
+* **Meaning:** Retrieves the timestamp of the last survey submission made by the incoming participant.
+* **Use Case:** Useful for evaluating recent activity before the merge.
+* **How it works:** Enter the survey key.
 
-#### 5. **Get incoming message next time (Merge event)**  
-* **Meaning:** Returns the next scheduled time for a message assigned to the incoming participant.  
-* **Use Case:** Useful for preserving message timing or rescheduling after a merge.  
+#### 5. **Get incoming message next time (Merge event)**
+* **Meaning:** Returns the next scheduled time for a message assigned to the incoming participant.
+* **Use Case:** Useful for preserving message timing or rescheduling after a merge.
 * **How it works:** Enter the message key.
 
 
 ---
 ## Strings
 
-Some expressions return strings that can be used for various purposes, such as displaying messages or formatting output. 
+Some expressions return strings that can be used for various purposes, such as displaying messages or formatting output.
 
 ### Variables
 
-#### 1. **Text constant**  
-* **Meaning:** Allows you to input a fixed text value.  
-* **Use Case:** Use to define labels or keys.  
+#### 1. **Text constant**
+* **Meaning:** Allows you to input a fixed text value.
+* **Use Case:** Use to define labels or keys.
 * **How it works:** Enter the desired text directly.
 
 ### Event properties
 
 #### 1. **Get event payload as string**
 * **Meaning:** Extracts a value from an event payload and returns it as a string.
-* **Use Case:** Use to inspect or process incoming event data.  
+* **Use Case:** Use to inspect or process incoming event data.
 * **How it works:** Enter the key of the event payload.
 
 <a id="study-string-study-variables"></a>
 ### Study variables
 
-#### 1. **Get study variable as string**  
-* **Meaning:** Retrieves the value of a study variable and returns it as a string.  
+#### 1. **Get study variable as string**
+* **Meaning:** Retrieves the value of a study variable and returns it as a string.
 * **Use Case:** Useful for workflows based on textual data such as participant group labels, phases of study flow, or other string-based values.
-* **How it works:** Provide the variable key. 
+* **How it works:** Provide the variable key.
 
 
 ### Advanced
 
-#### 1. **Use external service to evaluate event data**  
-* **Meaning:** Sends event data to an external service for evaluation, which returns a string.  
-* **Use Case:** Use to validate or process data using external logic.  
+#### 1. **Use external service to evaluate event data**
+* **Meaning:** Sends event data to an external service for evaluation, which returns a string.
+* **Use Case:** Use to validate or process data using external logic.
 * **How it works:** Select service name and route of the external event handler service.
 
 ### Date helpers
 
-#### 1. **Convert date to string**  
-* **Meaning:** Transforms a date value into a formatted string.  
-* **Use Case:** Use to display dates in readable formats or pass them to external systems.  
+#### 1. **Convert date to string**
+* **Meaning:** Transforms a date value into a formatted string.
+* **Use Case:** Use to display dates in readable formats or pass them to external systems.
 * **How It Works:** Provide a date value and specify the desired format using placeholders. Examples:
-  - `yyyy-MM-dd HH:mm:ss` → `"2023-12-25 14:30:45"`  
+  - `yyyy-MM-dd HH:mm:ss` → `"2023-12-25 14:30:45"`
   - `MM/dd/yy hh:mm a` → `"12/25/23 02:30 PM"`
   -  **Supported Format Tokens:**
 
 | Token | Description              | Example      |
 | ---- | ---- | ----------- |
-| `yyyy` | 4-digit year             | `2006`      | 
+| `yyyy` | 4-digit year             | `2006`      |
 | `yy`   | 2-digit year             | `06`        |
 | `MM`   | 2-digit month            | `01-12`   |
 | `M`    | 1-digit month            | `1-12`    |
@@ -481,10 +485,10 @@ Some expressions return strings that can be used for various purposes, such as d
 
 ### Response Checkers
 
-#### 1. **Get response value as string**  
-* **Meaning:** Retrieves a participant’s response as a string.  
-* **Use Case:** Use to display or process responses in text format.  
-* **How it works:** Enter the item key and the slot key of the response.  
+#### 1. **Get response value as string**
+* **Meaning:** Retrieves a participant’s response as a string.
+* **Use Case:** Use to display or process responses in text format.
+* **How it works:** Enter the item key and the slot key of the response.
 
 #### 2. **Get selected keys**
 * **Meaning:** Retrieves the selected keys from a multi-select or list-type response as a comma-separated string.
@@ -498,9 +502,9 @@ Some expressions return strings that can be used for various purposes, such as d
 * **Use Case:** Useful for displaying or using flag values in logic or communications.
 * **How it works:** Provide the flag key.
 
-#### 2. **Get linking code**  
-* **Meaning:** Retrieves the linking code assigned to the participant.  
-* **Use Case:** Use to connect data across studies or systems.  
+#### 2. **Get linking code**
+* **Meaning:** Retrieves the linking code assigned to the participant.
+* **Use Case:** Use to connect data across studies or systems.
 * **How it works:** Enter the linking code or study code list key.
 
 
@@ -508,212 +512,212 @@ Some expressions return strings that can be used for various purposes, such as d
 
 #### 1. **Get incoming participant flag value (Merge event)**
 * **Meaning:** Returns the value of a specific participant flag from the incoming (merged) participant as a string.
-* **Use Case:** Use to transfer participant data between studies.  
+* **Use Case:** Use to transfer participant data between studies.
 * **How it works:** Provide the flag key.
 
 #### 2. **Get incoming linking code value (Merge event)**
 * **Meaning:** Retrieves the linking code assigned to the incoming (merged) participant.
-* **Use Case:** Use to maintain participant identity across merged studies. 
+* **Use Case:** Use to maintain participant identity across merged studies.
 * **How it works:** Enter the linking code or study code list key.
 
 
 ---
 ## Actions
 
-**Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions. 
+**Actions** are tasks that modify or interact with a participant’s state within a study. They define what should happen next in a study workflow — for example, updating participant data, sending notifications, or managing study sessions.
 
 ### Control Flow
 
-#### 1. **If - else**  
-* **Meaning:** Executes one set of actions if a condition is true, and another set if it is false.  
-* **Use Case:** Use when different outcomes should be triggered depending on whether a condition is met.  
+#### 1. **If - else**
+* **Meaning:** Executes one set of actions if a condition is true, and another set if it is false.
+* **Use Case:** Use when different outcomes should be triggered depending on whether a condition is met.
 * **How it works:** Define a condition. If it evaluates to true, the “then” actions are executed; otherwise, the “else” actions are triggered.
 
-#### 2. **Conditional action set (IF-THEN)**  
-* **Meaning:** Executes a set of actions only if a specified condition is true.  
-* **Use Case:** Use to trigger actions selectively based on participant data or study state.  
+#### 2. **Conditional action set (IF-THEN)**
+* **Meaning:** Executes a set of actions only if a specified condition is true.
+* **Use Case:** Use to trigger actions selectively based on participant data or study state.
 * **How it works:** Provide a condition. If it evaluates to true, the defined actions are executed. No actions are triggered if the condition is false.
 
-#### 3. **Group of actions (DO)**  
-* **Meaning:** Executes multiple actions together as a single block.  
-* **Use Case:** Use to organize and run several related actions in sequence.  
+#### 3. **Group of actions (DO)**
+* **Meaning:** Executes multiple actions together as a single block.
+* **Use Case:** Use to organize and run several related actions in sequence.
 * **How it works:** Add all desired actions to the group. They will be executed in the order listed when the group is triggered.
 
 
 ### General Study Actions
 
-#### 1. **Update study status**  
-* **Meaning:** Changes the current status of the study for the participant.  
-* **Use Case:** Use to reflect progress, transitions, or milestones in the study.  
+#### 1. **Update study status**
+* **Meaning:** Changes the current status of the study for the participant.
+* **Use Case:** Use to reflect progress, transitions, or milestones in the study.
 * **How it works:** Select the new status value to assign.
 
-#### 2. **Stop participation**  
-* **Meaning:** Ends the participant’s involvement in the study.  
-* **Use Case:** Use when a participant should no longer continue, e.g., due to withdrawal or exclusion.  
+#### 2. **Stop participation**
+* **Meaning:** Ends the participant’s involvement in the study.
+* **Use Case:** Use when a participant should no longer continue, e.g., due to withdrawal or exclusion.
 * **How it works:** No input required. The participant is marked as no longer active in the study.
 
-#### 3. **Finish participation**  
-* **Meaning:** Marks the participant’s study journey as complete.  
-* **Use Case:** Use when all required tasks are done and the study is formally concluded.  
+#### 3. **Finish participation**
+* **Meaning:** Marks the participant’s study journey as complete.
+* **Use Case:** Use when all required tasks are done and the study is formally concluded.
 * **How it works:** No input required. The participant is marked as finished.
 
 #### 4. **Start new study session**
-* **Meaning:** Assigns a new study ID to the participant, starting a fresh session within the same study.  
-* **Use Case:** Use when you want to group a new set of surveys or activities under a unique session for the participant.  
+* **Meaning:** Assigns a new study ID to the participant, starting a fresh session within the same study.
+* **Use Case:** Use when you want to group a new set of surveys or activities under a unique session for the participant.
 * **How it works:** No input required. A new, unique study ID is automatically generated.
 
-#### 5. **Remove entry from study-wide code list**  
-* **Meaning:** Deletes a specific code entry associated with the participant from a global list.  
-* **Use Case:** Use to revoke access, remove tags, or clean up data.  
+#### 5. **Remove entry from study-wide code list**
+* **Meaning:** Deletes a specific code entry associated with the participant from a global list.
+* **Use Case:** Use to revoke access, remove tags, or clean up data.
 * **How it works:** Provide the list key and the code to be removed.
 
-#### 6. **Notify researchers (Email)**  
-* **Meaning:** Sends an email notification to designated researchers.  
-* **Use Case:** Use to inform about events like e.g. consent withdrawal or survey completion.  
+#### 6. **Notify researchers (Email)**
+* **Meaning:** Sends an email notification to designated researchers.
+* **Use Case:** Use to inform about events like e.g. consent withdrawal or survey completion.
 * **How it works:** Provide the message type and optional payload as key-value pair.
 
-#### 7. **Reset study counter**  
-* **Meaning:** Sets a study-level counter back to zero.  
-* **Use Case:** Use to restart counting for a new phase or time period.  
+#### 7. **Reset study counter**
+* **Meaning:** Sets a study-level counter back to zero.
+* **Use Case:** Use to restart counting for a new phase or time period.
 * **How it works:** Enter the scope key of the counter to reset.
 
 <a id="study-update-study-variables"></a>
-#### 8. **Update study variable (boolean)**  
-* **Meaning:** Updates a study variable with a boolean value (`true` or `false`).  
+#### 8. **Update study variable (boolean)**
+* **Meaning:** Updates a study variable with a boolean value (`true` or `false`).
 * **Use Case:** Use for closing access to survey components if a threshold of maximal participants is reached.
 * **How it works:** Select the variable key and assign a boolean value.
 
-#### 9. **Update study variable (string)**  
-* **Meaning:** Updates a study variable with a text value.  
+#### 9. **Update study variable (string)**
+* **Meaning:** Updates a study variable with a text value.
 * **Use Case:** Use to update the currently active study phase (e.g., from **"phase1"** to  **"phase2"**) if a threshold of participants is reached.
 * **How it works:** Select the variable key and assign a string value.
 
-#### 10. **Update study variable (integer)**  
-* **Meaning:** Updates a study variable with a whole number.  
+#### 10. **Update study variable (integer)**
+* **Meaning:** Updates a study variable with a whole number.
 * **Use Case:** Use to track the number of participants meeting a certain condition (e.g., symptom reported or submitted a survey) or updating thresholds for triggering study-wide actions.
 * **How it works:** Select the variable key and assign an integer value.
 
-#### 11. **Update study variable (float)**  
-* **Meaning:** Updates a study variable with a decimal number.  
-* **Use Case:** Use to track study-wide calculated values from external services or update thresholds for continuous variables (e.g., maximum EM diameter)  
+#### 11. **Update study variable (float)**
+* **Meaning:** Updates a study variable with a decimal number.
+* **Use Case:** Use to track study-wide calculated values from external services or update thresholds for continuous variables (e.g., maximum EM diameter)
 * **How it works:** Select the variable key and assign a float value.
 
-#### 12. **Update study variable (date)**  
-* **Meaning:** Updates a study variable with a date value in POSIX seconds (Unix timestamp).  
+#### 12. **Update study variable (date)**
+* **Meaning:** Updates a study variable with a date value in POSIX seconds (Unix timestamp).
 * **Use Case:** Use to update the start or end date of survey availability when a defined participant threshold is reached.
 * **How it works:** Select the variable key and provide a date value in POSIX format.
 
 
 ### Change Participant State
 
-#### 1. **Update participant flag**  
-* **Meaning:** Sets or updates a flag value for the participant.  
-* **Use Case:** Use to track states like eligibility, completion, or custom markers.  
+#### 1. **Update participant flag**
+* **Meaning:** Sets or updates a flag value for the participant.
+* **Use Case:** Use to track states like eligibility, completion, or custom markers.
 * **How it works:** Provide the flag key and the value to assign.
 
-#### 2. **Remove participant flag**  
-* **Meaning:** Deletes a specific flag from the participant’s record.  
-* **Use Case:** Use to reset or clean up participant state markers.  
+#### 2. **Remove participant flag**
+* **Meaning:** Deletes a specific flag from the participant’s record.
+* **Use Case:** Use to reset or clean up participant state markers.
 * **How it works:** Provide the flag key to be removed.
 
 #### 3. **Add new survey**
-* **Meaning:** Assigns a new survey to the participant.  
-* **Use Case:** Use to trigger follow-up surveys or add new tasks.  
+* **Meaning:** Assigns a new survey to the participant.
+* **Use Case:** Use to trigger follow-up surveys or add new tasks.
 * **How it works:** Specify the survey key, and select a category (normal, priority, immediate, optional) to control its assignment type. Optionally, you can set “available from” and “available until” timestamps to define the survey’s availability window.
 
-#### 4. **Remove all assigned surveys**  
-* **Meaning:** Deletes all surveys currently assigned to the participant.  
-* **Use Case:** Use to reset the survey queue or clear outdated assignments.  
-* **How it works:** No input required. 
+#### 4. **Remove all assigned surveys**
+* **Meaning:** Deletes all surveys currently assigned to the participant.
+* **Use Case:** Use to reset the survey queue or clear outdated assignments.
+* **How it works:** No input required.
 
-#### 5. **Remove one assigned survey**  
-* **Meaning:** Deletes a specific survey from the participant’s assignments.  
-* **Use Case:** Use to cancel a particular survey without affecting others.  
+#### 5. **Remove one assigned survey**
+* **Meaning:** Deletes a specific survey from the participant’s assignments.
+* **Use Case:** Use to cancel a particular survey without affecting others.
 * **How it works:** Provide the survey key to be removed and specify if the first or the last survey should be removed.
 
-#### 6. **Remove all surveys of a specific key**  
-* **Meaning:** Deletes all surveys with a given key, regardless of assignment time.  
-* **Use Case:** Use to remove repeated or recurring surveys of the same type.  
-* **How it works:** Enter the survey key. 
+#### 6. **Remove all surveys of a specific key**
+* **Meaning:** Deletes all surveys with a given key, regardless of assignment time.
+* **Use Case:** Use to remove repeated or recurring surveys of the same type.
+* **How it works:** Enter the survey key.
 
 #### 7. **Send message now (immediately)**
-* **Meaning:** Sends a message to the participant without delay.  
-* **Use Case:** Use to deliver instant feedback or instructions.  
+* **Meaning:** Sends a message to the participant without delay.
+* **Use Case:** Use to deliver instant feedback or instructions.
 * **How it works:** Select the message to be sent immediately.
 
-#### 8. **Schedule a message**  
-* **Meaning:** Plans a message to be sent to the participant at a future time.  
-* **Use Case:** Use for reminders, notifications, or timed instructions.  
+#### 8. **Schedule a message**
+* **Meaning:** Plans a message to be sent to the participant at a future time.
+* **Use Case:** Use for reminders, notifications, or timed instructions.
 * **How it works:** Provide the message key and the [scheduled timestamp](#get-timestamp).
 
-#### 9. **Remove all scheduled messages**  
-* **Meaning:** Deletes all messages currently scheduled for the participant.  
-* **Use Case:** Use to reset the message queue or cancel all pending notifications.  
-* **How it works:** No input required. 
+#### 9. **Remove all scheduled messages**
+* **Meaning:** Deletes all messages currently scheduled for the participant.
+* **Use Case:** Use to reset the message queue or cancel all pending notifications.
+* **How it works:** No input required.
 
-#### 10. **Remove scheduled messages of a specific type**  
-* **Meaning:** Deletes scheduled messages that match a specific message key.  
-* **Use Case:** Use to cancel a particular type of message without affecting others.  
+#### 10. **Remove scheduled messages of a specific type**
+* **Meaning:** Deletes scheduled messages that match a specific message key.
+* **Use Case:** Use to cancel a particular type of message without affecting others.
 * **How it works:** Enter the message key.
 
-#### 11. **Set linking code**  
-* **Meaning:** Assigns a specific linking code to the participant.  
-* **Use Case:** Use to establish connections between participants or datasets.  
+#### 11. **Set linking code**
+* **Meaning:** Assigns a specific linking code to the participant.
+* **Use Case:** Use to establish connections between participants or datasets.
 * **How it works:** Select linking code key and enter the code as value.
 
-#### 12. **Delete linking code**  
-* **Meaning:** Removes the currently assigned linking code from the participant.  
-* **Use Case:** Use to break links or reset participant associations.  
+#### 12. **Delete linking code**
+* **Meaning:** Removes the currently assigned linking code from the participant.
+* **Use Case:** Use to break links or reset participant associations.
 * **How it works:** No input required. Specify optional keys if only linking code of these keys should be deleted.
 
-#### 13. **Draw study code as linking code**  
-* **Meaning:** Uses the participant’s study code as their linking code.  
-* **Use Case:** Use when the study code should serve as a unique identifier across systems.  
+#### 13. **Draw study code as linking code**
+* **Meaning:** Uses the participant’s study code as their linking code.
+* **Use Case:** Use when the study code should serve as a unique identifier across systems.
 * **How it works:** Select the study code key. Specify optionally the linking code key to assign the study code to.
 
-#### 14. **Remove confidential response by key**  
-* **Meaning:** Deletes a specific confidential response from the participant’s data.  
-* **Use Case:** Use to remove sensitive information selectively.  
+#### 14. **Remove confidential response by key**
+* **Meaning:** Deletes a specific confidential response from the participant’s data.
+* **Use Case:** Use to remove sensitive information selectively.
 * **How it works:** Provide the response key to be removed.
 
-#### 15. **Remove all confidential responses**  
-* **Meaning:** Deletes all confidential responses associated with the participant.  
-* **Use Case:** Use to fully clear sensitive data.  
-* **How it works:** No input required. 
+#### 15. **Remove all confidential responses**
+* **Meaning:** Deletes all confidential responses associated with the participant.
+* **Use Case:** Use to fully clear sensitive data.
+* **How it works:** No input required.
 
-#### 16. **Increment and store study counter as flag**  
-* **Meaning:** Increases a study-level counter and saves the value as part of a participant flag.  
-* **Use Case:** Use to assign sequential IDs or track event counts.  
+#### 16. **Increment and store study counter as flag**
+* **Meaning:** Increases a study-level counter and saves the value as part of a participant flag.
+* **Use Case:** Use to assign sequential IDs or track event counts.
 * **How it works:** Enter the counter scope key and the flag key. Optionally, define a prefix to prepend to the value and padding to ensure a minimum number of digits (e.g., `ST-0005`).
 
 #### 17. **Increment and store study counter as linking code**
-* **Meaning:** Increases a study-level counter and stores the result as part of a linking code for the participant.  
-* **Use Case:** Use to generate unique codes for linking data across systems or studies.  
+* **Meaning:** Increases a study-level counter and stores the result as part of a linking code for the participant.
+* **Use Case:** Use to generate unique codes for linking data across systems or studies.
 * **How it works:** Enter the counter scope key and the linking code key. Optionally, define a prefix to prepend to the code and padding to ensure a minimum number of digits (e.g., `LC-0007`).
 
-#### 18. **External event handler**  
-* **Meaning:** Triggers an external event or integration.  
-* **Use Case:** Use to connect with external systems or services.  
+#### 18. **External event handler**
+* **Meaning:** Triggers an external event or integration.
+* **Use Case:** Use to connect with external systems or services.
 * **How it works:** Provide the service name and route.
 
-#### 19. **Initialize report**  
-* **Meaning:** Starts a new report for the participant.  
-* **Use Case:** Use to begin tracking or compiling summarized participant data.  
+#### 19. **Initialize report**
+* **Meaning:** Starts a new report for the participant.
+* **Use Case:** Use to begin tracking or compiling summarized participant data.
 * **How it works:** Specify the report key.
 
-#### 20. **Cancel report**  
-* **Meaning:** Cancels an active report for the participant for the current event.  
-* **Use Case:** Use to stop and discard reports.  
+#### 20. **Cancel report**
+* **Meaning:** Cancels an active report for the participant for the current event.
+* **Use Case:** Use to stop and discard reports.
 * **How it works:** Provide the report key to cancel.
 
 #### 21. **Update report data**
-* **Meaning:** Modifies or adds data to an existing report.  
-* **Use Case:** Use to keep reports current or add new findings.  
-* **How it works:**  
+* **Meaning:** Modifies or adds data to an existing report.
+* **Use Case:** Use to keep reports current or add new findings.
+* **How it works:**
   Specify the report key and the attribute you want to update. Enter the new value for the attribute. Optionally, you can select how the value should be interpreted (e.g., as a date, float, integer, raw message, or list of keys).
 
 #### 22. **Remove report data by attribute key**
-* **Meaning:** Deletes specific data from a report based on the attribute key.  
-* **Use Case:** Use to selectively remove report entries without canceling the entire report.  
+* **Meaning:** Deletes specific data from a report based on the attribute key.
+* **Use Case:** Use to selectively remove report entries without canceling the entire report.
 * **How it works:** Provide the report key and the attribute to be removed from the report.
 
