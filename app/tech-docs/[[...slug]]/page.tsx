@@ -32,7 +32,7 @@ export default async function Page(props: {
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}
       breadcrumb={{
-        includeRoot: true,
+        includeRoot: false,
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>

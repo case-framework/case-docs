@@ -1,5 +1,6 @@
 {
     "title": "Participant Management",
     "description": "Tools to interact with participant data",
-    "root": true
+    "root": true,
+    "icon": "BookUser"
 }

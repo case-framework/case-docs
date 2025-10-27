@@ -2,5 +2,5 @@
     "title": "User Management",
     "description": "Functionality for managing user accounts and permissions",
     "root": true,
-    "icon": "UserRoundCog"
+    "icon": "ShieldUser"
 }
