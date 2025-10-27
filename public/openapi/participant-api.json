@@ -10,6 +10,9 @@
             "get": {
                 "summary": "Health check",
                 "operationId": "getHealth",
+                "tags": [
+                    "misc"
+                ],
                 "responses": {
                     "200": {
                         "description": "Service is healthy",
@@ -33,6 +36,9 @@
         },
         "/v1/auth/login": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Login with email and password",
                 "operationId": "loginWithEmail",
                 "requestBody": {
@@ -2634,5 +2640,15 @@
                 "additionalProperties": false
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Authentication endpoints"
+        },
+        {
+            "name": "misc",
+            "description": "Miscellaneous"
+        }
+    ]
 }

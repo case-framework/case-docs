@@ -17,7 +17,7 @@ export default function HomePage() {
       <p className="text-fd-muted-foreground">
         API documentation is available at{' '}
         <Link
-          href="/tech-docs/smtp-bridge/api"
+          href="/tech-docs/framework/overview"
           className="text-fd-foreground font-semibold underline"
         >
           /tech-docs
