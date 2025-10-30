@@ -192,10 +192,6 @@ Use these when you want rules to trigger only if study data falls inside or outs
 * **Use Case:** Use when actions should only trigger for participants who are linked to a certain message type (e.g. reminder).
 * **How it works:** Select the message type to check for.
 
-#### 11 ** Get current study session's ID **
-* **Meaning:** Returns the ID of the current study session.
-* **Use Case:** e.g. to store the session ID into a report data object, or compare with participant flags.
-
 ### Incoming participant state checkers (for merge events)
 
 #### 1. **Incoming state has survey with key assigned (Merge event)**
@@ -368,27 +364,32 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 * **Use Case:** Useful for calculating durations, deadlines, or eligibility based on study entry.
 * **How it works:** No input required.
 
-#### 2. **Get survey key assigned from timestamp**
+#### 2. ** Get current study session's ID **
+* **Meaning:** Returns the ID of the current study session.
+* **Use Case:** Use to store the session ID into a report data object, or compare with participant flags.
+* **How it works:** No input required.
+
+#### 3. **Get survey key assigned from timestamp**
 * **Meaning:** Retrieves the timestamp from which a specific survey was assigned to the participant.
 * **Use Case:** Useful for determining when a survey became available or tracking assignment history.
 * **How it works:** Enter the survey key.
 
-#### 3. **Get survey key assigned until timestamp**
+#### 4. **Get survey key assigned until timestamp**
 * **Meaning:** Retrieves the timestamp until which a specific survey remains assigned to the participant.
 * **Use Case:** Useful for checking survey availability windows or expiration.
 * **How it works:** Enter the survey key.
 
-#### 4. **Get participant flag value as number**
+#### 5. **Get participant flag value as number**
 * **Meaning:** Converts a participant flag value into a number.
 * **Use Case:** Useful for evaluating participant flags numerically, e.g., numerical comparison or progress tracking.
 * **How it works:** Provide the flag key.
 
-#### 5. **Get last submission date**
+#### 6. **Get last submission date**
 * **Meaning:** Returns the timestamp of the participant’s most recent survey submission.
 * **Use Case:** Useful for tracking activity or triggering follow-ups.
 * **How it works:** Specify the survey key. The expression returns the timestamp of the last submission for that survey.
 
-#### 6. **Get message next time**
+#### 7. **Get message next time**
 * **Meaning:** Retrieves the next timestamp for when a specific message is scheduled to be sent.
 * **Use Case:** Useful for managing message timing, reminders, or notifications.
 * **How it works:** Enter the message key.
