@@ -66,6 +66,9 @@
         },
         "/v1/auth/signup": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Sign up with email",
                 "operationId": "signupWithEmail",
                 "requestBody": {
@@ -96,6 +99,9 @@
         },
         "/v1/auth/login-with-temptoken": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Login using a temporary token (optionally with password or access token)",
                 "operationId": "loginWithTempToken",
                 "requestBody": {
@@ -123,6 +129,9 @@
         },
         "/v1/auth/temptoken-info": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Get info for a temporary token",
                 "operationId": "getTempTokenInfo",
                 "requestBody": {
@@ -154,6 +163,9 @@
         },
         "/v1/auth/token/renew": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Renew access token",
                 "security": [
                     {
@@ -186,6 +198,9 @@
         },
         "/v1/auth/token/validate": {
             "get": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Validate access token",
                 "security": [
                     {
@@ -220,6 +235,9 @@
         },
         "/v1/auth/token/revoke": {
             "get": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Revoke refresh tokens for user",
                 "security": [
                     {
@@ -258,6 +276,9 @@
         },
         "/v1/auth/resend-email-verification": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Resend email verification",
                 "security": [
                     {
@@ -302,6 +323,9 @@
         },
         "/v1/auth/verify-email": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Verify email by token",
                 "operationId": "verifyEmail",
                 "requestBody": {
@@ -349,6 +373,9 @@
         },
         "/v1/auth/logout": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Logout user (invalidate current session)",
                 "security": [
                     {
@@ -368,6 +395,9 @@
         },
         "/v1/auth/otp": {
             "get": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Request OTP (email by default)",
                 "security": [
                     {
@@ -407,6 +437,9 @@
         },
         "/v1/auth/otp/verify": {
             "post": {
+                "tags": [
+                    "auth"
+                ],
                 "summary": "Verify OTP code",
                 "security": [
                     {
@@ -442,6 +475,7 @@
         },
         "/v1/password-reset/initiate": {
             "post": {
+                "tags": ["password"],
                 "summary": "Initiate password reset",
                 "operationId": "initiatePasswordReset",
                 "requestBody": {
@@ -472,6 +506,7 @@
         },
         "/v1/password-reset/get-infos": {
             "post": {
+                "tags": ["password"],
                 "summary": "Get info for a password reset token",
                 "operationId": "getPasswordResetInfos",
                 "requestBody": {
@@ -519,6 +554,7 @@
         },
         "/v1/password-reset/reset": {
             "post": {
+                "tags": ["password"],
                 "summary": "Reset password",
                 "operationId": "resetPassword",
                 "requestBody": {
@@ -543,6 +579,7 @@
         },
         "/v1/study-service/studies/": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "List studies by status",
                 "operationId": "getStudiesByStatus",
                 "parameters": [
@@ -593,6 +630,7 @@
         },
         "/v1/study-service/studies/{studyKey}": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "Get study by key",
                 "operationId": "getStudy",
                 "parameters": [
@@ -643,6 +681,7 @@
         },
         "/v1/study-service/studies/{studyKey}/code-lists/has-code": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "Check if a code exists in a code list",
                 "operationId": "studyHasCodeListCode",
                 "parameters": [
@@ -709,6 +748,7 @@
         },
         "/v1/study-service/studies/{studyKey}/variables": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "List variables for a study",
                 "operationId": "getStudyVariables",
                 "parameters": [
@@ -744,6 +784,7 @@
         },
         "/v1/study-service/studies/{studyKey}/variables/{variableKey}": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "Get a study variable",
                 "operationId": "getStudyVariable",
                 "parameters": [
@@ -787,6 +828,7 @@
         },
         "/v1/study-service/studies/participating": {
             "get": {
+                "tags": ["study service studies"],
                 "summary": "List studies the user participates in",
                 "security": [
                     {
@@ -824,6 +866,7 @@
         },
         "/v1/study-service/events/{studyKey}/enter": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Enter a study",
                 "security": [
                     {
@@ -874,6 +917,7 @@
         },
         "/v1/study-service/events/{studyKey}/custom": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Trigger a custom study event",
                 "security": [
                     {
@@ -932,6 +976,7 @@
         },
         "/v1/study-service/events/{studyKey}/submit": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Submit survey response",
                 "security": [
                     {
@@ -988,6 +1033,7 @@
         },
         "/v1/study-service/events/{studyKey}/leave": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Leave a study",
                 "security": [
                     {
@@ -1038,6 +1084,7 @@
         },
         "/v1/study-service/events/{studyKey}/merge-temporary-participant": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Merge temporary participant into user profile",
                 "security": [
                     {
@@ -1092,6 +1139,7 @@
         },
         "/v1/study-service/events/{studyKey}/merge-virtual-participant": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Merge a virtual participant into user profile by linking code",
                 "security": [
                     {
@@ -1134,6 +1182,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/surveys": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get assigned surveys for profiles",
                 "security": [
                     {
@@ -1175,6 +1224,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/survey/{surveyKey}": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get a specific survey with context",
                 "security": [
                     {
@@ -1223,6 +1273,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/participant-state": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get participant state",
                 "security": [
                     {
@@ -1263,6 +1314,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/linking-code": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get a linking code by key",
                 "security": [
                     {
@@ -1311,6 +1363,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/responses": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get survey responses for a profile",
                 "security": [
                     {
@@ -1376,6 +1429,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/confidential-response": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get confidential responses by key",
                 "security": [
                     {
@@ -1424,6 +1478,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/submission-history": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get submission history for profiles",
                 "security": [
                     {
@@ -1474,6 +1529,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/reports": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get reports for a profile",
                 "security": [
                     {
@@ -1537,6 +1593,7 @@
         },
         "/v1/study-service/temp-participant/register": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Register a temporary participant",
                 "operationId": "registerTempParticipant",
                 "requestBody": {
@@ -1576,6 +1633,7 @@
         },
         "/v1/study-service/temp-participant/surveys": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Assigned surveys for a temporary participant",
                 "operationId": "getTempParticipantSurveys",
                 "parameters": [
@@ -1619,6 +1677,7 @@
         },
         "/v1/study-service/temp-participant/survey": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get a survey with context for a temporary participant",
                 "operationId": "getTempParticipantSurveyWithContext",
                 "parameters": [
@@ -1670,6 +1729,7 @@
         },
         "/v1/study-service/temp-participant/submit-response": {
             "post": {
+                "tags": ["study service events"],
                 "summary": "Submit a survey response for a temporary participant",
                 "operationId": "submitTempParticipantResponse",
                 "requestBody": {
@@ -1718,6 +1778,7 @@
         },
         "/v1/study-service/virtual-participants/{studyKey}/": {
             "get": {
+                "tags": ["study service participant data"],
                 "summary": "Get virtual participants by linking code",
                 "security": [
                     {
@@ -1766,6 +1827,7 @@
         },
         "/v1/user/": {
             "get": {
+                "tags": ["user"],
                 "summary": "Get current user",
                 "security": [
                     {
@@ -1798,6 +1860,7 @@
                 }
             },
             "delete": {
+                "tags": ["user"],
                 "summary": "Delete current user",
                 "security": [
                     {
@@ -1833,6 +1896,7 @@
         },
         "/v1/user/profiles": {
             "post": {
+                "tags": ["user"],
                 "summary": "Add new profile",
                 "security": [
                     {
@@ -1875,6 +1939,7 @@
                 }
             },
             "put": {
+                "tags": ["user"],
                 "summary": "Update profile",
                 "security": [
                     {
@@ -1919,6 +1984,7 @@
         },
         "/v1/user/profiles/remove": {
             "post": {
+                "tags": ["user"],
                 "summary": "Remove a profile",
                 "security": [
                     {
@@ -1960,6 +2026,7 @@
         },
         "/v1/user/password": {
             "post": {
+                "tags": ["user"],
                 "summary": "Change password",
                 "security": [
                     {
@@ -2004,6 +2071,7 @@
         },
         "/v1/user/change-account-email": {
             "post": {
+                "tags": ["user"],
                 "summary": "Change account email",
                 "security": [
                     {
@@ -2049,6 +2117,7 @@
         },
         "/v1/user/change-phone-number": {
             "post": {
+                "tags": ["user"],
                 "summary": "Change phone number",
                 "security": [
                     {
@@ -2096,6 +2165,7 @@
         },
         "/v1/user/request-phone-number-verification": {
             "get": {
+                "tags": ["user"],
                 "summary": "Request phone number verification code via SMS",
                 "security": [
                     {
@@ -2121,6 +2191,7 @@
         },
         "/v1/user/attributes": {
             "get": {
+                "tags": ["user"],
                 "summary": "Get user attributes",
                 "security": [
                     {
@@ -2157,6 +2228,7 @@
                 }
             },
             "post": {
+                "tags": ["user"],
                 "summary": "Create or update a user attribute",
                 "security": [
                     {
@@ -2189,6 +2261,7 @@
         },
         "/v1/user/attributes/{attributeID}": {
             "delete": {
+                "tags": ["user"],
                 "summary": "Delete a user attribute",
                 "security": [
                     {
@@ -2221,6 +2294,7 @@
         },
         "/v1/user/contact-preferences": {
             "put": {
+                "tags": ["user"],
                 "summary": "Update contact preferences",
                 "description": "Update the user's newsletter and weekly subscription preferences.",
                 "security": [
@@ -2261,6 +2335,7 @@
         },
         "/v1/unsubscribe-newsletter": {
             "post": {
+                "tags": ["misc"],
                 "summary": "Unsubscribe user from newsletter (via token)",
                 "operationId": "unsubscribeNewsletter",
                 "requestBody": {
@@ -2700,6 +2775,26 @@
         {
             "name": "auth",
             "description": "Authentication endpoints"
+        },
+        {
+            "name": "password",
+            "description": "Password endpoints"
+        },
+         {
+            "name": "study service events",
+            "description": "Study service events endpoints"
+        },
+         {
+            "name": "study service participant data",
+            "description": "Endpoints getting participant data in study service"
+        },
+         {
+            "name": "study service studies",
+            "description": "Endpoints getting study data in study service"
+        },
+        {
+            "name": "user",
+            "description": "User endpoints"
         },
         {
             "name": "misc",
