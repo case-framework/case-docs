@@ -1472,7 +1472,7 @@
                 }
             }
         },
-        "/v1/study-service/reports": {
+        "/v1/study-service/participant-data/{studyKey}/reports": {
             "get": {
                 "summary": "Get reports for a profile",
                 "security": [
@@ -2219,6 +2219,46 @@
                 }
             }
         },
+        "/v1/user/contact-preferences": {
+            "put": {
+                "summary": "Update contact preferences",
+                "description": "Update the user's newsletter and weekly subscription preferences.",
+                "security": [
+                    { "BearerAuth": [] }
+                ],
+                "operationId": "updateContactPreferences",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateContactPreferencesReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contact preferences updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                },
+                                "examples": {
+                                    "ok": {
+                                        "value": { "message": "contact preferences updated" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": { "$ref": "#/components/responses/Error400" },
+                    "401": { "$ref": "#/components/responses/Error401" },
+                    "500": { "$ref": "#/components/responses/Error400" }
+                }
+            }
+        },
         "/v1/unsubscribe-newsletter": {
             "post": {
                 "summary": "Unsubscribe user from newsletter (via token)",
@@ -2335,6 +2375,21 @@
                 "required": [
                     "status"
                 ],
+                "additionalProperties": false
+            },
+            "UpdateContactPreferencesReq": {
+                "type": "object",
+                "properties": {
+                    "subscribedToNewsletter": {
+                        "type": "boolean",
+                        "description": "Whether the user is subscribed to the newsletter."
+                    },
+                    "toggleWeeklySubscription": {
+                        "type": "boolean",
+                        "description": "If true, toggles the user's weekly subscription preference."
+                    }
+                },
+                "required": ["subscribedToNewsletter", "toggleWeeklySubscription"],
                 "additionalProperties": false
             },
             "Message": {
