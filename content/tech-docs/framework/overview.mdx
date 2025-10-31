@@ -6,10 +6,64 @@ description: Components of the CASE Framework
 This page wants to give you an overview of the standard set of components offered by the CASE Framework.
 Detailed documentation for each component is available in their respective pages.
 
-## Framework
+## Offered components
 
-The Framework is a service that allows you to manage the system and its resources.
+### Backend Services
 
+Event-driven APIs to interact with the system.
+
+#### Management API
+
+Bundles the functionality needed to manage the system and its resources. Provides authentication and authorization for the admin UI and other tools.
+[More information](/tech-docs/management-api/overview)
+
+#### Participant API
+
+A collection of APIs for implementing participant facing functionality. Includes built-in multi-factor authentication and user management and study interactions.
+[More information](/tech-docs/participant-api/overview)
+
+#### SMTP Bridge
+Internal service to bridge the framework's email sending to an external SMTP server. Has a simple API to send emails. In case, the setup is using a different email provider, this service can be replaced with a custom implementation.
+[More information](/tech-docs/smtp-bridge/overview)
+
+#### SMTP Bridge Emulator
+Identical API to the SMTP Bridge, but instead of sending emails through an SMTP connection, it will write them to disk at a specified location. Useful for testing or development purposes, when no SMTP server is available yet, or to avoid sending related costs/risks in load testing.
+
+---
+
+### Backend Jobs
+
+Scheduled or one off jobs to be run on the server.
+
+#### Study Timer
+
+#### User Management
+
+#### Messaging
+
+#### Study Daily Data Export
+
+#### DB migration
+
+---
+
+### Applications
+
+#### Admin UI
+
+#### Recruitment List Application
+
+- frontend + backend
+
+---
+
+### Libraries
+
+#### Survey Engine
+
+#### Editor tools
+
+---
 
 ## Basic application architecture
 
@@ -29,7 +83,7 @@ The standard application setup is as follows:
         - participant-frontend: frontend component to handle participant interactions. In most cases, this was implemented as a Next.js application so far, but it's not a requirement.
     - Management facing:
         - management-api: backend component to handle management events and data
-        - case-admin: a web application to handle management interactions, to configure the application and its studies, or access data in the system.
+        - case-admin (Admin/Management UI): a web application to handle management interactions, to configure the application and its studies, or access data in the system.
     - smtp-bridge: to bridge the framework's email sending to an external SMTP server
     - Jobs run on regular intervals:
         - messaging: to handle message related tasks, such as processing message queues or generating scheduled messages
