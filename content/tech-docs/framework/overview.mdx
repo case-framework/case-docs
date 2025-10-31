@@ -19,7 +19,7 @@ Bundles the functionality needed to manage the system and its resources. Provide
 
 #### Participant API
 
-A collection of APIs for implementing participant facing functionality. Includes built-in multi-factor authentication and user management and study interactions.
+A collection of APIs for implementing participant-facing functionality. Includes built-in multi-factor authentication and user management and study interactions.
 [More information](/tech-docs/participant-api/overview)
 
 #### SMTP Bridge
@@ -33,7 +33,7 @@ Identical API to the SMTP Bridge, but instead of sending emails through an SMTP 
 
 ### Backend Jobs
 
-Scheduled or one off jobs to be run on the server.
+Scheduled or one-off jobs to be run on the server.
 
 #### Study Timer
 
@@ -96,15 +96,15 @@ The standard application setup is as follows:
     - Email server with SMTP
     - Persistent storage for files
 2. Framework components:
-    - Participant facing:
+    - Participant-facing:
         - participant-api: backend component to handle participant events and data
         - participant-frontend: frontend component to handle participant interactions. In most cases, this was implemented as a Next.js application so far, but it's not a requirement.
-    - Management facing:
+    - Management-facing:
         - management-api: backend component to handle management events and data
         - case-admin (Admin/Management UI): a web application to handle management interactions, to configure the application and its studies, or access data in the system.
     - smtp-bridge: to bridge the framework's email sending to an external SMTP server
     - Jobs run on regular intervals:
-        - messaging: to handle message related tasks, such as processing message queues or generating scheduled messages
+        - messaging: to handle messaging-related tasks, such as processing message queues or generating scheduled messages
         - study-timer: to update study statistics and handle study timer events
         - user-management: to handle user management tasks, such as reminding users to verify their email address, or cleaning up unused or unverified user accounts
 3. Optional components:
