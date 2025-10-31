@@ -1,8 +1,41 @@
 ---
-title: Overview
-description: Framework
+title: Framework Overview
+description: Components of the CASE Framework
 ---
+
+This page wants to give you an overview of the standard set of components offered by the CASE Framework.
+Detailed documentation for each component is available in their respective pages.
 
 ## Framework
 
 The Framework is a service that allows you to manage the system and its resources.
+
+
+## Basic application architecture
+
+![Basic application architecture](./images/case-typical-setup.png)
+
+
+The framework can be utilized in a variety of ways depending on the use case.
+The standard application setup is as follows:
+
+1. External resources:
+    - MongoDB database
+    - Email server with SMTP
+    - Persistent storage for files
+2. Framework components:
+    - Participant facing:
+        - participant-api: backend component to handle participant events and data
+        - participant-frontend: frontend component to handle participant interactions. In most cases, this was implemented as a Next.js application so far, but it's not a requirement.
+    - Management facing:
+        - management-api: backend component to handle management events and data
+        - case-admin: a web application to handle management interactions, to configure the application and its studies, or access data in the system.
+    - smtp-bridge: to bridge the framework's email sending to an external SMTP server
+    - Jobs run on regular intervals:
+        - messaging: to handle message related tasks, such as processing message queues or generating scheduled messages
+        - study-timer: to update study statistics and handle study timer events
+        - user-management: to handle user management tasks, such as reminding users to verify their email address, or cleaning up unused or unverified user accounts
+3. Optional components:
+    - study-daily-data-export: to prepare daily data exports for researchers
+    - recruitment-list application (with backend and frontend): pull participants and their data for recruitment purposes and share it with external partners
+
