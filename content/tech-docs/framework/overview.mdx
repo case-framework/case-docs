@@ -37,13 +37,23 @@ Scheduled or one off jobs to be run on the server.
 
 #### Study Timer
 
+This job handles scheduled timer operations for active studies, including updating study statistics, executing timer-based actions, and optionally cleaning up orphaned task results.
+
 #### User Management
+
+This job handles scheduled user management operations including account cleanup, verification reminders, inactivity management, and profile ID lookup generation. It helps maintain data integrity and manages the user lifecycle across studies.
 
 #### Messaging
 
+This job handles various messaging-related tasks including processing outgoing emails, scheduled messages, study messages, and researcher notifications.
+
 #### Study Daily Data Export
 
+This job handles daily data exports for studies, including survey responses and confidential response exports. It also provides cleanup functionality for orphaned task results.
+
 #### DB migration
+
+This job handles various db migration tasks including dropping and creating indexes.
 
 ---
 
@@ -51,9 +61,11 @@ Scheduled or one off jobs to be run on the server.
 
 #### Admin UI
 
+CASE's Admin UI is a web app for setting up and running research studies. It lets you design surveys, manage participants, and send study messages - all in one place.
+
 #### Recruitment List Application
 
-- frontend + backend
+A go backend and Next.js frontend application that can be used to pull participant data and share it with external partners.
 
 ---
 
@@ -61,7 +73,13 @@ Scheduled or one off jobs to be run on the server.
 
 #### Survey Engine
 
+A Typescript library for handling surveys. It's used for handling dynamic conditions to determine which questions should be shown to the participant, and to map the survey's definition and current state to a renderable survey.
+
+The Admin UI contains a reference implementation of components using the survey engine, to showcase how it can be used with React, and Tailwind CSS to build a survey user interface.
+
 #### Editor tools
+
+A Typescript library with helper functions, types and utilities for coding study rules, actions or surveys.
 
 ---
 
