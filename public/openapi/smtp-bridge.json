@@ -1,0 +1,243 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "SMTP Bridge API",
+        "version": "1.0.0",
+        "description": "Simple bridge for sending emails via configured SMTP servers."
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Health check",
+                "operationId": "getHealth",
+                "responses": {
+                    "200": {
+                        "description": "Service is healthy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthStatus"
+                                },
+                                "examples": {
+                                    "ok": {
+                                        "value": {
+                                            "status": "ok"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/send-email": {
+            "post": {
+                "summary": "Send an email",
+                "operationId": "sendEmail",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendEmailRequest"
+                            },
+                            "examples": {
+                                "basic": {
+                                    "value": {
+                                        "to": [
+                                            "user@example.com"
+                                        ],
+                                        "subject": "Hello",
+                                        "content": "<p>Hi there</p>",
+                                        "highPrio": false
+                                    }
+                                },
+                                "withHeaderOverrides": {
+                                    "value": {
+                                        "to": [
+                                            "user@example.com"
+                                        ],
+                                        "subject": "Important",
+                                        "content": "Text body",
+                                        "highPrio": true,
+                                        "headerOverrides": {
+                                            "from": "\"System Notifications\" <noreply@example.com>",
+                                            "sender": "system@example.com",
+                                            "replyTo": [
+                                                "support@example.com"
+                                            ],
+                                            "noReplyTo": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email accepted for sending",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessMessage"
+                                },
+                                "examples": {
+                                    "sent": {
+                                        "value": {
+                                            "message": "email sent"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (missing/invalid API key or payload)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "examples": {
+                                    "missingApiKey": {
+                                        "value": {
+                                            "error": "A valid API key missing"
+                                        }
+                                    },
+                                    "missingTo": {
+                                        "value": {
+                                            "error": "missing 'to' field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to send after retries",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "examples": {
+                                    "sendFailed": {
+                                        "value": {
+                                            "error": "failed to send email"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Api-Key",
+                "description": "Provide a valid API key in the 'Api-Key' header"
+            }
+        },
+        "schemas": {
+            "HealthStatus": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "status"
+                ],
+                "additionalProperties": false
+            },
+            "SuccessMessage": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ],
+                "additionalProperties": false
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "error"
+                ],
+                "additionalProperties": false
+            },
+            "HeaderOverrides": {
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string"
+                    },
+                    "sender": {
+                        "type": "string"
+                    },
+                    "replyTo": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    "noReplyTo": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SendEmailRequest": {
+                "type": "object",
+                "properties": {
+                    "to": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "email"
+                        },
+                        "minItems": 1
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "highPrio": {
+                        "type": "boolean"
+                    },
+                    "headerOverrides": {
+                        "$ref": "#/components/schemas/HeaderOverrides"
+                    }
+                },
+                "required": [
+                    "to"
+                ],
+                "additionalProperties": false
+            }
+        }
+    }
+}

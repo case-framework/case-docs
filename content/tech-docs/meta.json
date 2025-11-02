@@ -1,0 +1,8 @@
+{
+    "pages": [
+        "framework",
+        "management-api",
+        "participant-api",
+        "smtp-bridge"
+    ]
+}

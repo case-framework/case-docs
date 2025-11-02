@@ -1,0 +1,7 @@
+{
+  "title": "Framework",
+  "description": "Overview of the technical components of the framework",
+  "root": true,
+  "icon": "LayoutPanelTop",
+  "pages": ["overview.mdx", "local-deployment.mdx", "configuration-pattern.mdx"]
+}

@@ -1,0 +1,10 @@
+{
+    "title": "Participant API",
+    "description": "TODO",
+    "root": true,
+    "icon": "Globe",
+    "pages": [
+        "overview",
+        "api"
+    ]
+}

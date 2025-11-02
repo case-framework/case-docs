@@ -4,30 +4,32 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "start": "next start",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
-    "@orama/orama": "^3.1.9",
-    "fumadocs-core": "15.6.0",
-    "fumadocs-mdx": "11.6.10",
-    "fumadocs-ui": "15.6.0",
-    "lucide-react": "^0.525.0",
+    "@orama/orama": "^3.1.16",
+    "fumadocs-core": "16.0.1",
+    "fumadocs-mdx": "13.0.0",
+    "fumadocs-ui": "16.0.1",
+    "lucide-react": "^0.546.0",
     "next": "15.3.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "swagger-ui-react": "^5.29.5"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.15",
     "@types/mdx": "^2.0.13",
-    "@types/node": "24.0.7",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/node": "24.9.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/swagger-ui-react": "^5.18.0",
     "eslint": "^8",
     "eslint-config-next": "15.3.4",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.1.15",
     "typescript": "^5.8.3"
   }
 }

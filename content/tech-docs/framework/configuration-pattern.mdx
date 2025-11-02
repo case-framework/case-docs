@@ -1,0 +1,25 @@
+---
+title: Configuration Pattern
+description: This document explains the configuration patterns used across all services and jobs in the CASE Backend system.
+---
+
+# CASE Backend Configuration Pattern
+
+### Global Configuration Pattern
+
+All services and jobs follow a consistent configuration pattern:
+
+1. **YAML Configuration File**: Specified via `CONFIG_FILE_PATH` environment variable
+2. **Environment Variables**: Environment variables override sensitive values from the config file, if they are provided
+3. **Initialization**: Services apply defaults during startup as a fallback
+
+### Required Environment Variable (All Services/Jobs)
+
+**`CONFIG_FILE_PATH`** - Absolute path to the YAML configuration file
+
+**Note**: This is the only required environment variable for all services and jobs. All other variables are optional and will use values from the configuration file if not provided.
+
+### Service Configuration
+
+The configuration for each part of the CASE framework is explained in the corresponding README files, e.g. for the configuration of the management-api you can find it here:
+`case-backend/services/management-api/README.md`.

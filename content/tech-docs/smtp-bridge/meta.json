@@ -1,0 +1,10 @@
+{
+    "title": "SMTP Bridge",
+    "description": "TODO",
+    "root": true,
+    "icon": "Mail",
+    "pages": [
+        "overview",
+        "api"
+    ]
+}

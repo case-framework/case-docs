@@ -1,0 +1,2654 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Participant API",
+        "version": "1.0.0",
+        "description": "Endpoints for participant authentication, user management, and study interactions."
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Health check",
+                "operationId": "getHealth",
+                "tags": [
+                    "misc"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service is healthy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthStatus"
+                                },
+                                "examples": {
+                                    "ok": {
+                                        "value": {
+                                            "status": "ok"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login with email and password",
+                "operationId": "loginWithEmail",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginWithEmailReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenAndUser"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/signup": {
+            "post": {
+                "summary": "Sign up with email",
+                "operationId": "signupWithEmail",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignupWithEmailReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenAndUser"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/auth/login-with-temptoken": {
+            "post": {
+                "summary": "Login using a temporary token (optionally with password or access token)",
+                "operationId": "loginWithTempToken",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginWithTempTokenReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenAndUser"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/temptoken-info": {
+            "post": {
+                "summary": "Get info for a temporary token",
+                "operationId": "getTempTokenInfo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TempTokenInfoReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Info returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TempTokenInfo"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        },
+        "/v1/auth/token/renew": {
+            "post": {
+                "summary": "Renew access token",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "renewToken",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshTokenReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenAndUser"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/token/validate": {
+            "get": {
+                "summary": "Validate access token",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "validateToken",
+                "responses": {
+                    "200": {
+                        "description": "Token valid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "tokenInfos": {
+                                            "$ref": "#/components/schemas/ParticipantUserClaims"
+                                        }
+                                    },
+                                    "required": [
+                                        "tokenInfos"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/token/revoke": {
+            "get": {
+                "summary": "Revoke refresh tokens for user",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "revokeTokens",
+                "responses": {
+                    "200": {
+                        "description": "Revoked",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "tokensRevoked": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "message",
+                                        "tokensRevoked"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/resend-email-verification": {
+            "post": {
+                "summary": "Resend email verification",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "resendEmailVerification",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/auth/verify-email": {
+            "post": {
+                "summary": "Verify email by token",
+                "operationId": "verifyEmail",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        },
+        "/v1/auth/logout": {
+            "post": {
+                "summary": "Logout user (invalidate current session)",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/auth/otp": {
+            "get": {
+                "summary": "Request OTP (email by default)",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "requestOTP",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "email",
+                                "sms"
+                            ],
+                            "default": "email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/auth/otp/verify": {
+            "post": {
+                "summary": "Verify OTP code",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "verifyOTP",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyOTPReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenAndUser"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/password-reset/initiate": {
+            "post": {
+                "summary": "Initiate password reset",
+                "operationId": "initiatePasswordReset",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InitiatePasswordResetReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/password-reset/get-infos": {
+            "post": {
+                "summary": "Get info for a password reset token",
+                "operationId": "getPasswordResetInfos",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account ID returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accountId": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "accountId"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        },
+        "/v1/password-reset/reset": {
+            "post": {
+                "summary": "Reset password",
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/": {
+            "get": {
+                "summary": "List studies by status",
+                "operationId": "getStudiesByStatus",
+                "parameters": [
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "studies": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StudyInfo"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "studies"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/{studyKey}": {
+            "get": {
+                "summary": "Get study by key",
+                "operationId": "getStudy",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "study": {
+                                            "$ref": "#/components/schemas/StudyInfo"
+                                        }
+                                    },
+                                    "required": [
+                                        "study"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/{studyKey}/code-lists/has-code": {
+            "get": {
+                "summary": "Check if a code exists in a code list",
+                "operationId": "studyHasCodeListCode",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "listKey",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "exists": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [
+                                        "exists"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/{studyKey}/variables": {
+            "get": {
+                "summary": "List variables for a study",
+                "operationId": "getStudyVariables",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/{studyKey}/variables/{variableKey}": {
+            "get": {
+                "summary": "Get a study variable",
+                "operationId": "getStudyVariable",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/studies/participating": {
+            "get": {
+                "summary": "List studies the user participates in",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getParticipatingStudies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "studies": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StudyInfo"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "studies"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/enter": {
+            "post": {
+                "summary": "Enter a study",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "enterStudy",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "profileID"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/custom": {
+            "post": {
+                "summary": "Trigger a custom study event",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "customStudyEvent",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "eventKey": {
+                                        "type": "string"
+                                    },
+                                    "profileID": {
+                                        "type": "string"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "eventKey",
+                                    "profileID"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/submit": {
+            "post": {
+                "summary": "Submit survey response",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "submitSurveyEvent",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    },
+                                    "response": {
+                                        "type": "object",
+                                        "description": "SurveyResponse",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "profileID",
+                                    "response"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/leave": {
+            "post": {
+                "summary": "Leave a study",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "leaveStudyEvent",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "profileID"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/merge-temporary-participant": {
+            "post": {
+                "summary": "Merge temporary participant into user profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "mergeTempParticipant",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    },
+                                    "temporaryParticipantID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "profileID",
+                                    "temporaryParticipantID"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Merged participant returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/events/{studyKey}/merge-virtual-participant": {
+            "post": {
+                "summary": "Merge a virtual participant into user profile by linking code",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "mergeVirtualParticipant",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MergeVirtualParticipantRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Merged participant returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/surveys": {
+            "get": {
+                "summary": "Get assigned surveys for profiles",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getAssignedSurveys",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pids",
+                        "in": "query",
+                        "required": true,
+                        "description": "Comma-separated profile IDs",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/survey/{surveyKey}": {
+            "get": {
+                "summary": "Get a specific survey with context",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getSurveyWithContext",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surveyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Survey with context returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/participant-state": {
+            "get": {
+                "summary": "Get participant state",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getParticipantState",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Participant state returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/linking-code": {
+            "get": {
+                "summary": "Get a linking code by key",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getLinkingCode",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Linking code returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/responses": {
+            "get": {
+                "summary": "Get survey responses for a profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getStudyResponsesForProfile",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surveyKey",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Responses returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/confidential-response": {
+            "get": {
+                "summary": "Get confidential responses by key",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getConfidentialResponse",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Confidential responses returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/submission-history": {
+            "get": {
+                "summary": "Get submission history for profiles",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getSubmissionHistory",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pids",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Submission history returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/reports": {
+            "get": {
+                "summary": "Get reports for a profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getReports",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reports returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/temp-participant/register": {
+            "post": {
+                "summary": "Register a temporary participant",
+                "operationId": "registerTempParticipant",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "instanceId": {
+                                        "type": "string"
+                                    },
+                                    "studyKey": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "instanceId",
+                                    "studyKey"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Temporary participant created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/temp-participant/surveys": {
+            "get": {
+                "summary": "Assigned surveys for a temporary participant",
+                "operationId": "getTempParticipantSurveys",
+                "parameters": [
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "studyKey",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/temp-participant/survey": {
+            "get": {
+                "summary": "Get a survey with context for a temporary participant",
+                "operationId": "getTempParticipantSurveyWithContext",
+                "parameters": [
+                    {
+                        "name": "instanceID",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "studyKey",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surveyKey",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pid",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Survey with context returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/temp-participant/submit-response": {
+            "post": {
+                "summary": "Submit a survey response for a temporary participant",
+                "operationId": "submitTempParticipantResponse",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "instanceId": {
+                                        "type": "string"
+                                    },
+                                    "studyKey": {
+                                        "type": "string"
+                                    },
+                                    "pid": {
+                                        "type": "string"
+                                    },
+                                    "response": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "instanceId",
+                                    "studyKey",
+                                    "pid",
+                                    "response"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned surveys returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/study-service/virtual-participants/{studyKey}/": {
+            "get": {
+                "summary": "Get virtual participants by linking code",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getVirtualParticipantsByLinkingCode",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Participants returned"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/": {
+            "get": {
+                "summary": "Get current user",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getUser",
+                "responses": {
+                    "200": {
+                        "description": "User returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete current user",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "deleteUser",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "exitSurveyResponse": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/profiles": {
+            "post": {
+                "summary": "Add new profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "addProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "profile": {
+                                            "$ref": "#/components/schemas/Profile"
+                                        }
+                                    },
+                                    "required": [
+                                        "profile"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "updateProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "profile": {
+                                            "$ref": "#/components/schemas/Profile"
+                                        }
+                                    },
+                                    "required": [
+                                        "profile"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/profiles/remove": {
+            "post": {
+                "summary": "Remove a profile",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "removeProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileId": {
+                                        "type": "string"
+                                    },
+                                    "exitSurveyResponse": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "profileId"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/password": {
+            "post": {
+                "summary": "Change password",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "changePassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "oldPassword": {
+                                        "type": "string"
+                                    },
+                                    "newPassword": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "oldPassword",
+                                    "newPassword"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/change-account-email": {
+            "post": {
+                "summary": "Change account email",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "changeAccountEmail",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/change-phone-number": {
+            "post": {
+                "summary": "Change phone number",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "changePhoneNumber",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "newPhoneNumber": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "newPhoneNumber",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/user/request-phone-number-verification": {
+            "get": {
+                "summary": "Request phone number verification code via SMS",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "requestPhoneNumberVerification",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/Error429"
+                    }
+                }
+            }
+        },
+        "/v1/user/attributes": {
+            "get": {
+                "summary": "Get user attributes",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "getUserAttributes",
+                "responses": {
+                    "200": {
+                        "description": "Attributes returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "attributes": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": true
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "attributes"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create or update a user attribute",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "setUserAttribute",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserAttributeReqPayload"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/user/attributes/{attributeID}": {
+            "delete": {
+                "summary": "Delete a user attribute",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "deleteUserAttribute",
+                "parameters": [
+                    {
+                        "name": "attributeID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    }
+                }
+            }
+        },
+        "/v1/unsubscribe-newsletter": {
+            "post": {
+                "summary": "Unsubscribe user from newsletter (via token)",
+                "operationId": "unsubscribeNewsletter",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "responses": {
+            "TokenAndUser": {
+                "description": "Access and refresh tokens with user",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                    "$ref": "#/components/schemas/TokenEnvelope"
+                                },
+                                "user": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            },
+                            "required": [
+                                "token",
+                                "user"
+                            ]
+                        }
+                    }
+                }
+            },
+            "MessageOk": {
+                "description": "Generic OK message",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    }
+                }
+            },
+            "Error400": {
+                "description": "Bad request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "Error401": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "Error429": {
+                "description": "Too many requests",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "HealthStatus": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "status"
+                ],
+                "additionalProperties": false
+            },
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ],
+                "additionalProperties": false
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "error"
+                ],
+                "additionalProperties": false
+            },
+            "LoginWithEmailReq": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "instanceId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password",
+                    "instanceId"
+                ],
+                "additionalProperties": false
+            },
+            "SignupWithEmailReq": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "instanceId": {
+                        "type": "string"
+                    },
+                    "infoCheck": {
+                        "type": "string"
+                    },
+                    "preferredLanguage": {
+                        "type": "string"
+                    },
+                    "withAttributes": {
+                        "$ref": "#/components/schemas/UserAttributeReqPayload"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password",
+                    "instanceId"
+                ],
+                "additionalProperties": false
+            },
+            "LoginWithTempTokenReq": {
+                "type": "object",
+                "properties": {
+                    "tempToken": {
+                        "type": "string"
+                    },
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "tempToken"
+                ],
+                "additionalProperties": false,
+                "description": "Provide either accessToken or password along with tempToken."
+            },
+            "TempTokenInfoReq": {
+                "type": "object",
+                "properties": {
+                    "instanceId": {
+                        "type": "string"
+                    },
+                    "tempToken": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "instanceId",
+                    "tempToken"
+                ],
+                "additionalProperties": false
+            },
+            "TempTokenInfo": {
+                "type": "object",
+                "properties": {
+                    "userID": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "required": [
+                    "userID",
+                    "email"
+                ],
+                "additionalProperties": false
+            },
+            "RefreshTokenReq": {
+                "type": "object",
+                "properties": {
+                    "refreshToken": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "refreshToken"
+                ],
+                "additionalProperties": false
+            },
+            "VerifyOTPReq": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "code"
+                ],
+                "additionalProperties": false
+            },
+            "InitiatePasswordResetReq": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "instanceID": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "instanceID"
+                ],
+                "additionalProperties": false
+            },
+            "ResetPasswordReq": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "newPassword": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "token",
+                    "newPassword"
+                ],
+                "additionalProperties": false
+            },
+            "TokenEnvelope": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "expiresIn": {
+                        "type": "number"
+                    },
+                    "selectedProfile": {
+                        "type": "string"
+                    },
+                    "lastOTP": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "required": [
+                    "accessToken",
+                    "refreshToken",
+                    "expiresIn",
+                    "selectedProfile"
+                ],
+                "additionalProperties": false
+            },
+            "ParticipantUserClaims": {
+                "type": "object",
+                "description": "Decoded participant user JWT claims",
+                "additionalProperties": true
+            },
+            "User": {
+                "type": "object",
+                "description": "Participant user object. Shape is extensive; represented as free-form for brevity.",
+                "additionalProperties": true
+            },
+            "Profile": {
+                "type": "object",
+                "description": "User profile object",
+                "additionalProperties": true
+            },
+            "UserAttributeReqPayload": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "required": [
+                    "type",
+                    "attributes"
+                ],
+                "additionalProperties": false
+            },
+            "StudyInfo": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "props": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "stats": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "profileIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "key",
+                    "status",
+                    "props",
+                    "stats"
+                ],
+                "additionalProperties": false
+            },
+            "MergeVirtualParticipantRequest": {
+                "type": "object",
+                "properties": {
+                    "profileID": {
+                        "type": "string"
+                    },
+                    "virtualParticipantID": {
+                        "type": "string"
+                    },
+                    "linkingCodeKey": {
+                        "type": "string"
+                    },
+                    "linkingCodeValue": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "profileID",
+                    "virtualParticipantID",
+                    "linkingCodeKey",
+                    "linkingCodeValue"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Authentication endpoints"
+        },
+        {
+            "name": "misc",
+            "description": "Miscellaneous"
+        }
+    ]
+}

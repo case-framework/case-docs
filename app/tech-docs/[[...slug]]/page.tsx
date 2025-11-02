@@ -1,4 +1,4 @@
-import { source } from '@/lib/source-docs';
+import { source } from '@/lib/source-tech-docs';
 import {
   DocsPage,
   DocsBody,
@@ -8,7 +8,10 @@ import {
 import { notFound } from 'next/navigation';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { getMDXComponents } from '@/mdx-components';
+import ApiDoc from '@/components/api-doc';
 
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -17,12 +20,19 @@ export default async function Page(props: {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
+  // Use the ApiDoc component for API pages (wrapper for Swagger UI)
+  if (params.slug?.includes('api')) {
+    return (
+      <ApiDoc specUrl={`${basePath}/openapi/${params.slug[0]}.json`} />
+    )
+  }
+
   const MDXContent = page.data.body;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}
       breadcrumb={{
-        includeRoot: true,
+        includeRoot: false,
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
