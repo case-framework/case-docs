@@ -704,16 +704,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
+                                
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "study": {
-                                            "$ref": "#/components/schemas/StudyInfo"
-                                        }
-                                    },
-                                    "required": [
-                                        "study"
-                                    ]
+                                "$ref": "#/components/schemas/StudyInfo"
                                 }
                             }
                         }
@@ -2024,8 +2017,14 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             },
@@ -2058,8 +2057,14 @@
                     "200": {
                         "$ref": "#/components/responses/MessageOk"
                     },
+                     "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             }
@@ -2079,7 +2084,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Profile"
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "$ref": "#/components/schemas/Profile"
+                                    }
+                                },
+                                "required": [
+                                    "profile"
+                                ]
                             }
                         }
                     }
@@ -2103,8 +2116,14 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             },
@@ -2122,7 +2141,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Profile"
+                               "$ref": "#/components/schemas/Profile"
                             }
                         }
                     }
@@ -2146,8 +2165,14 @@
                             }
                         }
                     },
+                   "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             }
@@ -2188,8 +2213,14 @@
                     "200": {
                         "$ref": "#/components/responses/MessageOk"
                     },
+                   "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             }
@@ -2235,6 +2266,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
                     }
                 }
             }
@@ -2281,6 +2315,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                         },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2329,6 +2366,9 @@
                     },
                     "429": {
                         "$ref": "#/components/responses/Error429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2355,6 +2395,9 @@
                     },
                     "429": {
                         "$ref": "#/components/responses/Error429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2380,8 +2423,7 @@
                                         "attributes": {
                                             "type": "array",
                                             "items": {
-                                                "type": "object",
-                                                "additionalProperties": true
+                                                "$ref": "#/components/schemas/UserAttributes"
                                             }
                                         }
                                     },
@@ -2392,8 +2434,14 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             },
@@ -2425,6 +2473,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                        },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2458,6 +2509,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2475,31 +2529,29 @@
                     "required": true,
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateContactPreferencesReq"
+                             "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "subscribedToNewsletter": {
+                                        "type": "boolean",
+                                    },
+                                    "toggleWeeklySubscription": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "subscribedToNewsletter",
+                                    "toggleWeeklySubscription"
+                                ]
                             }
                         }
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Contact preferences updated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Message"
-                                },
-                                "examples": {
-                                    "ok": {
-                                        "value": { "message": "contact preferences updated" }
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    "200": { "$ref": "#/components/responses/MessageOk"},
                     "400": { "$ref": "#/components/responses/Error400" },
                     "401": { "$ref": "#/components/responses/Error401" },
-                    "500": { "$ref": "#/components/responses/Error400" }
+                    "500": { "$ref": "#/components/responses/Error500" }
                 }
             }
         },
@@ -2532,6 +2584,9 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2630,21 +2685,6 @@
                 "required": [
                     "status"
                 ],
-                "additionalProperties": false
-            },
-            "UpdateContactPreferencesReq": {
-                "type": "object",
-                "properties": {
-                    "subscribedToNewsletter": {
-                        "type": "boolean",
-                        "description": "Whether the user is subscribed to the newsletter."
-                    },
-                    "toggleWeeklySubscription": {
-                        "type": "boolean",
-                        "description": "If true, toggles the user's weekly subscription preference."
-                    }
-                },
-                "required": ["subscribedToNewsletter", "toggleWeeklySubscription"],
                 "additionalProperties": false
             },
             "Message": {
@@ -2876,6 +2916,11 @@
                 "description": "User profile object",
                 "additionalProperties": true
             },
+            "UserAttributes": {
+                "type": "object",
+                "description": "User attributes object",
+                "additionalProperties": true
+            },
             "UserAttributeReqPayload": {
                 "type": "object",
                 "properties": {
@@ -2883,8 +2928,7 @@
                         "type": "string"
                     },
                     "attributes": {
-                        "type": "object",
-                        "additionalProperties": true
+                        "$ref": "#/components/schemas/UserAttributes"
                     }
                 },
                 "required": [
