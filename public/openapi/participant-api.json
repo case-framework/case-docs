@@ -669,6 +669,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -720,6 +723,9 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -787,6 +793,9 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -816,13 +825,34 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "variables": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/StudyVariables"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "variables"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                        },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -860,13 +890,31 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "variables": {
+                                            "$ref": "#/components/schemas/StudyVariables"
+                                        }
+                                    },
+                                    "required": [
+                                        "variables"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
                     },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                        },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -903,8 +951,14 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
                     }
                 }
             }
@@ -2870,6 +2924,73 @@
                     "stats"
                 ],
                 "additionalProperties": false
+            },
+            "StudyVariables": {
+                "type": "object",
+                "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "MongoDB ObjectID",
+                    "example": "64e4b2f2c2a4e2b1a1c2d3e4"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "configUpdatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "valueUpdatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "studyKey": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "description": "Value of the study variable, type depends on 'type'",
+                    "oneOf": [
+                    { "type": "string" },
+                    { "type": "integer" },
+                    { "type": "number", "format": "float" },
+                    { "type": "boolean" },
+                    { "type": "string", "format": "date-time" }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["string", "int", "float", "boolean", "date"]
+                },
+                "label": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "uiType": {
+                    "type": "string"
+                },
+                "uiPriority": {
+                    "type": "integer"
+                },
+                "configs": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+                },
+                "required": [
+                "createdAt",
+                "configUpdatedAt",
+                "valueUpdatedAt",
+                "studyKey",
+                "key",
+                "value",
+                "type"
+                ]
             },
             "MergeVirtualParticipantRequest": {
                 "type": "object",
