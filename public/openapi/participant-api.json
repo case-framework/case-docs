@@ -114,8 +114,24 @@
                     "required": true,
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/LoginWithTempTokenReq"
+                             "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "tempToken": {
+                                        "type": "string"
+                                    },
+                                    "accessToken": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "tempToken"
+                                ],
+                                "additionalProperties": false,
+                                "description": "Provide either accessToken or password along with tempToken."
                             }
                         }
                     }
@@ -148,7 +164,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TempTokenInfoReq"
+                                "type": "object",
+                                "properties": {
+                                    "instanceId": {
+                                        "type": "string"
+                                    },
+                                    "tempToken": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "instanceId",
+                                    "tempToken"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -159,7 +188,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TempTokenInfo"
+                                    "type": "object",
+                                    "properties": {
+                                        "userID": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email"
+                                        }
+                                    },
+                                    "required": [
+                                        "userID",
+                                        "email"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -269,19 +312,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "tokensRevoked": {
-                                            "type": "integer"
-                                        }
-                                    },
-                                    "required": [
-                                        "message",
-                                        "tokensRevoked"
-                                    ]
+                                    "$ref": "#/components/schemas/Message"
                                 }
                             }
                         }
@@ -415,7 +446,27 @@
                 "operationId": "logout",
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/MessageOk"
+                        "description": "User logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "tokensRevoked": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "message",
+                                        "tokensRevoked"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -519,7 +570,21 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/InitiatePasswordResetReq"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "instanceID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "instanceID"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -604,8 +669,21 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ResetPasswordReq"
-                            }
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    },
+                                    "newPassword": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "newPassword"
+                                ],
+                                "additionalProperties": false
+                            },
                         }
                     }
                 },
@@ -996,7 +1074,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1058,7 +1154,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1118,7 +1232,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1172,7 +1304,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1230,7 +1380,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Merged participant returned"
+                        "description": "Assigned surveys of participant returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1276,7 +1444,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Merged participant returned"
+                        "description": "Assigned surveys of merged participant returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1764,7 +1950,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Temporary participant created"
+                        "description": "Temporary participant returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "participant": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Participant"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "participant"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1920,7 +2124,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assignedSurveys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AssignedSurvey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "assignedSurveys"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -2752,65 +2974,22 @@
                         "type": "string"
                     },
                     "withAttributes": {
-                        "$ref": "#/components/schemas/UserAttributeReqPayload"
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "attributes": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
                     }
                 },
                 "required": [
                     "email",
                     "password",
                     "instanceId"
-                ],
-                "additionalProperties": false
-            },
-            "LoginWithTempTokenReq": {
-                "type": "object",
-                "properties": {
-                    "tempToken": {
-                        "type": "string"
-                    },
-                    "accessToken": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "tempToken"
-                ],
-                "additionalProperties": false,
-                "description": "Provide either accessToken or password along with tempToken."
-            },
-            "TempTokenInfoReq": {
-                "type": "object",
-                "properties": {
-                    "instanceId": {
-                        "type": "string"
-                    },
-                    "tempToken": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "instanceId",
-                    "tempToken"
-                ],
-                "additionalProperties": false
-            },
-            "TempTokenInfo": {
-                "type": "object",
-                "properties": {
-                    "userID": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    }
-                },
-                "required": [
-                    "userID",
-                    "email"
                 ],
                 "additionalProperties": false
             },
@@ -2835,39 +3014,6 @@
                 },
                 "required": [
                     "code"
-                ],
-                "additionalProperties": false
-            },
-            "InitiatePasswordResetReq": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "instanceID": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "instanceID"
-                ],
-                "additionalProperties": false
-            },
-            "ResetPasswordReq": {
-                "type": "object",
-                "properties": {
-                    "token": {
-                        "type": "string"
-                    },
-                    "newPassword": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "token",
-                    "newPassword"
                 ],
                 "additionalProperties": false
             },
@@ -2906,6 +3052,16 @@
                 "description": "Decoded participant user JWT claims",
                 "additionalProperties": true
             },
+            "AssignedSurvey": {
+                "type": "object",
+                "description": "Assigned survey object",
+                "additionalProperties": true
+            },
+            "Participant": {
+                "type": "object",
+                "description": "Participant defines the datamodel for current state of the participant in a study as stored in the database",
+                "additionalProperties": true
+            },
             "User": {
                 "type": "object",
                 "description": "Participant user object. Shape is extensive; represented as free-form for brevity.",
@@ -2928,7 +3084,8 @@
                         "type": "string"
                     },
                     "attributes": {
-                        "$ref": "#/components/schemas/UserAttributes"
+                        "type": "object",
+                        "additionalProperties": true
                     }
                 },
                 "required": [
