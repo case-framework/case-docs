@@ -683,7 +683,7 @@
                                     "newPassword"
                                 ],
                                 "additionalProperties": false
-                            },
+                            }
                         }
                     }
                 },
