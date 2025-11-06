@@ -1819,7 +1819,7 @@
                         "in": "query",
                         "description": "comma-separated list of extra context columns to include in the response",
                         "schema": {
-                            "type": "string",
+                            "type": "string"
                         }
                     }
 
@@ -2962,7 +2962,7 @@
                                 "type": "object",
                                 "properties": {
                                     "subscribedToNewsletter": {
-                                        "type": "boolean",
+                                        "type": "boolean"
                                     },
                                     "toggleWeeklySubscription": {
                                         "type": "boolean"
@@ -3311,22 +3311,22 @@
                 ],
                 "additionalProperties": false
             },
-            PaginationInfos: {
+            "PaginationInfos": {
                 "type": "object",
                 "description": "Pagination information",
                 "additionalProperties": true
             },
-            ConfidentialResponsesExportEntry: {
+            "ConfidentialResponsesExportEntry": {
                 "type": "object",
                 "description": "Confidential survey response export entry",
                 "additionalProperties": true
             },
-            SubmissionHistory: {
+            "SubmissionHistory": {
                 "type": "object",
                 "description": "Submission history",
                 "additionalProperties": true
             },
-            Report: {
+            "Report": {
                 "type": "object",
                 "description": "report object",
                 "additionalProperties": true
