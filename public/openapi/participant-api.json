@@ -782,9 +782,8 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                
                                 "schema": {
-                                "$ref": "#/components/schemas/StudyInfo"
+                                    "$ref": "#/components/schemas/StudyInfo"
                                 }
                             }
                         }
@@ -1507,7 +1506,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys with survey infos returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssignedSurveysWithInfos"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1560,7 +1566,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Survey with context returned"
+                        "description": "Survey with context returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1605,7 +1618,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Participant state returned"
+                        "description": "Participant state returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Participant"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1659,7 +1679,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Linking code returned"
+                        "description": "Linking code returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "linkingCode": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "linkingCode"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1712,24 +1747,112 @@
                     {
                         "name": "page",
                         "in": "query",
+                        "description": "page number (starting from 1)",
                         "schema": {
                             "type": "integer",
-                            "minimum": 1
+                            "minimum": 1,
+                            "default": 1
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
+                        "description": "maximum number of responses per page",
                         "schema": {
                             "type": "integer",
                             "minimum": 1,
-                            "maximum": 1000
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "bson.M object to filter responses",
+                        "schema": {
+                            "type": "object",
+                             "additionalProperties": {
+                                "type": "object"
+                             }
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "bson.M object to sort responses",
+                        "schema": {
+                            "type": "object",
+                             "additionalProperties": {
+                                "type": "object"
+                             }
+                        }
+                    },
+                    {
+                        "name": "shortKeys",
+                        "in": "query",
+                        "description": "whether to return short keys for responses",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "questionOptionSep",
+                        "in": "query",
+                        "description": "character used to seperate slot keys in response",
+                        "schema": {
+                            "type": "string",
+                            "default": "-"
+                        }
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "format for survey responses",
+                        "schema": {
+                            "type": "string",
+                            "default": "wide",
+                            "enum": ["wide", "long", "json"]
+                        }
+                    },
+                    {
+                        "name": "extraContextColumns",
+                        "in": "query",
+                        "description": "comma-separated list of extra context columns to include in the response",
+                        "schema": {
+                            "type": "string",
                         }
                     }
+
                 ],
                 "responses": {
                     "200": {
-                        "description": "Responses returned"
+                        "description": "Responses returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "responses": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "description": "Responses",
+                                                "additionalProperties": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "paginationInfo": {
+                                            "$ref": "#/components/schemas/PaginationInfos"
+                                        }
+                                    },
+                                    "required": [
+                                        "responses",
+                                        "paginationInfo"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1783,7 +1906,25 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Confidential responses returned"
+                        "description": "Confidential responses returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "confidentialResponse": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ConfidentialResponsesExportEntry"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "confidentialResponse"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1839,7 +1980,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Submission history returned"
+                        "description": "Submission history returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "submissionHistory": {
+                                            "$ref": "#/components/schemas/SubmissionHistory"
+                                        }
+                                    },
+                                    "required": [
+                                        "submissionHistory"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1884,30 +2040,60 @@
                     {
                         "name": "page",
                         "in": "query",
+                        "description": "page number (starting from 1)",
                         "schema": {
                             "type": "integer",
-                            "minimum": 1
+                            "minimum": 1,
+                            "default": 1
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
+                        "description": "maximum number of reports per page",
                         "schema": {
                             "type": "integer",
-                            "minimum": 1
+                            "minimum": 1,
+                            "default": 10
                         }
                     },
                     {
                         "name": "filter",
                         "in": "query",
+                        "description": "bson.M object to filter reports",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                             "additionalProperties": {
+                                "type": "object"
+                             }
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Reports returned"
+                        "description": "Reports returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "reports": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Report"
+                                            }
+                                        },
+                                        "paginationInfo": {
+                                            "$ref": "#/components/schemas/PaginationInfos"
+                                        }
+                                    },
+                                    "required": [
+                                        "reports",
+                                        "paginationInfo"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -1954,18 +2140,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "participant": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Participant"
-                                            }
-                                        }
-                                    },
-                                    "required": [
-                                        "participant"
-                                    ]
+                                    "$ref": "#/components/schemas/Participant"
                                 }
                             }
                         }
@@ -2016,7 +2191,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assigned surveys returned"
+                        "description": "Assigned surveys with survey infos returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssignedSurveysWithInfos"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -2072,7 +2254,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Survey with context returned"
+                        "description": "Survey with context returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -2196,7 +2385,25 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Participants returned"
+                        "description": "Participants returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "participants": {
+                                            "type": "array",
+                                            "items": {
+                                            "$ref": "#/components/schemas/Participant"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "participants"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -3055,6 +3262,73 @@
             "AssignedSurvey": {
                 "type": "object",
                 "description": "Assigned survey object",
+                "additionalProperties": true
+            },
+            "AssignedSurveysWithInfos": {
+                "type": "object",
+                "description": "Assigned surveys object with survey infos",
+                "properties": {
+                    "surveys": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "surveyInfos": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                },
+                "required": [
+                    "surveys",
+                    "surveyInfos"
+                ],
+                "additionalProperties": false
+            },
+            "AssignedSurveyWithContext": {
+                "type": "object",
+                "description": "Assigned survey object with optional context and prefill survey response",
+                "properties": {
+                    "survey": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "surveyContext": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "prefill": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "required": [
+                    "survey"
+                ],
+                "additionalProperties": false
+            },
+            PaginationInfos: {
+                "type": "object",
+                "description": "Pagination information",
+                "additionalProperties": true
+            },
+            ConfidentialResponsesExportEntry: {
+                "type": "object",
+                "description": "Confidential survey response export entry",
+                "additionalProperties": true
+            },
+            SubmissionHistory: {
+                "type": "object",
+                "description": "Submission history",
+                "additionalProperties": true
+            },
+            Report: {
+                "type": "object",
+                "description": "report object",
                 "additionalProperties": true
             },
             "Participant": {
