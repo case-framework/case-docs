@@ -46,7 +46,25 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/LoginWithEmailReq"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "instanceId": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "instanceId"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -98,8 +116,44 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/SignupWithEmailReq"
-                            }
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "instanceId": {
+                                        "type": "string"
+                                    },
+                                    "infoCheck": {
+                                        "type": "string"
+                                    },
+                                    "preferredLanguage": {
+                                        "type": "string"
+                                    },
+                                    "withAttributes": {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "attributes": {
+                                                "type": "object",
+                                                "additionalProperties": true
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "instanceId"
+                                ],
+                                "additionalProperties": false
+                            },
                         }
                     }
                 },
@@ -289,8 +343,17 @@
                     "required": true,
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshTokenReq"
+                            "schema": {                               
+                                "type": "object",
+                                "properties": {
+                                    "refreshToken": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "refreshToken"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -1591,7 +1654,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/MergeVirtualParticipantRequest"
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    },
+                                    "virtualParticipantID": {
+                                        "type": "string"
+                                    },
+                                    "linkingCodeKey": {
+                                        "type": "string"
+                                    },
+                                    "linkingCodeValue": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "profileID",
+                                    "virtualParticipantID",
+                                    "linkingCodeKey",
+                                    "linkingCodeValue"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -2086,7 +2170,9 @@
                                         "confidentialResponse": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/ConfidentialResponsesExportEntry"
+                                                "type": "object",
+                                                "description": "Confidential survey response export entry",
+                                                "additionalProperties": true
                                             }
                                         }
                                     },
@@ -3326,78 +3412,6 @@
                 ],
                 "additionalProperties": false
             },
-            "LoginWithEmailReq": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "instanceId": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "password",
-                    "instanceId"
-                ],
-                "additionalProperties": false
-            },
-            "SignupWithEmailReq": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "instanceId": {
-                        "type": "string"
-                    },
-                    "infoCheck": {
-                        "type": "string"
-                    },
-                    "preferredLanguage": {
-                        "type": "string"
-                    },
-                    "withAttributes": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string"
-                            },
-                            "attributes": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
-                        }
-                    }
-                },
-                "required": [
-                    "email",
-                    "password",
-                    "instanceId"
-                ],
-                "additionalProperties": false
-            },
-            "RefreshTokenReq": {
-                "type": "object",
-                "properties": {
-                    "refreshToken": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "refreshToken"
-                ],
-                "additionalProperties": false
-            },
             "TokenEnvelope": {
                 "type": "object",
                 "properties": {
@@ -3508,11 +3522,6 @@
             "PaginationInfos": {
                 "type": "object",
                 "description": "Pagination information",
-                "additionalProperties": true
-            },
-            "ConfidentialResponsesExportEntry": {
-                "type": "object",
-                "description": "Confidential survey response export entry",
                 "additionalProperties": true
             },
             "SubmissionHistory": {
@@ -3646,30 +3655,6 @@
                 "type"
                 ]
             },
-            "MergeVirtualParticipantRequest": {
-                "type": "object",
-                "properties": {
-                    "profileID": {
-                        "type": "string"
-                    },
-                    "virtualParticipantID": {
-                        "type": "string"
-                    },
-                    "linkingCodeKey": {
-                        "type": "string"
-                    },
-                    "linkingCodeValue": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "profileID",
-                    "virtualParticipantID",
-                    "linkingCodeKey",
-                    "linkingCodeValue"
-                ],
-                "additionalProperties": false
-            }
         }
     },
     "tags": [
