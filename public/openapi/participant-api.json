@@ -275,7 +275,9 @@
                                     "type": "object",
                                     "properties": {
                                         "tokenInfos": {
-                                            "$ref": "#/components/schemas/ParticipantUserClaims"
+                                            "type": "object",
+                                            "description": "Decoded participant user JWT claims",
+                                            "additionalProperties": true
                                         }
                                     },
                                     "required": [
@@ -734,7 +736,29 @@
                                         "studies": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/StudyInfo"
+                                                "type": "object",
+                                                "properties": {
+                                                    "key": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "props": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    },
+                                                    "stats": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    }
+                                                },
+                                                "required": [
+                                                    "key",
+                                                    "status",
+                                                    "props",
+                                                    "stats"
+                                                ]
                                             }
                                         }
                                     },
@@ -783,7 +807,34 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/StudyInfo"
+                                    "type": "object",
+                                    "properties": {
+                                        "study": {
+                                            "type": "object",
+                                            "properties": {
+                                                "key": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "props": {
+                                                    "type": "object",
+                                                    "additionalProperties": true
+                                                },
+                                                "stats": {
+                                                    "type": "object",
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "key",
+                                                "status",
+                                                "props",
+                                                "stats"
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -966,12 +1017,12 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "variables": {
+                                        "variable": {
                                             "$ref": "#/components/schemas/StudyVariables"
                                         }
                                     },
                                     "required": [
-                                        "variables"
+                                        "variable"
                                     ]
                                 }
                             }
@@ -1570,7 +1621,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                    "type": "object",
+                                    "properties": {
+                                        "surveyWithContext": {
+                                            "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                        }
+                                    },
+                                    "required": [
+                                        "surveyWithContext"
+                                    ]
                                 }
                             }
                         }
@@ -1622,7 +1681,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Participant"
+                                    "type": "object",
+                                    "properties": {
+                                        "participant": {
+                                            "$ref": "#/components/schemas/Participant"
+                                        }
+                                    },
+                                    "required": [
+                                        "participant"
+                                    ]
                                 }
                             }
                         }
@@ -1842,13 +1909,13 @@
                                                 }
                                             }
                                         },
-                                        "paginationInfo": {
+                                        "pagination": {
                                             "$ref": "#/components/schemas/PaginationInfos"
                                         }
                                     },
                                     "required": [
                                         "responses",
-                                        "paginationInfo"
+                                        "pagination"
                                     ]
                                 }
                             }
@@ -2083,13 +2150,13 @@
                                                 "$ref": "#/components/schemas/Report"
                                             }
                                         },
-                                        "paginationInfo": {
+                                        "pagination": {
                                             "$ref": "#/components/schemas/PaginationInfos"
                                         }
                                     },
                                     "required": [
                                         "reports",
-                                        "paginationInfo"
+                                        "pagination"
                                     ]
                                 }
                             }
@@ -2140,7 +2207,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Participant"
+                                    "type": "object",
+                                    "properties": {
+                                        "participant": {
+                                            "$ref": "#/components/schemas/Participant"
+                                        }
+                                    },
+                                    "required": [
+                                        "participant"
+                                    ]
                                 }
                             }
                         }
@@ -2258,7 +2333,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                    "type": "object",
+                                    "properties": {
+                                        "surveyWithContext": {
+                                            "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                        }
+                                    },
+                                    "required": [
+                                        "surveyWithContext"
+                                    ]
                                 }
                             }
                         }
@@ -2570,7 +2653,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                               "$ref": "#/components/schemas/Profile"
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "$ref": "#/components/schemas/Profile"
+                                    }
+                                },
+                                "required": [
+                                    "profile"
+                                ]
                             }
                         }
                     }
@@ -2888,7 +2979,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserAttributeReqPayload"
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "attributes": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "attributes"
+                                ]
                             }
                         }
                     }
@@ -3254,11 +3358,6 @@
                 ],
                 "additionalProperties": false
             },
-            "ParticipantUserClaims": {
-                "type": "object",
-                "description": "Decoded participant user JWT claims",
-                "additionalProperties": true
-            },
             "AssignedSurvey": {
                 "type": "object",
                 "description": "Assigned survey object",
@@ -3297,7 +3396,7 @@
                         "type": "object",
                         "additionalProperties": true
                     },
-                    "surveyContext": {
+                    "context": {
                         "type": "object",
                         "additionalProperties": true
                     },
@@ -3351,23 +3450,6 @@
                 "description": "User attributes object",
                 "additionalProperties": true
             },
-            "UserAttributeReqPayload": {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "additionalProperties": true
-                    }
-                },
-                "required": [
-                    "type",
-                    "attributes"
-                ],
-                "additionalProperties": false
-            },
             "StudyInfo": {
                 "type": "object",
                 "properties": {
@@ -3389,14 +3471,16 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "ProfileIDs only required in study info objects related to participants"
                     }
                 },
                 "required": [
                     "key",
                     "status",
                     "props",
-                    "stats"
+                    "stats",
+                    "profileIds"
                 ],
                 "additionalProperties": false
             },
