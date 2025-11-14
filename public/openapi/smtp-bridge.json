@@ -99,7 +99,7 @@
                         }
                     },
                     "400": {
-                        "description": "Bad request (missing/invalid API key or payload)",
+                        "description": "Bad request",
                         "content": {
                             "application/json": {
                                 "schema": {

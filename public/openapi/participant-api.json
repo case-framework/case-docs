@@ -46,14 +46,51 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/LoginWithEmailReq"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "instanceId": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "instanceId"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/TokenAndUser"
+                        "description": "Access and refresh tokens with user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "$ref": "#/components/schemas/TokenEnvelope"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "token",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -79,14 +116,69 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/SignupWithEmailReq"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "instanceId": {
+                                        "type": "string"
+                                    },
+                                    "infoCheck": {
+                                        "type": "string"
+                                    },
+                                    "preferredLanguage": {
+                                        "type": "string"
+                                    },
+                                    "withAttributes": {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "attributes": {
+                                                "type": "object",
+                                                "additionalProperties": true
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "instanceId"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/TokenAndUser"
+                        "description": "Access and refresh tokens with user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "$ref": "#/components/schemas/TokenEnvelope"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "token",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -138,7 +230,26 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/TokenAndUser"
+                        "description": "Access and refresh tokens with user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "$ref": "#/components/schemas/TokenEnvelopeWithLastOTP"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "token",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -232,15 +343,43 @@
                     "required": true,
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshTokenReq"
+                            "schema": {                               
+                                "type": "object",
+                                "properties": {
+                                    "refreshToken": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "refreshToken"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/TokenAndUser"
+                        "description": "Access and refresh tokens with user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "$ref": "#/components/schemas/TokenEnvelopeWithLastOTP"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "token",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -275,7 +414,9 @@
                                     "type": "object",
                                     "properties": {
                                         "tokenInfos": {
-                                            "$ref": "#/components/schemas/ParticipantUserClaims"
+                                            "type": "object",
+                                            "description": "Decoded participant user JWT claims",
+                                            "additionalProperties": true
                                         }
                                     },
                                     "required": [
@@ -539,14 +680,42 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/VerifyOTPReq"
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "code"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/TokenAndUser"
+                        "description": "Access and refresh tokens with user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "$ref": "#/components/schemas/TokenEnvelopeWithLastOTP"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "token",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/Error400"
@@ -734,7 +903,29 @@
                                         "studies": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/StudyInfo"
+                                                "type": "object",
+                                                "properties": {
+                                                    "key": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "props": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    },
+                                                    "stats": {
+                                                        "type": "object",
+                                                        "additionalProperties": true
+                                                    }
+                                                },
+                                                "required": [
+                                                    "key",
+                                                    "status",
+                                                    "props",
+                                                    "stats"
+                                                ]
                                             }
                                         }
                                     },
@@ -783,7 +974,34 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/StudyInfo"
+                                    "type": "object",
+                                    "properties": {
+                                        "study": {
+                                            "type": "object",
+                                            "properties": {
+                                                "key": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "props": {
+                                                    "type": "object",
+                                                    "additionalProperties": true
+                                                },
+                                                "stats": {
+                                                    "type": "object",
+                                                    "additionalProperties": true
+                                                }
+                                            },
+                                            "required": [
+                                                "key",
+                                                "status",
+                                                "props",
+                                                "stats"
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -966,12 +1184,12 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "variables": {
+                                        "variable": {
                                             "$ref": "#/components/schemas/StudyVariables"
                                         }
                                     },
                                     "required": [
-                                        "variables"
+                                        "variable"
                                     ]
                                 }
                             }
@@ -1436,7 +1654,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/MergeVirtualParticipantRequest"
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                        "type": "string"
+                                    },
+                                    "virtualParticipantID": {
+                                        "type": "string"
+                                    },
+                                    "linkingCodeKey": {
+                                        "type": "string"
+                                    },
+                                    "linkingCodeValue": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "profileID",
+                                    "virtualParticipantID",
+                                    "linkingCodeKey",
+                                    "linkingCodeValue"
+                                ],
+                                "additionalProperties": false
                             }
                         }
                     }
@@ -1570,7 +1809,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                    "type": "object",
+                                    "properties": {
+                                        "surveyWithContext": {
+                                            "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                        }
+                                    },
+                                    "required": [
+                                        "surveyWithContext"
+                                    ]
                                 }
                             }
                         }
@@ -1622,7 +1869,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Participant"
+                                    "type": "object",
+                                    "properties": {
+                                        "participant": {
+                                            "$ref": "#/components/schemas/Participant"
+                                        }
+                                    },
+                                    "required": [
+                                        "participant"
+                                    ]
                                 }
                             }
                         }
@@ -1842,13 +2097,13 @@
                                                 }
                                             }
                                         },
-                                        "paginationInfo": {
+                                        "pagination": {
                                             "$ref": "#/components/schemas/PaginationInfos"
                                         }
                                     },
                                     "required": [
                                         "responses",
-                                        "paginationInfo"
+                                        "pagination"
                                     ]
                                 }
                             }
@@ -1915,7 +2170,9 @@
                                         "confidentialResponse": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/ConfidentialResponsesExportEntry"
+                                                "type": "object",
+                                                "description": "Confidential survey response export entry",
+                                                "additionalProperties": true
                                             }
                                         }
                                     },
@@ -2083,13 +2340,13 @@
                                                 "$ref": "#/components/schemas/Report"
                                             }
                                         },
-                                        "paginationInfo": {
+                                        "pagination": {
                                             "$ref": "#/components/schemas/PaginationInfos"
                                         }
                                     },
                                     "required": [
                                         "reports",
-                                        "paginationInfo"
+                                        "pagination"
                                     ]
                                 }
                             }
@@ -2140,7 +2397,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Participant"
+                                    "type": "object",
+                                    "properties": {
+                                        "participant": {
+                                            "$ref": "#/components/schemas/Participant"
+                                        }
+                                    },
+                                    "required": [
+                                        "participant"
+                                    ]
                                 }
                             }
                         }
@@ -2258,7 +2523,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                    "type": "object",
+                                    "properties": {
+                                        "surveyWithContext": {
+                                            "$ref": "#/components/schemas/AssignedSurveyWithContext"
+                                        }
+                                    },
+                                    "required": [
+                                        "surveyWithContext"
+                                    ]
                                 }
                             }
                         }
@@ -2570,7 +2843,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                               "$ref": "#/components/schemas/Profile"
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "$ref": "#/components/schemas/Profile"
+                                    }
+                                },
+                                "required": [
+                                    "profile"
+                                ]
                             }
                         }
                     }
@@ -2888,7 +3169,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserAttributeReqPayload"
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "attributes": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "attributes"
+                                ]
                             }
                         }
                     }
@@ -3030,28 +3324,6 @@
             }
         },
         "responses": {
-            "TokenAndUser": {
-                "description": "Access and refresh tokens with user",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "token": {
-                                    "$ref": "#/components/schemas/TokenEnvelope"
-                                },
-                                "user": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            },
-                            "required": [
-                                "token",
-                                "user"
-                            ]
-                        }
-                    }
-                }
-            },
             "MessageOk": {
                 "description": "Generic OK message",
                 "content": {
@@ -3140,91 +3412,31 @@
                 ],
                 "additionalProperties": false
             },
-            "LoginWithEmailReq": {
+            "TokenEnvelope": {
                 "type": "object",
                 "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
+                    "accessToken": {
                         "type": "string"
                     },
-                    "instanceId": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "password",
-                    "instanceId"
-                ],
-                "additionalProperties": false
-            },
-            "SignupWithEmailReq": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "instanceId": {
-                        "type": "string"
-                    },
-                    "infoCheck": {
-                        "type": "string"
-                    },
-                    "preferredLanguage": {
-                        "type": "string"
-                    },
-                    "withAttributes": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string"
-                            },
-                            "attributes": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
-                        }
-                    }
-                },
-                "required": [
-                    "email",
-                    "password",
-                    "instanceId"
-                ],
-                "additionalProperties": false
-            },
-            "RefreshTokenReq": {
-                "type": "object",
-                "properties": {
                     "refreshToken": {
                         "type": "string"
-                    }
-                },
-                "required": [
-                    "refreshToken"
-                ],
-                "additionalProperties": false
-            },
-            "VerifyOTPReq": {
-                "type": "object",
-                "properties": {
-                    "code": {
+                    },
+                    "expiresIn": {
+                        "type": "number"
+                    },
+                    "selectedProfile": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "code"
+                    "accessToken",
+                    "refreshToken",
+                    "expiresIn",
+                    "selectedProfile"
                 ],
                 "additionalProperties": false
             },
-            "TokenEnvelope": {
+            "TokenEnvelopeWithLastOTP": {
                 "type": "object",
                 "properties": {
                     "accessToken": {
@@ -3250,14 +3462,10 @@
                     "accessToken",
                     "refreshToken",
                     "expiresIn",
-                    "selectedProfile"
+                    "selectedProfile",
+                    "lastOTP"
                 ],
                 "additionalProperties": false
-            },
-            "ParticipantUserClaims": {
-                "type": "object",
-                "description": "Decoded participant user JWT claims",
-                "additionalProperties": true
             },
             "AssignedSurvey": {
                 "type": "object",
@@ -3297,7 +3505,7 @@
                         "type": "object",
                         "additionalProperties": true
                     },
-                    "surveyContext": {
+                    "context": {
                         "type": "object",
                         "additionalProperties": true
                     },
@@ -3314,11 +3522,6 @@
             "PaginationInfos": {
                 "type": "object",
                 "description": "Pagination information",
-                "additionalProperties": true
-            },
-            "ConfidentialResponsesExportEntry": {
-                "type": "object",
-                "description": "Confidential survey response export entry",
                 "additionalProperties": true
             },
             "SubmissionHistory": {
@@ -3338,7 +3541,7 @@
             },
             "User": {
                 "type": "object",
-                "description": "Participant user object. Shape is extensive; represented as free-form for brevity.",
+                "description": "User object",
                 "additionalProperties": true
             },
             "Profile": {
@@ -3350,23 +3553,6 @@
                 "type": "object",
                 "description": "User attributes object",
                 "additionalProperties": true
-            },
-            "UserAttributeReqPayload": {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "additionalProperties": true
-                    }
-                },
-                "required": [
-                    "type",
-                    "attributes"
-                ],
-                "additionalProperties": false
             },
             "StudyInfo": {
                 "type": "object",
@@ -3389,14 +3575,16 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "ProfileIDs only required in study info objects related to participants"
                     }
                 },
                 "required": [
                     "key",
                     "status",
                     "props",
-                    "stats"
+                    "stats",
+                    "profileIds"
                 ],
                 "additionalProperties": false
             },
@@ -3467,30 +3655,6 @@
                 "type"
                 ]
             },
-            "MergeVirtualParticipantRequest": {
-                "type": "object",
-                "properties": {
-                    "profileID": {
-                        "type": "string"
-                    },
-                    "virtualParticipantID": {
-                        "type": "string"
-                    },
-                    "linkingCodeKey": {
-                        "type": "string"
-                    },
-                    "linkingCodeValue": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "profileID",
-                    "virtualParticipantID",
-                    "linkingCodeKey",
-                    "linkingCodeValue"
-                ],
-                "additionalProperties": false
-            }
         }
     },
     "tags": [
