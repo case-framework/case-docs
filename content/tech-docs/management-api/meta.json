@@ -2,5 +2,9 @@
     "title": "Management API",
     "description": "TODO",
     "root": true,
-    "icon": "Shield"
+    "icon": "Shield",
+    "pages": [
+        "overview",
+        "api"
+    ]
 }
