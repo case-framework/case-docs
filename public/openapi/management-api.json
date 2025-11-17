@@ -3,7 +3,7 @@
   "info": {
     "title": "Management API",
     "version": "1.0.0",
-  "description": "Endpoints for management authentication, user management, study administration, messaging, and participant administration. (Auto-generated rudimentary; please refine as needed)"
+    "description": "Endpoints for management authentication, user management, study administration, messaging, and participant administration. (Auto-generated rudimentary; please refine as needed)"
   },
   "tags": [
     { "name": "auth", "description": "Authentication & Session" },
