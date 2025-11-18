@@ -20,6 +20,7 @@ const ApiDoc = ({ specUrl }: { specUrl: string }) => {
             defaultModelsExpandDepth={1}
             tryItOutEnabled={false}
             plugins={[DisableAuthorizePlugin()]}
+            deepLinking={true}
 
         />
     )

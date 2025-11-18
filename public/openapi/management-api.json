@@ -1,0 +1,2280 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Management API",
+    "version": "1.0.0",
+    "description": "Endpoints for management authentication, user management, study administration, messaging, and participant administration. (Auto-generated rudimentary; please refine as needed)"
+  },
+  "tags": [
+    { "name": "auth", "description": "Authentication & Session" },
+    { "name": "studies", "description": "Study management" },
+    { "name": "surveys", "description": "Survey management" },
+    { "name": "study-rules", "description": "Study rules" },
+    { "name": "study-variables", "description": "Study variables" },
+    { "name": "study-counters", "description": "Study counters" },
+    { "name": "study-permissions", "description": "Permissions for a study" },
+    { "name": "notifications", "description": "Notification subscriptions" },
+    { "name": "code-lists", "description": "Study code lists" },
+    { "name": "participants", "description": "Participant operations (admin)" },
+    { "name": "reports", "description": "Participant reports (admin)" },
+    { "name": "responses", "description": "Response exports & queries" },
+    { "name": "files", "description": "File management for studies" },
+    { "name": "messaging", "description": "Messaging templates & scheduled emails" },
+    { "name": "user-management", "description": "Management users, service accounts & app roles" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": { "message": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "account": { "$ref": "#/components/schemas/Account" },
+          "timestamps": { "$ref": "#/components/schemas/Timestamps" },
+          "profiles": { "type": "array", "items": { "$ref": "#/components/schemas/Profile" } },
+          "contactPreferences": { "$ref": "#/components/schemas/ContactPreferences" },
+          "contactInfos": { "type": "array", "items": { "$ref": "#/components/schemas/ContactInfo" } }
+        },
+        "additionalProperties": false
+      },
+      "Account": {
+        "type": "object",
+        "properties": { "type": { "type": "string" }, "accountID": { "type": "string" } },
+        "additionalProperties": false
+      },
+      "Timestamps": {
+        "type": "object",
+        "properties": {
+          "lastTokenRefresh": { "type": "integer" },
+          "lastLogin": { "type": "integer" },
+          "createdAt": { "type": "integer" },
+          "updatedAt": { "type": "integer" },
+          "lastPasswordChange": { "type": "integer" },
+          "reminderToConfirmSentAt": { "type": "integer" },
+          "markedForDeletion": { "type": "integer" }
+        },
+        "additionalProperties": false
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "createdAt": { "type": "integer" },
+          "mainProfile": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      },
+      "ContactPreferences": {
+        "type": "object",
+        "properties": { "sendNewsletterTo": { "type": "array", "items": { "type": "string" } } },
+        "additionalProperties": true
+      },
+      "ContactInfo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["email", "phone"] },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "confirmedAt": { "type": "integer" },
+          "confirmationLinkSentAt": { "type": "integer" }
+        },
+        "additionalProperties": false
+      },
+      "PaginationInfos": {
+        "type": "object",
+        "description": "Pagination information",
+        "additionalProperties": true
+      },
+      "Study": { "type": "object", "properties": { "studyKey": { "type": "string" } }, "additionalProperties": true },
+      "Survey": { "type": "object", "properties": { "key": { "type": "string" } }, "additionalProperties": true },
+      "StudyVariable": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "configUpdatedAt": { "type": "string", "format": "date-time" },
+          "valueUpdatedAt": { "type": "string", "format": "date-time" },
+          "studyKey": { "type": "string" },
+          "key": { "type": "string" },
+          "value": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "integer" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "string", "format": "date-time" },
+              { "type": "object", "additionalProperties": true },
+              { "type": "array", "items": {} },
+              { "type": "null" }
+            ]
+          },
+          "type": { "type": "string", "enum": ["string", "int", "float", "boolean", "date"] },
+          "label": { "type": "string" },
+          "description": { "type": "string" },
+          "uiType": { "type": "string" },
+          "uiPriority": { "type": "integer" },
+          "configs": { "type": "object", "additionalProperties": true }
+        },
+        "additionalProperties": false
+      },
+      "Permission": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "resourceType": { "type": "string" },
+          "resourceKey": { "type": "string" },
+          "action": { "type": "string" },
+          "limiter": { "type": "object", "additionalProperties": true }
+        },
+        "additionalProperties": false
+      },
+      "AppRoleTemplate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "appName": { "type": "string" },
+          "role": { "type": "string" },
+          "requiredPermissions": { "type": "array", "items": { "$ref": "#/components/schemas/Permission" } }
+        },
+        "additionalProperties": false
+      },
+      "ServiceAccount": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+      "ServiceAccountAPIKey": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "key": { "type": "string" },
+          "expiresAt": { "type": "integer", "description": "Unix timestamp" }
+        },
+        "additionalProperties": false
+      }
+  ,"StudySummary": {"type": "object", "properties": {"key": {"type": "string"}, "status": {"type": "string"}, "isSystemDefaultStudy": {"type": "boolean"}}, "additionalProperties": true, "description": "Placeholder – simplified representation of a study"}
+  ,"StudyExportConfig": {"type": "object", "properties": {"exportedAt": {"type": "string", "format": "date-time"}, "config": {"$ref": "#/components/schemas/Study"}, "rules": {"$ref": "#/components/schemas/StudyRules"}, "surveys": {"type": "array", "items": {"$ref": "#/components/schemas/Survey"}}}, "additionalProperties": false, "description": "Stream export object (simplified placeholder)"}
+  ,"StudyRules": {"type": "object", "properties": {"uploadedAt": {"type": "integer"}, "uploadedBy": {"type": "string"}}, "additionalProperties": true, "description": "Placeholder for current study rules or version"}
+  ,"SurveyVersion": {"type": "object", "properties": {"surveyKey": {"type": "string"}, "versionID": {"type": "string"}, "published": {"type": "integer"}}, "additionalProperties": true, "description": "Placeholder for a single survey version"}
+      ,"PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false}
+  ,"Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Placeholder participant"}
+  ,"Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Placeholder report"}
+      ,"ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
+      ,"StudyCounterValue": {"type": "object", "properties": {"scope": {"type": "string"}, "value": {"type": "integer"}}, "additionalProperties": false}
+      ,"Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
+      ,"SurveyInfo": {"type": "object", "properties": {"key": {"type": "string"}}, "additionalProperties": true}
+      ,"StudyVariableList": {"type": "object", "properties": {"variables": {"type": "array", "items": {"$ref": "#/components/schemas/StudyVariable"}}}, "additionalProperties": false}
+      ,"NewStudyReq": {"type": "object", "properties": {"studyKey": {"type": "string"}, "secretKey": {"type": "string"}, "isSystemDefaultStudy": {"type": "boolean"}}, "required": ["studyKey","secretKey"], "additionalProperties": false}
+      ,"StudyIsDefaultUpdateReq": {"type": "object", "properties": {"isDefault": {"type": "boolean"}}, "required": ["isDefault"], "additionalProperties": false}
+      ,"StudyStatusUpdateReq": {"type": "object", "properties": {"status": {"type": "string"}}, "required": ["status"], "additionalProperties": false}
+      ,"StudyDisplayPropsUpdateReq": {"type": "object", "properties": {"name": {"type": "array", "items": {"type": "object"}}, "description": {"type": "array", "items": {"type": "object"}}, "tags": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
+      ,"FileUploadRuleUpdateReq": {"type": "object", "properties": {"simplifiedAllowedUpload": {"type": "boolean"}, "expression": {"type": "object"}}, "additionalProperties": true}
+      ,"SurveyCreateReq": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "additionalProperties": true}
+      ,"SurveyUpdateReq": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "additionalProperties": true}
+      ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
+      ,"NotificationSubscriptionsUpdateReq": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false}
+      ,"AddStudyCodeListEntriesRequest": {"type": "object", "properties": {"listKey": {"type": "string"}, "codes": {"type": "array", "items": {"type": "string"}}}, "required": ["listKey","codes"], "additionalProperties": false}
+      ,"StudyCounterValueSaveReq": {"type": "object", "properties": {"value": {"type": "integer"}}, "required": ["value"], "additionalProperties": false}
+      ,"AddStudyVariableRequest": {"type": "object", "properties": {"variableDef": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variableDef"], "additionalProperties": false}
+      ,"UpdateStudyVariableDefRequest": {"type": "object", "properties": {"variableDef": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variableDef"], "additionalProperties": false}
+      ,"UpdateStudyVariableValueRequest": {"type": "object", "properties": {"variable": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variable"], "additionalProperties": false}
+  ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Placeholder for a single response"}
+      ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
+      ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
+      ,"ReportCreateReq": {"type": "object", "properties": {"key": {"type": "string"}, "data": {"type": "object"}}, "required": ["key"], "additionalProperties": true}
+      ,"ReportInfo": {"type": "object", "properties": {"reportID": {"type": "string"}, "key": {"type": "string"}, "createdAt": {"type": "integer"}}, "additionalProperties": true}
+      ,"ResponseList": {"type": "object", "properties": {"responses": {"type": "array", "items": {"$ref": "#/components/schemas/Response"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["responses"], "additionalProperties": false}
+      ,"ParticipantList": {"type": "object", "properties": {"participants": {"type": "array", "items": {"$ref": "#/components/schemas/Participant"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["participants"], "additionalProperties": false}
+      ,"ReportList": {"type": "object", "properties": {"reports": {"type": "array", "items": {"$ref": "#/components/schemas/ReportInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["reports"], "additionalProperties": false}
+      ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
+  ,"FileInfo": {"type": "object", "properties": {"fileID": {"type": "string"}, "name": {"type": "string"}, "size": {"type": "integer"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
+  ,"StudyFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/FileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
+  ,"EmailTemplate": {"type": "object", "properties": {"messageType": {"type": "string"}, "subject": {"type": "string"}, "body": {"type": "string"}}, "additionalProperties": true}
+  ,"SmsTemplate": {"type": "object", "properties": {"messageType": {"type": "string"}, "content": {"type": "string"}}, "additionalProperties": true}
+  ,"ScheduledEmail": {"type": "object", "properties": {"id": {"type": "string"}, "studyKey": {"type": "string"}, "messageType": {"type": "string"}, "scheduledAt": {"type": "integer"}}, "additionalProperties": true}
+  ,"ScheduledEmailList": {"type": "object", "properties": {"emails": {"type": "array", "items": {"$ref": "#/components/schemas/ScheduledEmail"}}}, "required": ["emails"], "additionalProperties": false}
+  ,"ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
+  ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
+  ,"PermissionList": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"], "additionalProperties": false}
+  ,"AppRoleTemplateList": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "#/components/schemas/AppRoleTemplate"}}}, "required": ["templates"], "additionalProperties": false}
+  ,"ServiceAccountList": {"type": "object", "properties": {"serviceAccounts": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccount"}}}, "required": ["serviceAccounts"], "additionalProperties": false}
+  ,"APIKeyList": {"type": "object", "properties": {"apiKeys": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}}, "required": ["apiKeys"], "additionalProperties": false}
+  ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounterValue"}}}, "required": ["counters"], "additionalProperties": false}
+  ,"StudyRuleVersion": {"type": "object", "properties": {"id": {"type": "string"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
+  ,"StudyRuleVersionList": {"type": "object", "properties": {"versions": {"type": "array", "items": {"$ref": "#/components/schemas/StudyRuleVersion"}}}, "required": ["versions"], "additionalProperties": false}
+  ,"PermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
+  ,"PermissionLimiterUpdateReq": {"type": "object", "properties": {"limiter": {"type": "object", "additionalProperties": true}}, "required": ["limiter"], "additionalProperties": false}
+  ,"AppRole": {"type": "object", "properties": {"id": {"type": "string"}, "appName": {"type": "string"}, "role": {"type": "string"}, "templateID": {"type": "string"}}, "additionalProperties": true}
+  ,"AppRoleList": {"type": "object", "properties": {"appRoles": {"type": "array", "items": {"$ref": "#/components/schemas/AppRole"}}}, "required": ["appRoles"], "additionalProperties": false}
+  ,"AppRoleTemplateCreateReq": {"type": "object", "properties": {"appName": {"type": "string"}, "role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["appName","role"], "additionalProperties": false}
+  ,"AppRoleTemplateUpdateReq": {"type": "object", "properties": {"role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "additionalProperties": false}
+  ,"ServiceAccountCreateReq": {"type": "object", "properties": {"label": {"type": "string"}, "description": {"type": "string"}}, "required": ["label"], "additionalProperties": false}
+  ,"ServiceAccountUpdateReq": {"type": "object", "properties": {"label": {"type": "string"}, "description": {"type": "string"}}, "additionalProperties": false}
+  ,"ServiceAccountPermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
+  ,"APIKeyCreateReq": {"type": "object", "properties": {"expiresAt": {"type": "integer", "description": "Unix timestamp"}}, "additionalProperties": false}
+  ,"ParticipantUserDeletionReq": {"type": "object", "properties": {"participantID": {"type": "string"}, "reason": {"type": "string"}}, "required": ["participantID"], "additionalProperties": false}
+    },
+    "responses": {
+      "Error400": { "description": "Bad Request", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Error401": { "description": "Unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Error403": { "description": "Forbidden", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Error404": { "description": "Not Found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Error429": { "description": "Too Many Requests", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Error500": { "description": "Internal Server Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+    }
+  },
+  "paths": {
+    "/v1/auth/signin-with-idp": {
+      "post": {
+        "tags": ["auth"],
+        "responses": {
+          "200": { "description": "Signed in" },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/auth/extend-session": {
+      "post": {
+        "tags": ["auth"],
+        "responses": {
+          "200": { "description": "Session extended" },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/auth/renew-token/{sessionID}": {
+      "get": {
+        "tags": ["auth"],
+        "parameters": [ { "name": "sessionID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Renew token" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/auth/permissions": {
+      "get": {
+        "tags": ["auth"],
+        "responses": {
+          "200": { "description": "Permissions" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/": {
+      "get": {
+        "tags": ["studies"],
+        "operationId": "studies_listStudies",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "List studies",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object", "properties": {"studies": {"type": "array", "items": {"$ref": "#/components/schemas/StudySummary"}}}, "required": ["studies"]}
+              }
+            }
+          },
+          "401": {"$ref": "#/components/responses/Error401"},
+          "403": {"$ref": "#/components/responses/Error403"},
+          "500": {"$ref": "#/components/responses/Error500"}
+        }
+      },
+      "post": {
+        "tags": ["studies"],
+        "operationId": "studies_createStudy",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NewStudyReq"}}}
+        },
+        "responses": {
+          "201": {
+            "description": "Created study",
+            "content": {"application/json": {"schema": {"type": "object", "properties": {"study": {"$ref": "#/components/schemas/Study"}}, "required": ["study"]}}}
+          },
+          "400": {"$ref": "#/components/responses/Error400"},
+          "401": {"$ref": "#/components/responses/Error401"},
+          "403": {"$ref": "#/components/responses/Error403"},
+          "500": {"$ref": "#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/user-management/management-users": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listManagementUsers",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "page", "in": "query", "schema": {"type": "integer", "minimum": 1}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer", "minimum": 1, "maximum": 100}}
+        ],
+        "responses": {
+          "200": {
+            "description": "List management users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}},
+                    "pagination": {"$ref": "#/components/schemas/PaginationInfo"}
+                  },
+                  "required": ["users"]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_getManagementUser",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": {
+            "description": "Management user",
+            "content": {"application/json": {"schema": {"type": "object", "properties": {"user": {"$ref": "#/components/schemas/ManagementUser"}}, "required": ["user"]}}}
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteManagementUser",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Deleted management user", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/permissions": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listUserPermissions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "List permissions", "content": {"application/json": {"schema": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_createUserPermission",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PermissionCreateReq"}}}},
+        "responses": {
+          "201": { "description": "Permission created", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "#/components/schemas/Permission"}}, "required": ["permission"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/permissions/{permissionID}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteUserPermission",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "userID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": { "description": "Permission deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/permissions/{permissionID}/limiter": {
+      "put": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_updateUserPermissionLimiter",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "userID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PermissionLimiterUpdateReq"}}}},
+        "responses": {
+          "200": { "description": "Limiter updated", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "#/components/schemas/Permission"}}, "required": ["permission"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/app-roles": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listUserAppRoles",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "userID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "List user app roles", "content": {"application/json": {"schema": {"type": "object", "properties": {"appRoles": {"type": "array", "items": {"$ref": "#/components/schemas/AppRole"}}}, "required": ["appRoles"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/app-roles/{appRoleTemplateID}": {
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_addUserAppRole",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "userID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "appRoleTemplateID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "201": { "description": "App role added", "content": {"application/json": {"schema": {"type": "object", "properties": {"appRole": {"$ref": "#/components/schemas/AppRole"}}, "required": ["appRole"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/management-users/{userID}/app-roles/{appRoleID}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteUserAppRole",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "userID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "appRoleID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": { "description": "App role deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/templates/": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listAppRoleTemplates",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": {"description": "List app role templates", "content": {"application/json": {"schema": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "#/components/schemas/AppRoleTemplate"}}}, "required": ["templates"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_createAppRoleTemplate",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AppRoleTemplateCreateReq"}}}},
+        "responses": {
+          "201": {"description": "Created app role template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "#/components/schemas/AppRoleTemplate"}}, "required": ["template"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/templates/{appRoleTemplateID}": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_getAppRoleTemplate",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "appRoleTemplateID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": {"description": "App role template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "#/components/schemas/AppRoleTemplate"}}, "required": ["template"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "put": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_updateAppRoleTemplate",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "appRoleTemplateID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AppRoleTemplateUpdateReq"}}}},
+        "responses": {
+          "200": {"description": "Updated app role template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "#/components/schemas/AppRoleTemplate"}}, "required": ["template"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/templates/delete/{appRoleTemplateID}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteAppRoleTemplate",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "appRoleTemplateID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "Deleted app role template", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/templates/delete-for-app/{appName}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteAppRoleTemplatesForApp",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "appName", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "Deleted app role templates for app", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listAppRoles",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": { "description": "List app roles", "content": {"application/json": {"schema": {"type": "object", "properties": {"appRoles": {"type": "array", "items": {"$ref": "#/components/schemas/AppRole"}}}, "required": ["appRoles"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/app-roles/delete/{appName}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteAppRolesForApp",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "appName", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "Deleted app roles for app", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/participant-users/request-deletion": {
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_requestParticipantUserDeletion",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ParticipantUserDeletionReq"}}}},
+        "responses": {
+          "202": { "description": "Participant user deletion requested", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listServiceAccounts",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": { "description": "List service accounts", "content": {"application/json": {"schema": {"type": "object", "properties": {"serviceAccounts": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccount"}}}, "required": ["serviceAccounts"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_createServiceAccount",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ServiceAccountCreateReq"}}}},
+        "responses": {
+          "201": { "description": "Created service account", "content": {"application/json": {"schema": {"type": "object", "properties": {"serviceAccount": {"$ref": "#/components/schemas/ServiceAccount"}}, "required": ["serviceAccount"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_getServiceAccount",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "Service account", "content": {"application/json": {"schema": {"type": "object", "properties": {"serviceAccount": {"$ref": "#/components/schemas/ServiceAccount"}}, "required": ["serviceAccount"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "put": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_updateServiceAccount",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ServiceAccountUpdateReq"}}}},
+        "responses": {
+          "200": { "description": "Updated service account", "content": {"application/json": {"schema": {"type": "object", "properties": {"serviceAccount": {"$ref": "#/components/schemas/ServiceAccount"}}, "required": ["serviceAccount"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteServiceAccount",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "Deleted service account", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}/api-keys": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listServiceAccountApiKeys",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "List API keys", "content": {"application/json": {"schema": {"type": "object", "properties": {"apiKeys": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}}, "required": ["apiKeys"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_createServiceAccountApiKey",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/APIKeyCreateReq"}}}},
+        "responses": {
+          "201": { "description": "Created API key", "content": {"application/json": {"schema": {"type": "object", "properties": {"apiKey": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}, "required": ["apiKey"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}/api-keys/{apiKeyID}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteServiceAccountApiKey",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "apiKeyID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": { "description": "Deleted API key", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}/permissions": {
+      "get": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_listServiceAccountPermissions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "responses": {
+          "200": { "description": "List service account permissions", "content": {"application/json": {"schema": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"]}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_createServiceAccountPermission",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ServiceAccountPermissionCreateReq"}}}},
+        "responses": {
+          "201": { "description": "Created service account permission", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "#/components/schemas/Permission"}}, "required": ["permission"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}": {
+      "delete": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_deleteServiceAccountPermission",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": { "description": "Deleted service account permission", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}/limiter": {
+      "put": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_updateServiceAccountPermissionLimiter",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PermissionLimiterUpdateReq"}}}},
+        "responses": {
+          "200": { "description": "Updated permission limiter", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "#/components/schemas/Permission"}}, "required": ["permission"]}}}},
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}": {
+      "get": {
+        "tags": ["studies"],
+        "operationId": "studies_getStudy",
+        "security": [{"BearerAuth": []}],
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Study config", "content": {"application/json": {"schema": {"type": "object", "properties": {"study": {"$ref": "#/components/schemas/Study"}}, "required": ["study"]}}}},
+          "401": {"$ref": "#/components/responses/Error401"},
+          "403": {"$ref": "#/components/responses/Error403"},
+          "404": {"$ref": "#/components/responses/Error404"},
+          "500": {"$ref": "#/components/responses/Error500"}
+        }
+      },
+      "delete": {
+        "tags": ["studies"],
+        "operationId": "studies_deleteStudy",
+        "security": [{"BearerAuth": []}],
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}},
+          "401": {"$ref": "#/components/responses/Error401"},
+          "403": {"$ref": "#/components/responses/Error403"},
+          "404": {"$ref": "#/components/responses/Error404"},
+          "500": {"$ref": "#/components/responses/Error500"}
+        }
+      }
+    },
+  "/v1/studies/{studyKey}/export-config": {"get": {"tags": ["studies"], "operationId": "studies_exportConfig", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "config", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}, {"name": "surveys", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}, {"name": "rules", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}], "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudyExportConfig"}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/is-default": {"put": {"tags": ["studies"], "operationId": "studies_updateIsDefault", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudyIsDefaultUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/status": {"put": {"tags": ["studies"], "operationId": "studies_updateStatus", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudyStatusUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/display-props": {"put": {"tags": ["studies"], "operationId": "studies_updateDisplayProps", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudyDisplayPropsUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/file-upload-config": {"put": {"tags": ["studies"], "operationId": "studies_updateFileUploadRule", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FileUploadRuleUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+
+  "/v1/studies/{studyKey}/surveys/": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyInfos", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "List survey infos", "content": {"application/json": {"schema": {"type": "object", "properties": {"surveys": {"type": "array", "items": {"$ref": "#/components/schemas/SurveyInfo"}}}, "required": ["surveys"]}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_createSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SurveyCreateReq"}}}}, "responses": {"201": {"description": "Created survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/surveys/{surveyKey}": {"get": {"tags": ["surveys"], "operationId": "surveys_getLatestSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Latest survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_updateSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SurveyUpdateReq"}}}}, "responses": {"200": {"description": "Updated survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "#/components/responses/Error400"}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/unpublish": {"post": {"tags": ["surveys"], "operationId": "surveys_unpublishSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Unpublished", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyVersions", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Versions", "content": {"application/json": {"schema": {"type": "object", "properties": {"versions": {"type": "array", "items": {"$ref": "#/components/schemas/SurveyVersion"}}}, "required": ["versions"]}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions/{versionID}": {"get": {"tags": ["surveys"], "operationId": "surveys_getSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Version", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/SurveyVersion"}}, "required": ["survey"]}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}, "delete": {"tags": ["surveys"], "operationId": "surveys_deleteSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Message"}}}}, "401": {"$ref": "#/components/responses/Error401"}, "403": {"$ref": "#/components/responses/Error403"}, "404": {"$ref": "#/components/responses/Error404"}, "500": {"$ref": "#/components/responses/Error500"}}}},
+
+    "/v1/studies/{studyKey}/permissions/": {
+      "get": {
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_listPermissions",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "List permissions", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PermissionList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_addPermission",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyPermission" } } } },
+        "responses": {
+          "201": { "description": "Added", "content": { "application/json": { "schema": { "type": "object", "properties": { "permission": { "$ref": "#/components/schemas/StudyPermission" } }, "required": ["permission"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/permissions/{permissionID}": {
+      "delete": {
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_removePermission",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "permissionID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Removed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/notifications/": {
+      "get": {
+        "tags": ["notifications"],
+        "operationId": "notifications_getSubscriptions",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": {
+            "description": "List subscriptions",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "subscriptions": { "type": "array", "items": { "type": "object" } } }, "required": ["subscriptions"] } } }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "put": {
+        "tags": ["notifications"],
+        "operationId": "notifications_updateSubscriptions",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/NotificationSubscriptionsUpdateReq" } } } },
+        "responses": {
+          "200": { "description": "Updated", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/code-lists/list-keys": {
+      "get": {
+        "tags": ["code-lists"],
+        "operationId": "codeLists_listListKeys",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Keys", "content": { "application/json": { "schema": { "type": "object", "properties": { "listKeys": { "type": "array", "items": { "type": "string" } } }, "required": ["listKeys"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/code-lists/codes": {
+      "get": {
+        "tags": ["code-lists"],
+        "operationId": "codeLists_listCodes",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "listKey", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Codes", "content": { "application/json": { "schema": { "type": "object", "properties": { "codes": { "type": "array", "items": { "type": "string" } } }, "required": ["codes"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["code-lists"],
+        "operationId": "codeLists_addCodes",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddStudyCodeListEntriesRequest" } } } },
+        "responses": {
+          "201": { "description": "Added", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["code-lists"],
+        "operationId": "codeLists_deleteCodes",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "listKey", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Removed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/counters/": {
+      "get": {
+        "tags": ["study-counters"],
+        "operationId": "counters_listCounters",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "List counters", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyCounterList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/counters/{scope}": {
+      "post": {
+        "tags": ["study-counters"],
+        "operationId": "counters_saveCounter",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyCounterValueSaveReq" } } } },
+        "responses": {
+          "201": { "description": "Saved", "content": { "application/json": { "schema": { "type": "object", "properties": { "counter": { "$ref": "#/components/schemas/StudyCounterValue" } }, "required": ["counter"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "put": {
+        "tags": ["study-counters"],
+        "operationId": "counters_updateCounter",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyCounterValueSaveReq" } } } },
+        "responses": {
+          "200": { "description": "Updated", "content": { "application/json": { "schema": { "type": "object", "properties": { "counter": { "$ref": "#/components/schemas/StudyCounterValue" } }, "required": ["counter"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["study-counters"],
+        "operationId": "counters_deleteCounter",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Removed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/variables/": {
+      "get": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_listVariables",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "List", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyVariableList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_addVariable",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddStudyVariableRequest" } } } },
+        "responses": {
+          "201": { "description": "Created", "content": { "application/json": { "schema": { "type": "object", "properties": { "variable": { "$ref": "#/components/schemas/StudyVariable" } }, "required": ["variable"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/variables/{variableKey}": {
+      "get": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_getVariable",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "variableKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Item", "content": { "application/json": { "schema": { "type": "object", "properties": { "variable": { "$ref": "#/components/schemas/StudyVariable" } }, "required": ["variable"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "put": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_updateVariableDef",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "variableKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateStudyVariableDefRequest" } } } },
+        "responses": {
+          "200": { "description": "Updated", "content": { "application/json": { "schema": { "type": "object", "properties": { "variable": { "$ref": "#/components/schemas/StudyVariable" } }, "required": ["variable"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_deleteVariable",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "variableKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Removed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/variables/{variableKey}/value": {
+      "put": {
+        "tags": ["study-variables"],
+        "operationId": "studyVariables_updateVariableValue",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "variableKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateStudyVariableValueRequest" } } } },
+        "responses": {
+          "200": { "description": "Value updated", "content": { "application/json": { "schema": { "type": "object", "properties": { "variable": { "$ref": "#/components/schemas/StudyVariable" } }, "required": ["variable"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/rules/": {
+      "get": {
+        "tags": ["study-rules"],
+        "operationId": "studyRules_getCurrentRules",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Current rules", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyRules" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["study-rules"],
+        "operationId": "studyRules_createRulesVersion",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyRules" } } } },
+        "responses": {
+          "201": { "description": "Created version", "content": { "application/json": { "schema": { "type": "object", "properties": { "version": { "$ref": "#/components/schemas/StudyRuleVersion" } }, "required": ["version"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/rules/versions": {
+      "get": {
+        "tags": ["study-rules"],
+        "operationId": "studyRules_listVersions",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Versions", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyRuleVersionList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/rules/versions/{id}": {
+      "get": {
+        "tags": ["study-rules"],
+        "operationId": "studyRules_getVersion",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Version", "content": { "application/json": { "schema": { "type": "object", "properties": { "version": { "$ref": "#/components/schemas/StudyRuleVersion" } }, "required": ["version"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["study-rules"],
+        "operationId": "studyRules_deleteVersion",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Removed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/actions/participants/{participantID}": {
+      "post": {
+        "tags": ["participants"],
+        "operationId": "actions_runOnParticipant",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "actions": { "type": "array", "items": { "type": "object" } } }, "required": ["actions"] } } } },
+        "responses": {
+          "200": { "description": "Actions executed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/actions/participants/": {
+      "post": {
+        "tags": ["participants"],
+        "operationId": "actions_runOnParticipantsBulk",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "participantIDs": { "type": "array", "items": { "type": "string" } }, "actions": { "type": "array", "items": { "type": "object" } } }, "required": ["participantIDs","actions"] } } } },
+        "responses": {
+          "200": { "description": "Bulk actions queued", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/actions/previous-responses/{participantID}": {
+      "post": {
+        "tags": ["responses"],
+        "operationId": "actions_runOnParticipantPreviousResponses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "actions": { "type": "array", "items": { "type": "object" } } }, "required": ["actions"] } } } },
+        "responses": {
+          "200": { "description": "Actions executed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/actions/previous-responses/": {
+      "post": {
+        "tags": ["responses"],
+        "operationId": "actions_runOnPreviousResponsesBulk",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "surveyKey": { "type": "string" }, "actions": { "type": "array", "items": { "type": "object" } } }, "required": ["surveyKey","actions"] } } } },
+        "responses": {
+          "200": { "description": "Bulk actions queued", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-export/survey-info/": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_listSurveyInfo",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Survey info list", "content": { "application/json": { "schema": { "type": "object", "properties": { "surveys": { "type": "array", "items": { "$ref": "#/components/schemas/SurveyInfo" } } }, "required": ["surveys"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/responses/count": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_countResponses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Responses count", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } }, "required": ["count"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/responses/task/{taskID}": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_getResponsesTaskStatus",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task status", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/responses/task/{taskID}/result": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_getResponsesTaskResult",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task result (download or inline)", "content": { "application/json": { "schema": { "type": "object", "properties": { "url": { "type": "string" }, "expiresAt": { "type": "integer" } }, "required": ["url"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/responses/daily-exports": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_listDailyResponseExports",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Daily exports", "content": { "application/json": { "schema": { "type": "object", "properties": { "exports": { "type": "array", "items": { "type": "object", "properties": { "exportID": { "type": "string" }, "date": { "type": "string", "format": "date" } }, "required": ["exportID","date"] } } }, "required": ["exports"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/responses/daily-exports/{exportID}": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_getDailyResponseExport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "exportID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Daily export", "content": { "application/json": { "schema": { "type": "object", "properties": { "exportID": { "type": "string" }, "files": { "type": "array", "items": { "type": "string" } } }, "required": ["exportID"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-export/participants/count": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "dataExport_countParticipants",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Participants count", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } }, "required": ["count"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/participants/task/{taskID}": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "dataExport_getParticipantsTaskStatus",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task status", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/participants/task/{taskID}/result": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "dataExport_getParticipantsTaskResult",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task result (download or inline)", "content": { "application/json": { "schema": { "type": "object", "properties": { "url": { "type": "string" }, "expiresAt": { "type": "integer" } }, "required": ["url"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-export/reports/count": {
+      "get": {
+        "tags": ["reports"],
+        "operationId": "dataExport_countReports",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Reports count", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } }, "required": ["count"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/reports/task/{taskID}": {
+      "get": {
+        "tags": ["reports"],
+        "operationId": "dataExport_getReportsTaskStatus",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task status", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/reports/task/{taskID}/result": {
+      "get": {
+        "tags": ["reports"],
+        "operationId": "dataExport_getReportsTaskResult",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Task result (download or inline)", "content": { "application/json": { "schema": { "type": "object", "properties": { "url": { "type": "string" }, "expiresAt": { "type": "integer" } }, "required": ["url"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-export/confidential-responses/": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_listConfidentialResponseExports",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Confidential response exports", "content": { "application/json": { "schema": { "type": "object", "properties": { "exports": { "type": "array", "items": { "type": "object", "properties": { "exportID": { "type": "string" }, "createdAt": { "type": "integer" } }, "required": ["exportID"] } } }, "required": ["exports"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-export/confidential-responses/{exportID}": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExport_getConfidentialResponseExport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "exportID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Confidential response export", "content": { "application/json": { "schema": { "type": "object", "properties": { "exportID": { "type": "string" }, "url": { "type": "string" }, "expiresAt": { "type": "integer" } }, "required": ["exportID","url"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-explorer/responses/": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExplorer_listResponses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [        
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "surveyKey", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "shortKeys", "in": "query", "description": "whether to return short keys for responses", "required": false, "schema": { "type": "boolean", "default": false } },
+          { "name": "questionOptionSep", "in": "query", "description": "character used to seperate question options in response", "required": false, "schema": { "type": "string", "default": "-" } },
+          { "name": "format", "in": "query", "description": "format for survey responses", "required": false, "schema": { "type": "string", "default": "wide", "enum": ["wide", "long", "json"] } },
+          { "name": "page", "in": "query", "description": "page number (starting from 1)", "schema": { "type": "integer", "minimum": 1, "default": 1 } },
+          { "name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": { "type": "integer", "minimum": 1, "default": 10 } },
+          { "name": "filter", "in": "query", "description": "bson.M object to filter responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "sort", "in": "query", "description": "bson.M object to sort responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "extraContextColumns", "in": "query", "description": "comma-separated list of extra context columns to include in the response", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List responses",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "responses": { "type": "array", "items": { "type": "object", "description": "Responses", "additionalProperties": { "type": "object" } } }, "pagination": { "$ref": "#/components/schemas/PaginationInfos" } }, "required": ["responses","pagination"] }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["responses"],
+        "operationId": "dataExplorer_deleteResponses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "surveyKey", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted responses",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ResponsesDeleteSummary" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/responses/{responseId}": {
+      "get": {
+        "tags": ["responses"],
+        "operationId": "dataExplorer_getResponse",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "responseId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "response": { "$ref": "#/components/schemas/Response" } },
+                  "required": ["response"]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["responses"],
+        "operationId": "dataExplorer_deleteResponse",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "responseId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted response",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-explorer/participants/": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "dataExplorer_listParticipants",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List participants",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ParticipantList" } } }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["participants"],
+        "operationId": "dataExplorer_createParticipant",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ParticipantCreateReq" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Created participant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "participant": { "$ref": "#/components/schemas/Participant" } },
+                  "required": ["participant"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/participants/{participantID}": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "dataExplorer_getParticipant",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Participant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "participant": { "$ref": "#/components/schemas/Participant" } },
+                  "required": ["participant"]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/data-explorer/reports/keys": {"get": {"tags": ["reports"], "responses": {"200": {"description": "Report keys"}}}},
+    "/v1/studies/{studyKey}/data-explorer/reports/": {
+      "get": {
+        "tags": ["reports"],
+        "operationId": "dataExplorer_listReports",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List reports",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ReportList" } } }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["reports"],
+        "operationId": "dataExplorer_createOrUpdateReport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ReportCreateReq" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Created report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "report": { "$ref": "#/components/schemas/ReportInfo" } },
+                  "required": ["report"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/reports/{reportID}": {
+      "get": {
+        "tags": ["reports"],
+        "operationId": "dataExplorer_getReport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "reportID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "report": { "$ref": "#/components/schemas/ReportInfo" } },
+                  "required": ["report"]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/files/": {
+      "get": {
+        "tags": ["files"],
+        "operationId": "files_listStudyFiles",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } }
+        ],
+        "responses": {
+          "200": { "description": "List files", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StudyFileList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/files/{fileID}": {
+      "get": {
+        "tags": ["files"],
+        "operationId": "files_getFile",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "fileID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Download file metadata", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FileInfo" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["files"],
+        "operationId": "files_deleteFile",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "fileID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Deleted file", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/studies/{studyKey}/participants/virtual": {
+      "post": {
+        "tags": ["participants"],
+        "operationId": "participants_createVirtualParticipant",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": false, "content": { "application/json": { "schema": { "type": "object", "properties": { "profile": { "type": "object" } } } } } },
+        "responses": {
+          "201": { "description": "Virtual participant created", "content": { "application/json": { "schema": { "type": "object", "properties": { "participant": { "$ref": "#/components/schemas/Participant" } }, "required": ["participant"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/responses": {
+      "get": {
+        "tags": ["participants"],
+        "operationId": "participants_listParticipantResponses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } }
+        ],
+        "responses": {
+          "200": { "description": "List participant responses", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResponseList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["participants"],
+        "operationId": "participants_submitParticipantResponse",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Response" } } } },
+        "responses": {
+          "201": { "description": "Submit participant response", "content": { "application/json": { "schema": { "type": "object", "properties": { "response": { "$ref": "#/components/schemas/Response" } }, "required": ["response"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/events": {
+      "post": {
+        "tags": ["participants"],
+        "operationId": "participants_submitParticipantEvent",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "eventType": { "type": "string" }, "data": { "type": "object" } }, "required": ["eventType"] } } } },
+        "responses": {
+          "201": { "description": "Submit participant event", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/reports": {
+      "post": {
+        "tags": ["reports"],
+        "operationId": "participants_submitParticipantReport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ReportCreateReq" } } } },
+        "responses": {
+          "201": { "description": "Submit participant report", "content": { "application/json": { "schema": { "type": "object", "properties": { "report": { "$ref": "#/components/schemas/ReportInfo" } }, "required": ["report"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/reports/{reportID}": {
+      "put": {
+        "tags": ["reports"],
+        "operationId": "participants_updateParticipantReport",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "reportID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ReportCreateReq" } } } },
+        "responses": {
+          "200": { "description": "Update participant report", "content": { "application/json": { "schema": { "type": "object", "properties": { "report": { "$ref": "#/components/schemas/ReportInfo" } }, "required": ["report"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/merge": {
+      "post": {
+        "tags": ["participants"],
+        "operationId": "participants_mergeParticipants",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "sourceIDs": { "type": "array", "items": { "type": "string" } }, "targetID": { "type": "string" } }, "required": ["sourceIDs","targetID"] } } } },
+        "responses": {
+          "200": { "description": "Merge participants", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}": {
+      "put": {
+        "tags": ["participants"],
+        "operationId": "participants_editParticipant",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "profile": { "type": "object" } }, "required": ["profile"] } } } },
+        "responses": {
+          "200": { "description": "Edit participant", "content": { "application/json": { "schema": { "type": "object", "properties": { "participant": { "$ref": "#/components/schemas/Participant" } }, "required": ["participant"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+
+    "/v1/messaging/email-templates/global-templates": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_listGlobalEmailTemplates",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List global templates", "content": { "application/json": { "schema": { "type": "object", "properties": { "templates": { "type": "array", "items": { "$ref": "#/components/schemas/EmailTemplate" } } }, "required": ["templates"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["messaging"],
+        "operationId": "messaging_saveGlobalEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmailTemplate" } } } },
+        "responses": {
+          "201": { "description": "Save global template", "content": { "application/json": { "schema": { "type": "object", "properties": { "template": { "$ref": "#/components/schemas/EmailTemplate" } }, "required": ["template"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/email-templates/global-templates/{messageType}": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_getGlobalEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "messageType", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Global template", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmailTemplate" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["messaging"],
+        "operationId": "messaging_deleteGlobalEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "messageType", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Deleted", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/email-templates/study-templates": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_listAllStudyEmailTemplates",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List study templates (all studies)", "content": { "application/json": { "schema": { "type": "object", "properties": { "templates": { "type": "array", "items": { "$ref": "#/components/schemas/EmailTemplate" } } }, "required": ["templates"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/email-templates/study-templates/{studyKey}": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_listStudyEmailTemplates",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "List study templates", "content": { "application/json": { "schema": { "type": "object", "properties": { "templates": { "type": "array", "items": { "$ref": "#/components/schemas/EmailTemplate" } } }, "required": ["templates"] } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["messaging"],
+        "operationId": "messaging_saveStudyEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmailTemplate" } } } },
+        "responses": {
+          "201": { "description": "Save study template", "content": { "application/json": { "schema": { "type": "object", "properties": { "template": { "$ref": "#/components/schemas/EmailTemplate" } }, "required": ["template"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/email-templates/study-templates/{studyKey}/{messageType}": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_getStudyEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "messageType", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Study template", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmailTemplate" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["messaging"],
+        "operationId": "messaging_deleteStudyEmailTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "messageType", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Deleted", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/sms-templates/": {
+      "post": {
+        "tags": ["messaging"],
+        "operationId": "messaging_saveSmsTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SmsTemplate" } } } },
+        "responses": {
+          "201": { "description": "Save SMS template", "content": { "application/json": { "schema": { "type": "object", "properties": { "template": { "$ref": "#/components/schemas/SmsTemplate" } }, "required": ["template"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/sms-templates/{messageType}": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_getSmsTemplate",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "messageType", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "SMS template", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SmsTemplate" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/scheduled-emails/": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_listScheduledEmails",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List scheduled emails", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ScheduledEmailList" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "post": {
+        "tags": ["messaging"],
+        "operationId": "messaging_createScheduledEmail",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "studyKey": { "type": "string" }, "messageType": { "type": "string" }, "scheduledAt": { "type": "integer" } }, "required": ["studyKey","messageType","scheduledAt"] } } } },
+        "responses": {
+          "201": { "description": "Create scheduled email", "content": { "application/json": { "schema": { "type": "object", "properties": { "email": { "$ref": "#/components/schemas/ScheduledEmail" } }, "required": ["email"] } } } },
+          "400": { "$ref": "#/components/responses/Error400" },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+    "/v1/messaging/scheduled-emails/{id}": {
+      "get": {
+        "tags": ["messaging"],
+        "operationId": "messaging_getScheduledEmail",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Scheduled email", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ScheduledEmail" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      },
+      "delete": {
+        "tags": ["messaging"],
+        "operationId": "messaging_deleteScheduledEmail",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [ { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": {
+          "200": { "description": "Deleted", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+          "401": { "$ref": "#/components/responses/Error401" },
+          "403": { "$ref": "#/components/responses/Error403" },
+          "404": { "$ref": "#/components/responses/Error404" },
+          "500": { "$ref": "#/components/responses/Error500" }
+        }
+      }
+    },
+  }
+}
