@@ -1,0 +1,669 @@
+ {
+
+    "/v1/studies/": {
+      "get": {
+        "tags": ["studies"],
+        "operationId": "studies_listStudies",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "List studies",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object", "properties": {"studies": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/StudySummary"}}}, "required": ["studies"]}
+              }
+            }
+          },
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "post": {
+        "tags": ["studies"],
+        "operationId": "studies_createStudy",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/NewStudyReq"}}}
+        },
+        "responses": {
+          "201": {
+            "description": "Created study",
+            "content": {"application/json": {"schema": {"type": "object", "properties": {"study": {"$ref": "../management-api.json#/components/schemas/Study"}}, "required": ["study"]}}}
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/": {
+      "get": {
+        "tags": ["studies"],
+        "operationId": "studies_getStudy",
+        "security": [{"BearerAuth": []}],
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Study config", "content": {"application/json": {"schema": {"type": "object", "properties": {"study": {"$ref": "../management-api.json#/components/schemas/Study"}}, "required": ["study"]}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "delete": {
+        "tags": ["studies"],
+        "operationId": "studies_deleteStudy",
+        "security": [{"BearerAuth": []}],
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/export-config": {"get": {"tags": ["studies"], "operationId": "studies_exportConfig", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "config", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}, {"name": "surveys", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}, {"name": "rules", "in": "query", "schema": {"type": "string", "enum": ["true","false"]}}], "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyExportConfig"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/is-default": {"put": {"tags": ["studies"], "operationId": "studies_updateIsDefault", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyIsDefaultUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/status": {"put": {"tags": ["studies"], "operationId": "studies_updateStatus", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyStatusUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/display-props": {"put": {"tags": ["studies"], "operationId": "studies_updateDisplayProps", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyDisplayPropsUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/file-upload-config": {"put": {"tags": ["studies"], "operationId": "studies_updateFileUploadRule", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/FileUploadRuleUpdateReq"}}}}, "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/surveys/": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyInfos", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "List survey infos", "content": {"application/json": {"schema": {"type": "object", "properties": {"surveys": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyInfo"}}}, "required": ["surveys"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_createSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SurveyCreateReq"}}}}, "responses": {"201": {"description": "Created survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/surveys/{surveyKey}": {"get": {"tags": ["surveys"], "operationId": "surveys_getLatestSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Latest survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_updateSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SurveyUpdateReq"}}}}, "responses": {"200": {"description": "Updated survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/surveys/{surveyKey}/unpublish": {"post": {"tags": ["surveys"], "operationId": "surveys_unpublishSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Unpublished", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/surveys/{surveyKey}/versions": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyVersions", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Versions", "content": {"application/json": {"schema": {"type": "object", "properties": {"versions": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyVersion"}}}, "required": ["versions"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/surveys/{surveyKey}/versions/{versionID}": {"get": {"tags": ["surveys"], "operationId": "surveys_getSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Version", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/SurveyVersion"}}, "required": ["survey"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "delete": {"tags": ["surveys"], "operationId": "surveys_deleteSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+    "/v1/studies/{studyKey}/permissions/": {
+      "get": {
+        "tags": ["study-permissions"], "operationId": "studyPermissions_listPermissions",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Permission list", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionList"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "post": {
+        "tags": ["study-permissions"], "operationId": "studyPermissions_addPermission",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionCreateReq"}}}},
+        "responses": {
+          "201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/permissions/{permissionID}": {
+      "delete": {
+        "tags": ["study-permissions"], "operationId": "studyPermissions_removePermission",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/notification-subscriptions/": {
+      "get": {
+        "tags": ["notifications"], "operationId": "notifications_getSubscriptions",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Subscriptions", "content": {"application/json": {"schema": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "required": ["subscriptions"], "additionalProperties": false}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "put": {
+        "tags": ["notifications"], "operationId": "notifications_updateSubscriptions",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/NotificationSubscriptionsUpdateReq"}}}},
+        "responses": {
+          "200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/study-code-list/list-keys": {
+      "get": {
+        "tags": ["code-lists"], "operationId": "codeLists_getListKeys",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "List keys", "content": {"application/json": {"schema": {"type": "object", "properties": {"listKeys": {"type": "array", "items": {"type": "string"}}}, "required": ["listKeys"], "additionalProperties": false}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/study-code-list/codes": {
+      "get": {
+        "tags": ["code-lists"], "operationId": "codeLists_getCodes",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "listKey", "in": "query", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Codes", "content": {"application/json": {"schema": {"type": "object", "properties": {"codes": {"type": "array", "items": {"type": "string"}}}, "required": ["codes"], "additionalProperties": false}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "post": {
+        "tags": ["code-lists"], "operationId": "codeLists_addCodes",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/AddStudyCodeListEntriesRequest"}}}},
+        "responses": {
+          "201": {"description": "Added", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "delete": {
+        "tags": ["code-lists"], "operationId": "codeLists_removeCode",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "listKey", "in": "query", "required": true, "schema": {"type": "string"}},
+          {"name": "code", "in": "query", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/study-counters/": {
+      "get": {
+        "tags": ["study-counters"], "operationId": "studyCounters_listValues",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "Counter values", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterList"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/study-counters/{scope}": {
+      "post": {
+        "tags": ["study-counters"], "operationId": "studyCounters_saveValue",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValueSaveReq"}}}},
+        "responses": {
+          "201": {"description": "Saved", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValue"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "put": {
+        "tags": ["study-counters"], "operationId": "studyCounters_incrementValue",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Incremented", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValue"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "delete": {
+        "tags": ["study-counters"], "operationId": "studyCounters_removeValue",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/variables/": {
+      "get": {
+        "tags": ["study-variables"], "operationId": "studyVariables_listVariables",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "page", "in": "query", "schema": {"type": "integer"}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+        ],
+        "responses": {
+          "200": {"description": "Variable list", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariableList"}}}},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      },
+      "post": {
+        "tags": ["study-variables"], "operationId": "studyVariables_addVariable",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/AddStudyVariableRequest"}}}},
+        "responses": {
+          "201": {"description": "Created variable", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/studies/{studyKey}/variables/{variableKey}": {
+      "get": {
+        "tags": ["study-variables"], "operationId": "studyVariables_getVariable",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Variable", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "put": {
+        "tags": ["study-variables"], "operationId": "studyVariables_updateVariableDef",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/UpdateStudyVariableDefRequest"}}}},
+        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "delete": {
+        "tags": ["study-variables"], "operationId": "studyVariables_deleteVariable",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/variables/{variableKey}/value": {
+      "put": {
+        "tags": ["study-variables"], "operationId": "studyVariables_updateVariableValue",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/UpdateStudyVariableValueRequest"}}}},
+        "responses": {"200": {"description": "Updated value", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/rules/": {
+      "get": {
+        "tags": ["study-rules"], "operationId": "studyRules_getCurrent",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Current rules", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRules"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "post": {
+        "tags": ["study-rules"], "operationId": "studyRules_publishNewVersion",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRules"}}}},
+        "responses": {"201": {"description": "Published", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersion"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/rules/versions": {
+      "get": {
+        "tags": ["study-rules"], "operationId": "studyRules_listVersions",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Versions", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersionList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/rules/versions/{id}": {
+      "get": {
+        "tags": ["study-rules"], "operationId": "studyRules_getVersion",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Version", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersion"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "delete": {
+        "tags": ["study-rules"], "operationId": "studyRules_deleteVersion",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/participants/{participantID}": {
+      "post": {
+        "tags": ["actions"], "operationId": "actions_runOnParticipant",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/participants/": {
+      "post": {
+        "tags": ["actions"], "operationId": "actions_runOnParticipants",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/participants/task/{taskID}": {
+      "get": {
+        "tags": ["actions"], "operationId": "actions_getTaskStatus",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/participants/task/{taskID}/result": {
+      "get": {
+        "tags": ["actions"], "operationId": "actions_getTaskResult",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/previous-responses/{participantID}": {
+      "post": {
+        "tags": ["actions"], "operationId": "actions_runPrevResponsesOnParticipant",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/previous-responses/": {
+      "post": {
+        "tags": ["actions"], "operationId": "actions_runPrevResponsesOnParticipants",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/previous-responses/task/{taskID}": {
+      "get": {
+        "tags": ["actions"], "operationId": "actions_getPrevResponsesTaskStatus",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/run-actions/previous-responses/task/{taskID}/result": {
+      "get": {
+        "tags": ["actions"], "operationId": "actions_getPrevResponsesTaskResult",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/survey-info/": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getSurveyInfo",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Survey info", "content": {"application/json": {"schema": {"type": "object", "properties": {"surveys": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyInfo"}}}, "required": ["surveys"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/count": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getResponsesCount",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/": {
+      "post": {
+        "tags": ["responses"], "operationId": "dataExporter_generateResponsesExport",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/task/{taskID}": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getResponsesTaskStatus",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/task/{taskID}/result": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getResponsesTaskResult",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/daily-exports": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_listDailyResponseExports",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Exports", "content": {"application/json": {"schema": {"type": "object", "properties": {"exports": {"type": "array", "items": {"type": "object", "additionalProperties": true}}}, "required": ["exports"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/responses/daily-exports/{exportID}": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getDailyResponseExport",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "exportID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/participants/count": {
+      "get": {
+        "tags": ["participants"], "operationId": "dataExporter_getParticipantsCount",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/participants/": {
+      "post": {
+        "tags": ["participants"], "operationId": "dataExporter_generateParticipantsExport",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/participants/task/{taskID}": {
+      "get": {
+        "tags": ["participants"], "operationId": "dataExporter_getParticipantsTaskStatus",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/participants/task/{taskID}/result": {
+      "get": {
+        "tags": ["participants"], "operationId": "dataExporter_getParticipantsTaskResult",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/reports/count": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExporter_getReportsCount",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/reports/": {
+      "post": {
+        "tags": ["reports"], "operationId": "dataExporter_generateReportsExport",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/reports/task/{taskID}": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExporter_getReportsTaskStatus",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/reports/task/{taskID}/result": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExporter_getReportsTaskResult",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/confidential-responses/": {
+      "post": {
+        "tags": ["responses"], "operationId": "dataExporter_getConfidentialResponses",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
+        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_listConfidentialResponseExports",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Exports", "content": {"application/json": {"schema": {"type": "object", "properties": {"exports": {"type": "array", "items": {"type": "object", "additionalProperties": true}}}, "required": ["exports"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-exporter/confidential-responses/{exportID}": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExporter_getConfidentialResponseExport",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "exportID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/responses/": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExplorer_listResponses",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "page", "in": "query", "schema": {"type": "integer"}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer"}},
+          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Responses", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ResponseList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "delete": {
+        "tags": ["responses"], "operationId": "dataExplorer_deleteResponses",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Deleted summary", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ResponsesDeleteSummary"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/responses/{responseId}": {
+      "get": {
+        "tags": ["responses"], "operationId": "dataExplorer_getResponse",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "responseId", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Response", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Response"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "delete": {
+        "tags": ["responses"], "operationId": "dataExplorer_deleteResponse",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "responseId", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/participants/": {
+      "get": {
+        "tags": ["participants"], "operationId": "dataExplorer_listParticipants",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "page", "in": "query", "schema": {"type": "integer"}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+        ],
+        "responses": {"200": {"description": "Participants", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ParticipantList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/participants/{participantID}": {
+      "get": {
+        "tags": ["participants"], "operationId": "dataExplorer_getParticipant",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Participant", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Participant"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/reports/keys": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExplorer_listReportKeys",
+        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Report keys", "content": {"application/json": {"schema": {"type": "object", "properties": {"reportKeys": {"type": "array", "items": {"type": "string"}}}, "required": ["reportKeys"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/reports/": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExplorer_listReports",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "page", "in": "query", "schema": {"type": "integer"}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+        ],
+        "responses": {"200": {"description": "Reports", "content": {"application/json": {"schema": {"type": "object", "properties": {"reports": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/ReportInfo"}}, "pagination": {"$ref": "../management-api.json#/components/schemas/PaginationInfo"}}, "required": ["reports"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/reports/{reportID}": {
+      "get": {
+        "tags": ["reports"], "operationId": "dataExplorer_getReport",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "reportID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Report", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ReportInfo"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/files/": {
+      "get": {
+        "tags": ["files"], "operationId": "dataExplorer_listFiles",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "page", "in": "query", "schema": {"type": "integer"}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+        ],
+        "responses": {"200": {"description": "Files", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyFileList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    },
+    "/v1/studies/{studyKey}/data-explorer/files/{fileID}": {
+      "get": {
+        "tags": ["files"], "operationId": "dataExplorer_getFile",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "fileID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "File", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/FileInfo"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      },
+      "delete": {
+        "tags": ["files"], "operationId": "dataExplorer_deleteFile",
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "fileID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+      }
+    }
+}

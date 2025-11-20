@@ -1,0 +1,579 @@
+{
+    "/v1/studies/{studyKey}/participants/virtual": {
+        "post": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_createVirtualParticipant",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": false,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "profile": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Virtual participant created",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "participant": {
+                                        "$ref": "../management-api.json#/components/schemas/Participant"
+                                    }
+                                },
+                                "required": [
+                                    "participant"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/responses": {
+        "get": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_listParticipantResponses",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "schema": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "schema": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 100
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "List participant responses",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/ResponseList"
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        },
+        "post": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_submitParticipantResponse",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../management-api.json#/components/schemas/Response"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Submit participant response",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "response": {
+                                        "$ref": "../management-api.json#/components/schemas/Response"
+                                    }
+                                },
+                                "required": [
+                                    "response"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/events": {
+        "post": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_submitParticipantEvent",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "eventType": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "eventType"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Submit participant event",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/Message"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/reports": {
+        "post": {
+            "tags": [
+                "reports"
+            ],
+            "operationId": "participants_submitParticipantReport",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../management-api.json#/components/schemas/ReportCreateReq"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Submit participant report",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "report": {
+                                        "$ref": "../management-api.json#/components/schemas/ReportInfo"
+                                    }
+                                },
+                                "required": [
+                                    "report"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}/reports/{reportID}": {
+        "put": {
+            "tags": [
+                "reports"
+            ],
+            "operationId": "participants_updateParticipantReport",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "reportID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../management-api.json#/components/schemas/ReportCreateReq"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Update participant report",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "report": {
+                                        "$ref": "../management-api.json#/components/schemas/ReportInfo"
+                                    }
+                                },
+                                "required": [
+                                    "report"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/merge": {
+        "post": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_mergeParticipants",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "sourceIDs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "targetID": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "sourceIDs",
+                                "targetID"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Merge participants",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/Message"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    },
+    "/v1/studies/{studyKey}/participants/{participantID}": {
+        "put": {
+            "tags": [
+                "participants"
+            ],
+            "operationId": "participants_editParticipant",
+            "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "participantID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "profile": {
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "profile"
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Edit participant",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "participant": {
+                                        "$ref": "../management-api.json#/components/schemas/Participant"
+                                    }
+                                },
+                                "required": [
+                                    "participant"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "$ref": "../management-api.json#/components/responses/Error400"
+                },
+                "401": {
+                    "$ref": "../management-api.json#/components/responses/Error401"
+                },
+                "403": {
+                    "$ref": "../management-api.json#/components/responses/Error403"
+                },
+                "404": {
+                    "$ref": "../management-api.json#/components/responses/Error404"
+                },
+                "500": {
+                    "$ref": "../management-api.json#/components/responses/Error500"
+                }
+            }
+        }
+    }
+}

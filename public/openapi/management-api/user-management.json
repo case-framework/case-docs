@@ -1,0 +1,1424 @@
+{
+        "/v1/user-management/management-users": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listManagementUsers",
+                "responses": {
+                    "200": {
+                        "description": "List management users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/ManagementUserList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_getManagementUser",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Management user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "../management-api.json#/components/schemas/ManagementUser"
+                                        }
+                                    },
+                                    "required": [
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["user-management"],
+                "operationId": "userManagement_deleteManagementUser",
+                "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
+                "responses": {
+                    "200": { "description": "Deleted management user", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+                    "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+                    "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+                    "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+                    "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+                    "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+                }
+            }
+        },
+    "/v1/user-management/management-users/{userID}/permissions": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listUserPermissions",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permissions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/PermissionList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_addPermissionToUser",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/PermissionCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Added permission",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "permission": {
+                                            "$ref": "../management-api.json#/components/schemas/Permission"
+                                        }
+                                    },
+                                    "required": [
+                                        "permission"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}/permissions/{permissionID}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteUserPermission",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "permissionID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}/permissions/{permissionID}/limiter": {
+            "put": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_updatePermissionLimiter",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "permissionID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "limiter": {
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "limiter"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated limiter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "permission": {
+                                            "$ref": "../management-api.json#/components/schemas/Permission"
+                                        }
+                                    },
+                                    "required": [
+                                        "permission"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}/app-roles": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listUserAppRoles",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "App roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/AppRoleList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}/app-roles/{appRoleTemplateID}": {
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_addAppRoleToUser",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "appRoleTemplateID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Added app role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "appRole": {
+                                            "$ref": "../management-api.json#/components/schemas/AppRole"
+                                        }
+                                    },
+                                    "required": [
+                                        "appRole"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/management-users/{userID}/app-roles/{appRoleID}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_removeUserAppRole",
+                "parameters": [
+                    {
+                        "name": "userID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "appRoleID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Removed role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/templates/": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listAppRoleTemplates",
+                "responses": {
+                    "200": {
+                        "description": "Templates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/AppRoleTemplateList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_createAppRoleTemplate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "appName": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "appName"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created template",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "template": {
+                                            "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
+                                        }
+                                    },
+                                    "required": [
+                                        "template"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/templates/{appRoleTemplateID}": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_getAppRoleTemplate",
+                "parameters": [
+                    {
+                        "name": "appRoleTemplateID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Template",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "template": {
+                                            "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
+                                        }
+                                    },
+                                    "required": [
+                                        "template"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_updateAppRoleTemplate",
+                "parameters": [
+                    {
+                        "name": "appRoleTemplateID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated template",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "template": {
+                                            "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
+                                        }
+                                    },
+                                    "required": [
+                                        "template"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/templates/delete/{appRoleTemplateID}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteAppRoleTemplate",
+                "parameters": [
+                    {
+                        "name": "appRoleTemplateID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/templates/delete-for-app/{appName}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteAppRoleTemplatesForApp",
+                "parameters": [
+                    {
+                        "name": "appName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted templates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listAppRoles",
+                "responses": {
+                    "200": {
+                        "description": "App roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/AppRoleList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/app-roles/delete/{appName}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteAppRolesForApp",
+                "parameters": [
+                    {
+                        "name": "appName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted app roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/participant-users/request-deletion": {
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_requestParticipantUserDeletion",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/ParticipantUserDeletionReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deletion requested",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listServiceAccounts",
+                "responses": {
+                    "200": {
+                        "description": "Service accounts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/ServiceAccountList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_createServiceAccount",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created service account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "serviceAccount": {
+                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceAccount"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/{serviceAccountID}": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_getServiceAccount",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "serviceAccount": {
+                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceAccount"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_updateServiceAccount",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated service account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "serviceAccount": {
+                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceAccount"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["user-management"],
+                "operationId": "userManagement_deleteServiceAccount",
+                "security": [{"BearerAuth": []}],
+                "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+                "responses": {
+                    "200": { "description": "Deleted service account", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+                    "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+                    "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+                    "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+                    "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/{serviceAccountID}/api-keys": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listServiceAccountAPIKeys",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "API keys",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/APIKeyList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_createServiceAccountAPIKey",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/APIKeyCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "apiKey": {
+                                            "$ref": "../management-api.json#/components/schemas/APIKey"
+                                        }
+                                    },
+                                    "required": [
+                                        "apiKey"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/{serviceAccountID}/api-keys/{apiKeyID}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteServiceAccountAPIKey",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "apiKeyID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/{serviceAccountID}/permissions": {
+            "get": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_listServiceAccountPermissions",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permissions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/PermissionList"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_addPermissionToServiceAccount",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/ServiceAccountPermissionCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Added permission",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "permission": {
+                                            "$ref": "../management-api.json#/components/schemas/Permission"
+                                        }
+                                    },
+                                    "required": [
+                                        "permission"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+        "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}": {
+            "delete": {
+                "tags": [
+                    "user-management"
+                ],
+                "operationId": "userManagement_deleteServiceAccountPermission",
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "permissionID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
+        },
+    "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}/limiter": {
+      "put": {
+        "tags": ["user-management"],
+        "operationId": "userManagement_updateServiceAccountPermissionLimiter",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionLimiterUpdateReq"}}}},
+        "responses": {
+          "200": { "description": "Updated permission limiter", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "../management-api.json#/components/schemas/Permission"}}, "required": ["permission"]}}}},
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
+      }
+    }
+}

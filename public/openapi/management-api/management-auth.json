@@ -1,0 +1,55 @@
+  {
+    "/v1/auth/signin-with-idp": {
+      "post": {
+        "tags": ["auth"],
+        "operationId": "auth_signinWithIdp",
+        "responses": {
+          "200": {"description": "Signed in"},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/auth/extend-session": {
+      "post": {
+        "tags": ["auth"],
+        "operationId": "auth_extendSession",
+        "responses": {
+          "200": {"description": "Session extended"},
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/auth/renew-token/{sessionID}": {
+      "get": {
+        "tags": ["auth"],
+        "operationId": "auth_renewToken",
+        "parameters": [
+          {"name": "sessionID", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {"description": "Renew token"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    },
+    "/v1/auth/permissions": {
+      "get": {
+        "tags": ["auth"],
+        "operationId": "auth_listPermissions",
+        "responses": {
+          "200": {"description": "Permissions"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
+      }
+    }
+}
