@@ -208,8 +208,33 @@
         },
         "additionalProperties": false
       },
-      "Study": { "type": "object", "properties": { "studyKey": { "type": "string" } }, "additionalProperties": true },
-      "Survey": { "type": "object", "properties": { "key": { "type": "string" } }, "additionalProperties": true },
+      "Study": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID", "example": "64b8f0f2e1b1c8a1d2e3f4g5" },
+          "key": { "type": "string" },
+          "secretKey": { "type": "string" },
+          "status": { "type": "string" },
+          "props": { "type": "object", "additionalProperties": true },
+          "configs": { "type": "object", "additionalProperties": true },
+          "notificationSubscriptions": {
+            "type": "array",
+            "items": { "type": "object", "additionalProperties": true }
+          },
+          "stats": { "type": "object", "additionalProperties": true },
+          "nextTimerEvent": { "type": "integer", "format": "int64" },
+          "rules": {
+            "type": "array",
+            "items": { "type": "object", "additionalProperties": true }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Study object"
+      },
+      "Survey": {
+        "type": "object",
+        "additionalProperties": true
+      },
       "StudyVariable": {
         "type": "object",
         "properties": {
@@ -278,24 +303,28 @@
           "expiresAt": { "type": "integer", "description": "Unix timestamp" }
         },
         "additionalProperties": false
-      }
-      ,"StudySummary": {"type": "object", "properties": {"key": {"type": "string"}, "status": {"type": "string"}, "isSystemDefaultStudy": {"type": "boolean"}}, "additionalProperties": true, "description": "Platzhalter – vereinfachte Darstellung einer Studie"}
-      ,"StudyExportConfig": {"type": "object", "properties": {"exportedAt": {"type": "string", "format": "date-time"}, "config": {"$ref": "#/components/schemas/Study"}, "rules": {"$ref": "#/components/schemas/StudyRules"}, "surveys": {"type": "array", "items": {"$ref": "#/components/schemas/Survey"}}}, "additionalProperties": false, "description": "Stream Export Objekt (vereinfachter Platzhalter)"}
-      ,"StudyRules": {"type": "object", "properties": {"uploadedAt": {"type": "integer"}, "uploadedBy": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter für aktuelle Studienregeln oder Version"}
-      ,"SurveyVersion": {"type": "object", "properties": {"surveyKey": {"type": "string"}, "versionID": {"type": "string"}, "published": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter einer einzelnen Survey-Version"}
-      ,"PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false}
-      ,"Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"}
-      ,"Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"}
-      ,"ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
-      ,"StudyCounterValue": {"type": "object", "properties": {"scope": {"type": "string"}, "value": {"type": "integer"}}, "additionalProperties": false}
+      },
+      "StudyRules": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "studyKey": { "type": "string" },
+          "uploadedAt": { "type": "integer" },
+          "uploadedBy": { "type": "string" },
+          "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "serialisedRules": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "SurveyVersion": {"type": "object", "properties": {"surveyKey": {"type": "string"}, "versionID": {"type": "string"}, "published": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter einer einzelnen Survey-Version"},
+      "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
+      "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
+      "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
+      "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
+      "StudyCounterValue": {"type": "object", "properties": {"scope": {"type": "string"}, "value": {"type": "integer"}}, "additionalProperties": false}
       ,"Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
       ,"SurveyInfo": {"type": "object", "properties": {"key": {"type": "string"}}, "additionalProperties": true}
       ,"StudyVariableList": {"type": "object", "properties": {"variables": {"type": "array", "items": {"$ref": "#/components/schemas/StudyVariable"}}}, "additionalProperties": false}
-      ,"NewStudyReq": {"type": "object", "properties": {"studyKey": {"type": "string"}, "secretKey": {"type": "string"}, "isSystemDefaultStudy": {"type": "boolean"}}, "required": ["studyKey","secretKey"], "additionalProperties": false}
-      ,"StudyIsDefaultUpdateReq": {"type": "object", "properties": {"isDefault": {"type": "boolean"}}, "required": ["isDefault"], "additionalProperties": false}
-      ,"StudyStatusUpdateReq": {"type": "object", "properties": {"status": {"type": "string"}}, "required": ["status"], "additionalProperties": false}
-      ,"StudyDisplayPropsUpdateReq": {"type": "object", "properties": {"name": {"type": "array", "items": {"type": "object"}}, "description": {"type": "array", "items": {"type": "object"}}, "tags": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
-      ,"FileUploadRuleUpdateReq": {"type": "object", "properties": {"simplifiedAllowedUpload": {"type": "boolean"}, "expression": {"type": "object"}}, "additionalProperties": true}
       ,"SurveyCreateReq": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "additionalProperties": true}
       ,"SurveyUpdateReq": {"type": "object", "properties": {"survey": {"$ref": "#/components/schemas/Survey"}}, "additionalProperties": true}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
