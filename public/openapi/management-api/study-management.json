@@ -754,40 +754,140 @@
     },
     "/v1/studies/{studyKey}/rules/": {
       "get": {
-        "tags": ["study-rules"], "operationId": "studyRules_getCurrent",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Current rules", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRules"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "tags": ["study-rules"],
+        "operationId": "studyRules_getCurrent",
+        "summary": "Get current published study rules",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current rules",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { "studyRules": { "$ref": "../management-api.json#/components/schemas/StudyRules" } },
+                  "required": ["studyRules"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "post": {
-        "tags": ["study-rules"], "operationId": "studyRules_publishNewVersion",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRules"}}}},
-        "responses": {"201": {"description": "Published", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersion"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "tags": ["study-rules"],
+        "operationId": "studyRules_publishNewVersion",
+        "summary": "Publish a new version of study rules",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/StudyRules" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Published",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "../management-api.json#/components/schemas/Message"}
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/rules/versions": {
       "get": {
-        "tags": ["study-rules"], "operationId": "studyRules_listVersions",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Versions", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersionList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "tags": ["study-rules"],
+        "operationId": "studyRules_listVersions",
+        "summary": "List all study rules versions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Versions",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { "versions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyRules" } } },
+                  "required": ["versions"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/rules/versions/{id}": {
       "get": {
-        "tags": ["study-rules"], "operationId": "studyRules_getVersion",
+        "tags": ["study-rules"],
+        "operationId": "studyRules_getVersion",
+        "summary": "Get a study rules version by ID",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Version", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyRuleVersion"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Version",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { "studyRules": { "$ref": "../management-api.json#/components/schemas/StudyRules" } },
+                  "required": ["studyRules"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "delete": {
-        "tags": ["study-rules"], "operationId": "studyRules_deleteVersion",
+        "tags": ["study-rules"],
+        "operationId": "studyRules_deleteVersion",
+        "summary": "Delete a study rules version",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/participants/{participantID}": {

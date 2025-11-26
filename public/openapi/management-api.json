@@ -3,7 +3,7 @@
   "info": {
     "title": "Management API",
     "version": "1.0.0",
-    "description": "Endpoints for management authentication, user management, study administration, messaging, and participant administration. (Auto-generated rudimentary; please refine as needed)"
+    "description": "Endpoints for management authentication, user management, study administration, messaging, and participant administration."
   },
   "tags": [
     { "name": "auth", "description": "Authentication & Session" },
@@ -323,14 +323,15 @@
       "StudyRules": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
+          "id": { "type": "string", "description": "ObjectID" },
           "studyKey": { "type": "string" },
           "uploadedAt": { "type": "integer" },
           "uploadedBy": { "type": "string" },
           "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
           "serialisedRules": { "type": "string" }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Study rules object"
       },
       "SurveyInfo": {
         "type": "object",
@@ -375,8 +376,6 @@
   ,"APIKeyList": {"type": "object", "properties": {"apiKeys": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}}, "required": ["apiKeys"], "additionalProperties": false}
   ,"APIKey": {"type": "object", "additionalProperties": true}
   ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounterValue"}}}, "required": ["counters"], "additionalProperties": false}
-  ,"StudyRuleVersion": {"type": "object", "properties": {"id": {"type": "string"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
-  ,"StudyRuleVersionList": {"type": "object", "properties": {"versions": {"type": "array", "items": {"$ref": "#/components/schemas/StudyRuleVersion"}}}, "required": ["versions"], "additionalProperties": false}
   ,"PermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
   ,"PermissionLimiterUpdateReq": {"type": "object", "properties": {"limiter": {"type": "object", "additionalProperties": true}}, "required": ["limiter"], "additionalProperties": false}
   ,"AppRole": {"type": "object", "properties": {"id": {"type": "string"}, "appName": {"type": "string"}, "role": {"type": "string"}, "templateID": {"type": "string"}}, "additionalProperties": true}
