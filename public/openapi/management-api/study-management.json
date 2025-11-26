@@ -310,11 +310,246 @@
       }
     }
   },
-  "/v1/studies/{studyKey}/surveys/": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyInfos", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "List survey infos", "content": {"application/json": {"schema": {"type": "object", "properties": {"surveys": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyInfo"}}}, "required": ["surveys"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_createSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SurveyCreateReq"}}}}, "responses": {"201": {"description": "Created survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
-  "/v1/studies/{studyKey}/surveys/{surveyKey}": {"get": {"tags": ["surveys"], "operationId": "surveys_getLatestSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Latest survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "post": {"tags": ["surveys"], "operationId": "surveys_updateSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SurveyUpdateReq"}}}}, "responses": {"200": {"description": "Updated survey", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}}, "required": ["survey"]}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
-  "/v1/studies/{studyKey}/surveys/{surveyKey}/unpublish": {"post": {"tags": ["surveys"], "operationId": "surveys_unpublishSurvey", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Unpublished", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
-  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions": {"get": {"tags": ["surveys"], "operationId": "surveys_listSurveyVersions", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Versions", "content": {"application/json": {"schema": {"type": "object", "properties": {"versions": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyVersion"}}}, "required": ["versions"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
-  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions/{versionID}": {"get": {"tags": ["surveys"], "operationId": "surveys_getSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Version", "content": {"application/json": {"schema": {"type": "object", "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/SurveyVersion"}}, "required": ["survey"]}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}, "delete": {"tags": ["surveys"], "operationId": "surveys_deleteSurveyVersion", "security": [{"BearerAuth": []}], "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}}},
+  "/v1/studies/{studyKey}/surveys/": {
+    "get": {
+      "tags": ["surveys"],
+      "operationId": "surveys_listSurveyInfos",
+      "security": [{"BearerAuth": []}],
+      "summary": "List survey infos for a study",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "List survey infos",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveys": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyInfo"}}
+                },
+                "required": ["surveys"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    },
+    "post": {
+      "tags": ["surveys"],
+      "operationId": "surveys_createSurvey",
+      "security": [{"BearerAuth": []}],
+      "summary": "Create a new survey in a study",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "survey": {"$ref": "../management-api.json#/components/schemas/Survey"}
+              },
+              "required": ["survey"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created survey",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}},
+                "required": ["survey"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    }
+  },
+  "/v1/studies/{studyKey}/surveys/{surveyKey}": {
+    "get": {
+      "tags": ["surveys"],
+      "operationId": "surveys_getLatestSurvey",
+      "security": [{"BearerAuth": []}],
+      "summary": "Get latest survey by key",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "Latest survey",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}},
+                "required": ["survey"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    },
+    "post": {
+      "tags": ["surveys"],
+      "operationId": "surveys_updateSurvey",
+      "security": [{"BearerAuth": []}],
+      "summary": "Update survey definition",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "survey": {"$ref": "../management-api.json#/components/schemas/Survey"}
+              },
+              "required": ["survey"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Updated survey",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}},
+                "required": ["survey"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    }
+  },
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/unpublish": {
+    "post": {
+      "tags": ["surveys"],
+      "operationId": "surveys_unpublishSurvey",
+      "security": [{"BearerAuth": []}],
+      "summary": "Unpublish a survey",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "Unpublished",
+          "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    }
+  },
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions": {
+    "get": {
+      "tags": ["surveys"],
+      "operationId": "surveys_listSurveyVersions",
+      "security": [{"BearerAuth": []}],
+      "summary": "List all survey versions",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "Versions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {"versions": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/Survey"}}},
+                "required": ["versions"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    }
+  },
+  "/v1/studies/{studyKey}/surveys/{surveyKey}/versions/{versionID}": {
+    "get": {
+      "tags": ["surveys"],
+      "operationId": "surveys_getSurveyVersion",
+      "security": [{"BearerAuth": []}],
+      "summary": "Get a specific survey version",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "Version",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}},
+                "required": ["survey"]
+              }
+            }
+          }
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    },
+    "delete": {
+      "tags": ["surveys"],
+      "operationId": "surveys_deleteSurveyVersion",
+      "security": [{"BearerAuth": []}],
+      "summary": "Delete a survey version",
+      "parameters": [
+        {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "surveyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+        {"name": "versionID", "in": "path", "required": true, "schema": {"type": "string"}}
+      ],
+      "responses": {
+        "200": {
+          "description": "Deleted",
+          "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}
+        },
+        "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+        "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+        "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+      }
+    }
+  },
     "/v1/studies/{studyKey}/permissions/": {
       "get": {
         "tags": ["study-permissions"], "operationId": "studyPermissions_listPermissions",
