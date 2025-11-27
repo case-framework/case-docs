@@ -286,13 +286,17 @@
       "Permission": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
+          "id": { "type": "string", "description": "ObjectID" },
+          "subjectId": { "type": "string" },
+          "subjectType": { "type": "string" },
           "resourceType": { "type": "string" },
           "resourceKey": { "type": "string" },
           "action": { "type": "string" },
-          "limiter": { "type": "object", "additionalProperties": true }
+          "limiter": { "type": "object", "additionalProperties": { "type": "string" } }
         },
-        "additionalProperties": false
+        "required": ["id"],
+        "additionalProperties": false,
+        "description": "Permission object"
       },
       "AppRoleTemplate": {
         "type": "object",

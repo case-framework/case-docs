@@ -548,33 +548,95 @@
   },
     "/v1/studies/{studyKey}/permissions/": {
       "get": {
-        "tags": ["study-permissions"], "operationId": "studyPermissions_listPermissions",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_listPermissions",
+        "summary": "List study permissions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
         "responses": {
-          "200": {"description": "Permission list", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionList"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Permission list",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "user": { "type": "object" },
+                          "permissions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/Permission" } }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["permissions"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "post": {
-        "tags": ["study-permissions"], "operationId": "studyPermissions_addPermission",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionCreateReq"}}}},
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_addPermission",
+        "summary": "Add a study permission",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/Permission" }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
     "/v1/studies/{studyKey}/permissions/{permissionID}": {
       "delete": {
-        "tags": ["study-permissions"], "operationId": "studyPermissions_removePermission",
+        "tags": ["study-permissions"],
+        "operationId": "studyPermissions_removePermission",
+        "summary": "Remove a study permission",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "permissionID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Removed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
