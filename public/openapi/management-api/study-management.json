@@ -642,20 +642,69 @@
     },
     "/v1/studies/{studyKey}/notification-subscriptions/": {
       "get": {
-        "tags": ["notifications"], "operationId": "notifications_getSubscriptions",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "tags": ["notifications"],
+        "operationId": "notifications_getSubscriptions",
+        "summary": "List notification subscriptions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
         "responses": {
-          "200": {"description": "Subscriptions", "content": {"application/json": {"schema": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "required": ["subscriptions"], "additionalProperties": false}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Subscriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/NotificationSubscription" } }
+                  },
+                  "required": ["subscriptions"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "put": {
-        "tags": ["notifications"], "operationId": "notifications_updateSubscriptions",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/NotificationSubscriptionsUpdateReq"}}}},
+        "tags": ["notifications"],
+        "operationId": "notifications_updateSubscriptions",
+        "summary": "Update notification subscriptions",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object",
+                "properties": {
+                  "subscriptions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/NotificationSubscription" } }
+                },
+                "required": ["subscriptions"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },

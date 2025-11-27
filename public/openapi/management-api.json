@@ -355,13 +355,21 @@
         "additionalProperties": false,
         "description": "Study counter object"
       },
+      "NotificationSubscription": {
+        "type": "object",
+        "properties": {
+          "messageType": { "type": "string" },
+          "email": { "type": "string" } 
+        },
+        "additionalProperties": false,
+        "description": "Notification Subscription object"
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
       "Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
-      ,"NotificationSubscriptionsUpdateReq": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false}
       ,"AddStudyCodeListEntriesRequest": {"type": "object", "properties": {"listKey": {"type": "string"}, "codes": {"type": "array", "items": {"type": "string"}}}, "required": ["listKey","codes"], "additionalProperties": false}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
