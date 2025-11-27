@@ -281,7 +281,7 @@
         },
         "required": ["id"],
         "additionalProperties": false,
-        "description": "Study Variable object"
+        "description": "Study variable object"
       },
       "Permission": {
         "type": "object",
@@ -341,16 +341,24 @@
           "key": { "type": "string" }
         }
       },
+      "StudyCounter": {
+        "type": "object",
+        "properties": {
+          "studyKey": { "type": "string" },
+          "scope": { "type": "string" },
+          "value": { "type": "integer" }
+        },
+        "additionalProperties": false,
+        "description": "Study counter object"
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
-      "StudyCounterValue": {"type": "object", "properties": {"scope": {"type": "string"}, "value": {"type": "integer"}}, "additionalProperties": false}
-      ,"Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
+      "Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
       ,"NotificationSubscriptionsUpdateReq": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false}
       ,"AddStudyCodeListEntriesRequest": {"type": "object", "properties": {"listKey": {"type": "string"}, "codes": {"type": "array", "items": {"type": "string"}}}, "required": ["listKey","codes"], "additionalProperties": false}
-      ,"StudyCounterValueSaveReq": {"type": "object", "properties": {"value": {"type": "integer"}}, "required": ["value"], "additionalProperties": false}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
       ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
@@ -373,7 +381,7 @@
   ,"ServiceAccountList": {"type": "object", "properties": {"serviceAccounts": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccount"}}}, "required": ["serviceAccounts"], "additionalProperties": false}
   ,"APIKeyList": {"type": "object", "properties": {"apiKeys": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}}, "required": ["apiKeys"], "additionalProperties": false}
   ,"APIKey": {"type": "object", "additionalProperties": true}
-  ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounterValue"}}}, "required": ["counters"], "additionalProperties": false}
+  ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounter"}}}, "required": ["counters"], "additionalProperties": false}
   ,"PermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
   ,"PermissionLimiterUpdateReq": {"type": "object", "properties": {"limiter": {"type": "object", "additionalProperties": true}}, "required": ["limiter"], "additionalProperties": false}
   ,"AppRole": {"type": "object", "properties": {"id": {"type": "string"}, "appName": {"type": "string"}, "role": {"type": "string"}, "templateID": {"type": "string"}}, "additionalProperties": true}

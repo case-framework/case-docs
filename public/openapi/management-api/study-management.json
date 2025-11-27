@@ -643,47 +643,142 @@
     },
     "/v1/studies/{studyKey}/study-counters/": {
       "get": {
-        "tags": ["study-counters"], "operationId": "studyCounters_listValues",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "tags": ["study-counters"],
+        "operationId": "studyCounters_listValues",
+        "security": [{"BearerAuth": []}],
+        "summary": "List all study counter values",
+        "parameters": [
+          {
+            "name": "studyKey",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
-          "200": {"description": "Counter values", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterList"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Counter values",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "values": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyCounter" } } 
+                  },
+                  "required": ["values"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
     "/v1/studies/{studyKey}/study-counters/{scope}": {
       "post": {
-        "tags": ["study-counters"], "operationId": "studyCounters_saveValue",
+        "tags": ["study-counters"],
+        "operationId": "studyCounters_saveValue",
+        "security": [{"BearerAuth": []}],
+        "summary": "Set a study counter value for scope",
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValueSaveReq"}}}},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object", 
+                "properties": {
+                  "value": {"type": "integer"}
+                }, 
+                "required": ["value"], 
+                "additionalProperties": false
+              }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Saved", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValue"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "properties": {
+                    "value": {"type": "integer"}
+                  }, 
+                  "required": ["value"], 
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "put": {
-        "tags": ["study-counters"], "operationId": "studyCounters_incrementValue",
+        "tags": ["study-counters"],
+        "operationId": "studyCounters_incrementValue",
+        "security": [{"BearerAuth": []}],
+        "summary": "Increment a study counter value",
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {"description": "Incremented", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyCounterValue"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Incremented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object", 
+                  "properties": {
+                    "value": {"type": "integer"}
+                  }, 
+                  "required": ["value"], 
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "delete": {
-        "tags": ["study-counters"], "operationId": "studyCounters_removeValue",
+        "tags": ["study-counters"],
+        "operationId": "studyCounters_removeValue",
+        "security": [{"BearerAuth": []}],
+        "summary": "Remove a study counter value",
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "scope", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "scope", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Removed",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "success": { "type": "boolean" } 
+                  },
+                  "required": ["success"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
