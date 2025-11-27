@@ -254,7 +254,7 @@
       "StudyVariable": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
+          "id": { "type": "string", "description": "ObjectID" },
           "createdAt": { "type": "string", "format": "date-time" },
           "configUpdatedAt": { "type": "string", "format": "date-time" },
           "valueUpdatedAt": { "type": "string", "format": "date-time" },
@@ -279,7 +279,9 @@
           "uiPriority": { "type": "integer" },
           "configs": { "type": "object", "additionalProperties": true }
         },
-        "additionalProperties": false
+        "required": ["id"],
+        "additionalProperties": false,
+        "description": "Study Variable object"
       },
       "Permission": {
         "type": "object",
@@ -345,14 +347,10 @@
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
       "StudyCounterValue": {"type": "object", "properties": {"scope": {"type": "string"}, "value": {"type": "integer"}}, "additionalProperties": false}
       ,"Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
-      ,"StudyVariableList": {"type": "object", "properties": {"variables": {"type": "array", "items": {"$ref": "#/components/schemas/StudyVariable"}}}, "additionalProperties": false}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
       ,"NotificationSubscriptionsUpdateReq": {"type": "object", "properties": {"subscriptions": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false}
       ,"AddStudyCodeListEntriesRequest": {"type": "object", "properties": {"listKey": {"type": "string"}, "codes": {"type": "array", "items": {"type": "string"}}}, "required": ["listKey","codes"], "additionalProperties": false}
       ,"StudyCounterValueSaveReq": {"type": "object", "properties": {"value": {"type": "integer"}}, "required": ["value"], "additionalProperties": false}
-      ,"AddStudyVariableRequest": {"type": "object", "properties": {"variableDef": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variableDef"], "additionalProperties": false}
-      ,"UpdateStudyVariableDefRequest": {"type": "object", "properties": {"variableDef": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variableDef"], "additionalProperties": false}
-      ,"UpdateStudyVariableValueRequest": {"type": "object", "properties": {"variable": {"$ref": "#/components/schemas/StudyVariable"}}, "required": ["variable"], "additionalProperties": false}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
       ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}

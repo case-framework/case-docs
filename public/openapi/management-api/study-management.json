@@ -351,13 +351,7 @@
         "required": true,
         "content": {
           "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "survey": {"$ref": "../management-api.json#/components/schemas/Survey"}
-              },
-              "required": ["survey"]
-            }
+            "schema": { "$ref": "../management-api.json#/components/schemas/Survey" }
           }
         }
       },
@@ -397,7 +391,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {"survey": {"$ref": "../management-api.json#/components/schemas/Survey"}},
+                "properties": {
+                  "survey": {"$ref": "../management-api.json#/components/schemas/Survey"}
+                },
                 "required": ["survey"]
               }
             }
@@ -694,62 +690,205 @@
     "/v1/studies/{studyKey}/variables/": {
       "get": {
         "tags": ["study-variables"], "operationId": "studyVariables_listVariables",
+        "summary": "List study variables",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "schema": {"type": "integer"}},
-          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
         ],
         "responses": {
-          "200": {"description": "Variable list", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariableList"}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Variable list",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "variables": {"type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyVariable" }}
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "post": {
         "tags": ["study-variables"], "operationId": "studyVariables_addVariable",
+        "summary": "Create a new study variable",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/AddStudyVariableRequest"}}}},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariable" }
+                  },
+                  "additionalProperties": false
+                }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Created variable", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Created variable",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "id": { "type": "string" } 
+                  },
+                  "additionalProperties": false,
+                  "required": ["id"] 
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
     "/v1/studies/{studyKey}/variables/{variableKey}": {
       "get": {
         "tags": ["study-variables"], "operationId": "studyVariables_getVariable",
+        "summary": "Get a study variable by key",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Variable", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Variable",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "variable": { "$ref": "../management-api.json#/components/schemas/StudyVariable" }
+                  },
+                  "additionalProperties": false,
+                  "required": ["variable"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "put": {
         "tags": ["study-variables"], "operationId": "studyVariables_updateVariableDef",
+        "summary": "Update study variable definition",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/UpdateStudyVariableDefRequest"}}}},
-        "responses": {"200": {"description": "Updated", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object", 
+                "properties": {
+                  "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}
+                }, 
+                "required": ["variableDef"], 
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "delete": {
         "tags": ["study-variables"], "operationId": "studyVariables_deleteVariable",
+        "summary": "Delete a study variable",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "success": { "type": "boolean" } 
+                  },
+                  "required": ["success"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/variables/{variableKey}/value": {
       "put": {
         "tags": ["study-variables"], "operationId": "studyVariables_updateVariableValue",
+        "summary": "Update study variable value",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "variableKey", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/UpdateStudyVariableValueRequest"}}}},
-        "responses": {"200": {"description": "Updated value", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object", 
+                "properties": {
+                  "variable": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}
+                }, 
+                "required": ["variable"], 
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Value updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/rules/": {
