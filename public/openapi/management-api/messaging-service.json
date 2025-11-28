@@ -3,22 +3,56 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_listGlobalEmailTemplates",
+        "summary": "List global email templates",
+        "security": [{"BearerAuth": []}],
         "responses": {
-          "200": {"description": "List global templates", "content": {"application/json": {"schema": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}, "required": ["templates"]}}}},
+          "200": {
+            "description": "List global templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "templates": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } }
+                  },
+                  "required": ["templates"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "post": {
         "tags": ["messaging"],
         "operationId": "messaging_saveGlobalEmailTemplate",
-  "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}},
+        "summary": "Save global email template",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Save global template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}, "required": ["template"]}}}},
+          "200": {
+            "description": "Save global template",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "template": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -27,24 +61,44 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_getGlobalEmailTemplate",
+        "summary": "Get global email template by type",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "messageType", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "Global template", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}},
+          "200": {
+            "description": "Global template",
+            "content": {
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "template": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } 
+                  },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "delete": {
         "tags": ["messaging"],
         "operationId": "messaging_deleteGlobalEmailTemplate",
+        "summary": "Delete global email template",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "messageType", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Message" } }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -53,10 +107,23 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_listAllStudyEmailTemplates",
+        "summary": "List all study email templates",
+        "security": [{"BearerAuth": []}],
         "responses": {
-          "200": {"description": "List study templates (all studies)", "content": {"application/json": {"schema": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}, "required": ["templates"]}}}},
+          "200": {
+            "description": "List study templates (all studies)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "templates": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } } },
+                  "required": ["templates"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -65,25 +132,56 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_listStudyEmailTemplates",
+        "summary": "List study email templates",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "List study templates", "content": {"application/json": {"schema": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}, "required": ["templates"]}}}},
+          "200": {
+            "description": "List study templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "templates": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } } },
+                  "required": ["templates"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "post": {
         "tags": ["messaging"],
         "operationId": "messaging_saveStudyEmailTemplate",
+        "summary": "Save study email template",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-  "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Save study template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}, "required": ["template"]}}}},
+          "200": {
+            "description": "Save study template",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "template": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
@@ -93,30 +191,50 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_getStudyEmailTemplate",
+        "summary": "Get study email template by type",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "messageType", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
         "responses": {
-          "200": {"description": "Study template", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/EmailTemplate"}}}},
+          "200": {
+            "description": "Study template",
+            "content": {
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "template": { "$ref": "../management-api.json#/components/schemas/EmailTemplate" } 
+                  },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "delete": {
         "tags": ["messaging"],
         "operationId": "messaging_deleteStudyEmailTemplate",
+        "summary": "Delete study email template",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "messageType", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
         "responses": {
-          "200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Message" } }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -125,12 +243,31 @@
       "post": {
         "tags": ["messaging"],
         "operationId": "messaging_saveSmsTemplate",
-  "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SmsTemplate"}}}},
+        "summary": "Save SMS template",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/SmsTemplate" }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Save SMS template", "content": {"application/json": {"schema": {"type": "object", "properties": {"template": {"$ref": "../management-api.json#/components/schemas/SmsTemplate"}}, "required": ["template"]}}}},
+          "200": {
+            "description": "Save SMS template",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "template": { "$ref": "../management-api.json#/components/schemas/SmsTemplate" } },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -139,12 +276,24 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_getSmsTemplate",
+        "summary": "Get SMS template by type",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "messageType", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "SMS template", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/SmsTemplate"}}}},
+          "200": {
+            "description": "SMS template",
+            "content": {
+              "application/json": { 
+                "schema": {
+                  "type": "object",
+                  "properties": { "template": { "$ref": "../management-api.json#/components/schemas/SmsTemplate" } },
+                  "required": ["template"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -153,22 +302,54 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_listScheduledEmails",
+        "summary": "List scheduled emails",
+        "security": [{"BearerAuth": []}],
         "responses": {
-          "200": {"description": "List scheduled emails", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ScheduledEmailList"}}}},
+          "200": {
+            "description": "List scheduled emails",
+            "content": {
+              "application/json": { 
+                "schema": {
+                  "type": "object",
+                  "properties": { "schedules": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/ScheduledEmail" } } },
+                  "required": ["schedules"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "post": {
         "tags": ["messaging"],
         "operationId": "messaging_createScheduledEmail",
-  "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"studyKey": {"type": "string"}, "messageType": {"type": "string"}, "scheduledAt": {"type": "integer"}}, "required": ["studyKey","messageType","scheduledAt"]}}}},
+        "summary": "Save scheduled email",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "../management-api.json#/components/schemas/ScheduledEmail" }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Create scheduled email", "content": {"application/json": {"schema": {"type": "object", "properties": {"email": {"$ref": "../management-api.json#/components/schemas/ScheduledEmail"}}, "required": ["email"]}}}},
+          "200": {
+            "description": "Save scheduled email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "schedule": { "$ref": "../management-api.json#/components/schemas/ScheduledEmail" } },
+                  "required": ["schedule"]
+                }
+              }
+            }
+          },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -177,24 +358,42 @@
       "get": {
         "tags": ["messaging"],
         "operationId": "messaging_getScheduledEmail",
+        "summary": "Get scheduled email",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "Scheduled email", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ScheduledEmail"}}}},
+          "200": {
+            "description": "Scheduled email",
+            "content": {
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": { "schedule": { "$ref": "../management-api.json#/components/schemas/ScheduledEmail" } },
+                  "required": ["schedule"]
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       },
       "delete": {
         "tags": ["messaging"],
         "operationId": "messaging_deleteScheduledEmail",
+        "summary": "Delete scheduled email",
+        "security": [{"BearerAuth": []}],
         "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
         "responses": {
-          "200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Message" } }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }

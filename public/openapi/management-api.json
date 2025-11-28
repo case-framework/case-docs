@@ -381,6 +381,47 @@
         "additionalProperties": false,
         "description": "Study Code List Entry object"
       },
+      "EmailTemplate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "messageType": { "type": "string" },
+          "studyKey": { "type": "string" },
+          "defaultLanguage": { "type": "string" },
+          "headerOverrides": { "type": "object", "additionalProperties": true },
+          "translations": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+        },
+        "additionalProperties": false,
+        "description": "Email Template object"
+      },
+      "SmsTemplate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "userID": { "type": "string" },
+          "messageType": { "type": "string" },
+          "sentAt": { "type": "string", "format": "date-time" },
+          "phoneNumber": { "type": "string" }
+        },
+        "additionalProperties": false,
+        "description": "SMS Template object"
+      },
+      "ScheduledEmail": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "template": { "$ref": "#/components/schemas/EmailTemplate" },
+          "type": { "type": "string" },
+          "studyKey": { "type": "string" },
+          "condition": { "type": "object", "additionalProperties": true },
+          "nextTime": { "type": "integer" },
+          "period": { "type": "integer" },
+          "label": { "type": "string" },
+          "until": { "type": "integer" }
+        },
+        "additionalProperties": false,
+        "description": "Scheduled Email object"
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
@@ -398,9 +439,6 @@
       ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
   ,"FileInfo": {"type": "object", "properties": {"fileID": {"type": "string"}, "name": {"type": "string"}, "size": {"type": "integer"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
   ,"StudyFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/FileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
-  ,"EmailTemplate": {"type": "object", "properties": {"messageType": {"type": "string"}, "subject": {"type": "string"}, "body": {"type": "string"}}, "additionalProperties": true}
-  ,"SmsTemplate": {"type": "object", "properties": {"messageType": {"type": "string"}, "content": {"type": "string"}}, "additionalProperties": true}
-  ,"ScheduledEmail": {"type": "object", "properties": {"id": {"type": "string"}, "studyKey": {"type": "string"}, "messageType": {"type": "string"}, "scheduledAt": {"type": "integer"}}, "additionalProperties": true}
   ,"ScheduledEmailList": {"type": "object", "properties": {"emails": {"type": "array", "items": {"$ref": "#/components/schemas/ScheduledEmail"}}}, "required": ["emails"], "additionalProperties": false}
   ,"ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
   ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
