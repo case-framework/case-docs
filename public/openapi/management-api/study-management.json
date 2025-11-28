@@ -710,45 +710,139 @@
     },
     "/v1/studies/{studyKey}/study-code-list/list-keys": {
       "get": {
-        "tags": ["code-lists"], "operationId": "codeLists_getListKeys",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "tags": ["code-lists"],
+        "operationId": "codeLists_getListKeys",
+        "summary": "List code list keys",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
         "responses": {
-          "200": {"description": "List keys", "content": {"application/json": {"schema": {"type": "object", "properties": {"listKeys": {"type": "array", "items": {"type": "string"}}}, "required": ["listKeys"], "additionalProperties": false}}}},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "List keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "listKeys": { "type": "array", "items": { "type": "string" } }
+                  },
+                  "required": ["listKeys"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },
     "/v1/studies/{studyKey}/study-code-list/codes": {
       "get": {
-        "tags": ["code-lists"], "operationId": "codeLists_getCodes",
+        "tags": ["code-lists"],
+        "operationId": "codeLists_getCodes",
+        "summary": "List codes of a study code list",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "listKey", "in": "query", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "listKey", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
         ],
         "responses": {
-          "200": {"description": "Codes", "content": {"application/json": {"schema": {"type": "object", "properties": {"codes": {"type": "array", "items": {"type": "string"}}}, "required": ["codes"], "additionalProperties": false}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Codes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codeList": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyCodeListEntry" } },
+                    "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfos" }
+                  },
+                  "required": [ "codeList", "pagination" ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       },
       "post": {
-        "tags": ["code-lists"], "operationId": "codeLists_addCodes",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/AddStudyCodeListEntriesRequest"}}}},
+        "tags": ["code-lists"],
+        "operationId": "codeLists_addCodes",
+        "summary": "Add codes to a study code list",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object",
+                "properties": {
+                  "listKey": { "type": "string" },
+                  "codes": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["listKey", "codes"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
         "responses": {
-          "201": {"description": "Added", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Added",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "errors": { "type": "array", "items": { "type": "string" } }
+                  },
+
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" }
         }
       },
       "delete": {
-        "tags": ["code-lists"], "operationId": "codeLists_removeCode",
+        "tags": ["code-lists"],
+        "operationId": "codeLists_removeCode",
+        "summary": "Remove a code from a study code list",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "listKey", "in": "query", "required": true, "schema": {"type": "string"}},
-          {"name": "code", "in": "query", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "listKey", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "code", "in": "query", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {"description": "Removed", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Removed",
+            "content": {
+              "application/json": {
+                "schema": {   
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" }
+                  },
+                  "required": ["success"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
         }
       }
     },

@@ -364,13 +364,29 @@
         "additionalProperties": false,
         "description": "Notification Subscription object"
       },
+      "PaginationInfos": {
+        "type": "object",
+        "description": "Pagination information",
+        "additionalProperties": true
+      },
+      StudyCodeListEntry: {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "studyKey": { "type": "string" },
+          "listKey": { "type": "string" },
+          "code": { "type": "string" },
+          "addedAt": { "type": "string", "format": "date-time" },
+        },
+        "additionalProperties": false,
+        "description": "Study Code List Entry object"
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
       "Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
-      ,"AddStudyCodeListEntriesRequest": {"type": "object", "properties": {"listKey": {"type": "string"}, "codes": {"type": "array", "items": {"type": "string"}}}, "required": ["listKey","codes"], "additionalProperties": false}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
       ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
