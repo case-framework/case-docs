@@ -486,17 +486,54 @@
         "additionalProperties": false,
         "description": "File Info object"
       },
+      "ExtendSessionRequest": {
+        "type": "object",
+        "properties": {
+          "sessionID": { "type": "string" },
+          "instanceID": { "type": "string" }
+        },
+        "required": ["sessionID", "instanceID"],
+        "additionalProperties": true
+      },
+      "ExtendSessionResponse": {
+        "type": "object",
+        "properties": {
+          "renewToken": { "type": "string" },
+          "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" }
+        },
+        "required": ["expiresAt"],
+        "additionalProperties": true
+      },
+      "RenewTokenResponse": {
+        "type": "object",
+        "properties": {
+          "renewToken": { "type": "string" },
+          "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" }
+        },
+        "required": ["renewToken", "expiresAt"],
+        "additionalProperties": true
+      },
+       "AppRole": {
+         "type": "object",
+         "properties": {
+           "id": { "type": "string", "description": "ObjectID" },
+           "subjectId": { "type": "string" },
+           "subjectType": { "type": "string" },
+           "appName": { "type": "string" },
+           "role": { "type": "string" },
+           "createdAt": { "type": "string", "format": "date-time" },
+         },
+       },
+
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
-      ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
       ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
       ,"ResponseList": {"type": "object", "properties": {"responses": {"type": "array", "items": {"$ref": "#/components/schemas/Response"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["responses"], "additionalProperties": false}
       ,"ParticipantList": {"type": "object", "properties": {"participants": {"type": "array", "items": {"$ref": "#/components/schemas/Participant"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["participants"], "additionalProperties": false}
       ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
-  ,"ScheduledEmailList": {"type": "object", "properties": {"emails": {"type": "array", "items": {"$ref": "#/components/schemas/ScheduledEmail"}}}, "required": ["emails"], "additionalProperties": false}
   ,"ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
   ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
   ,"PermissionList": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"], "additionalProperties": false}
@@ -507,7 +544,6 @@
   ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounter"}}}, "required": ["counters"], "additionalProperties": false}
   ,"PermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
   ,"PermissionLimiterUpdateReq": {"type": "object", "properties": {"limiter": {"type": "object", "additionalProperties": true}}, "required": ["limiter"], "additionalProperties": false}
-  ,"AppRole": {"type": "object", "properties": {"id": {"type": "string"}, "appName": {"type": "string"}, "role": {"type": "string"}, "templateID": {"type": "string"}}, "additionalProperties": true}
   ,"AppRoleList": {"type": "object", "properties": {"appRoles": {"type": "array", "items": {"$ref": "#/components/schemas/AppRole"}}}, "required": ["appRoles"], "additionalProperties": false}
   ,"AppRoleTemplateCreateReq": {"type": "object", "properties": {"appName": {"type": "string"}, "role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["appName","role"], "additionalProperties": false}
   ,"AppRoleTemplateUpdateReq": {"type": "object", "properties": {"role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "additionalProperties": false}

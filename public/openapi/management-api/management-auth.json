@@ -3,11 +3,55 @@
       "post": {
         "tags": ["auth"],
         "operationId": "auth_signinWithIdp",
+        "summary": "Sign in with identity provider",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sub": { "type": "string", "description": "IDP Subject (User ID)" },
+                  "roles": { "type": "array", "items": { "type": "string" }},
+                  "name": { "type": "string" },
+                  "provider": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "imageURL": { "type": "string" },
+                  "renewToken": { "type": "string", "description": "Token used to renew the session" },
+                  "instanceID": { "type": "string" }
+                },
+                "required": ["sub"]
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {"description": "Signed in"},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": { "type": "string" },
+                    "sessionID": { "type": "string" },
+                    "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" },
+                    "isAdmin": { "type": "boolean" }
+                  },
+                  "required": ["accessToken", "sessionID", "expiresAt", "isAdmin"]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "../management-api.json#/components/responses/Error400"
+          },
+          "403": {
+            "$ref": "../management-api.json#/components/responses/Error403"
+          },
+          "500": {
+            "$ref": "../management-api.json#/components/responses/Error500"
+          }
         }
       }
     },
@@ -15,12 +59,52 @@
       "post": {
         "tags": ["auth"],
         "operationId": "auth_extendSession",
+        "summary": "Extend session",
+        "security": [{"BearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "renewToken": { "type": "string" }
+                },
+                "required": ["renewToken"]
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {"description": "Session extended"},
-          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Session extended",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "type": "object",
+                    "properties": {
+                      "accessToken": { "type": "string" },
+                      "sessionID": { "type": "string" },
+                      "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" },
+                      "isAdmin": { "type": "boolean" }
+                    },
+                    "required": ["accessToken", "sessionID", "expiresAt", "isAdmin"]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "../management-api.json#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "../management-api.json#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "../management-api.json#/components/responses/Error403"
+          },
+          "500": {
+            "$ref": "../management-api.json#/components/responses/Error500"
+          }
         }
       }
     },
@@ -28,15 +112,45 @@
       "get": {
         "tags": ["auth"],
         "operationId": "auth_renewToken",
+        "summary": "Get renew token",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "sessionID", "in": "path", "required": true, "schema": {"type": "string"}}
+          {
+            "name": "sessionID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": {"description": "Renew token"},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
-          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Renew token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "renewToken": { "type": "string" }
+                  },
+                  "required": ["renewToken"]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "../management-api.json#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "../management-api.json#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "../management-api.json#/components/responses/Error403"
+          },
+          "500": {
+            "$ref": "../management-api.json#/components/responses/Error500"
+          }
         }
       }
     },
@@ -44,12 +158,41 @@
       "get": {
         "tags": ["auth"],
         "operationId": "auth_listPermissions",
+        "summary": "List permissions and roles",
+        "security": [{"BearerAuth": []}],
         "responses": {
-          "200": {"description": "Permissions"},
-          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+          "200": {
+            "description": "Permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isAdmin": { "type": "boolean" },
+                    "permissions": {
+                      "type": "array",
+                      "items": { "$ref": "../management-api.json#/components/schemas/Permission" }
+                    },
+                    "appRoles": {
+                      "type": "array",
+                      "items": { "$ref": "../management-api.json#/components/schemas/AppRole" }
+                    }
+                  },
+                  "required": ["isAdmin", "permissions", "appRoles"]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "../management-api.json#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "../management-api.json#/components/responses/Error401"
+          },
+          "500": {
+            "$ref": "../management-api.json#/components/responses/Error500"
+          }
         }
       }
     }
-}
+  }
