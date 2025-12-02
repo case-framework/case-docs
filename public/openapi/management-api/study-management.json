@@ -748,8 +748,8 @@
         "parameters": [
           { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
           { "name": "listKey", "in": "query", "required": true, "schema": { "type": "string" } },
-          { "name": "page", "in": "query", "schema": { "type": "integer" } },
-          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
+          { "name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
+          { "name": "limit", "in": "query", "description": "maximum number of codes per page", "schema": {"type": "integer", "minimum": 1, "default": 10}}
         ],
         "responses": {
           "200": {
@@ -1513,7 +1513,7 @@
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "reportKey", "in": "query", "schema": {"type": "string"}},
-          {"name": "filter", "in": "query", "schema": {"type": "object", "additionalProperties": {"type": "string"}}}
+          {"name": "filter", "in": "query", "description": "bson.M object to filter reports", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
         "responses": {
           "200": {
@@ -1544,7 +1544,7 @@
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "reportKey", "in": "query", "schema": {"type": "string"}},
-          {"name": "filter", "in": "query", "schema": {"type": "object", "additionalProperties": {"type": "string"}}}
+          {"name": "filter", "in": "query", "description": "bson.M object to filter reports", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
         "responses": {
           "200": {
@@ -1592,6 +1592,7 @@
               }
             }
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
           "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
@@ -1612,6 +1613,7 @@
             "description": "Result",
             "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
           "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
@@ -1646,8 +1648,8 @@
         "tags": ["responses"], "operationId": "dataExplorer_listResponses",
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "schema": {"type": "integer"}},
-          {"name": "limit", "in": "query", "schema": {"type": "integer"}},
+          {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
+          {"name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
           {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
         ],
         "responses": {"200": {"description": "Responses", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ResponseList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
@@ -1684,8 +1686,8 @@
         "tags": ["participants"], "operationId": "dataExplorer_listParticipants",
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "schema": {"type": "integer"}},
-          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+          {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
+          {"name": "limit", "in": "query", "description": "maximum number of participants per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
         ],
         "responses": {"200": {"description": "Participants", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ParticipantList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
       }
@@ -1743,11 +1745,11 @@
           {"name": "from", "in": "query", "description": "start date/time", "schema": {"type": "string"}},
           {"name": "until", "in": "query", "description": "end date/time", "schema": {"type": "string"}},
           {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
-          {"name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
+          {"name": "limit", "in": "query", "description": "maximum number of reports per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
           {
             "name": "filter",
             "in": "query",
-            "description": "bson.M object to filter responses",
+            "description": "bson.M object to filter reports",
             "schema": {
               "type": "object",
               "additionalProperties": { 
@@ -1759,6 +1761,7 @@
                   "$lte": {"type": "integer" },
                   "$gte": {"type": "integer" },
                 },
+                "additionalProperties": {"type": "object"},
                 "description": "Fallback values apply if the corresponding query parameters are not provided."
               }
             }
@@ -1811,6 +1814,7 @@
               }
             }
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
@@ -1819,30 +1823,82 @@
     "/v1/studies/{studyKey}/data-explorer/files/": {
       "get": {
         "tags": ["files"], "operationId": "dataExplorer_listFiles",
+        "summary": "List files",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "schema": {"type": "integer"}},
-          {"name": "limit", "in": "query", "schema": {"type": "integer"}}
+          {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
+          {"name": "limit", "in": "query", "description": "maximum number of files per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
+          {"name": "filter", "in": "query", "description": "bson.M object to filter files", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
-        "responses": {"200": {"description": "Files", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/StudyFileList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Files",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "files": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/FileInfo"}},
+                    "pagination": {"$ref": "../management-api.json#/components/schemas/PaginationInfos"}
+                  },
+                  "required": ["files", "pagination"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/files/{fileID}": {
       "get": {
         "tags": ["files"], "operationId": "dataExplorer_getFile",
+        "summary": "Get file by ID",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "fileID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "File", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/FileInfo"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "File",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/FileInfo" }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "delete": {
         "tags": ["files"], "operationId": "dataExplorer_deleteFile",
+        "summary": "Delete file",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "fileID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     }
 }

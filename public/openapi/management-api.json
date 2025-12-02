@@ -367,7 +367,13 @@
       "PaginationInfos": {
         "type": "object",
         "description": "Pagination information",
-        "additionalProperties": true
+        "properties": {
+          "totalCount": { "type": "integer" },
+          "currentPage": { "type": "integer" },
+          "totalPages": { "type": "integer" },
+          "pageSize": { "type": "integer" }
+        },
+        "additionalProperties": false
       },
       StudyCodeListEntry: {
         "type": "object",
@@ -461,6 +467,25 @@
         },
         "additionalProperties": true
       },
+      "FileInfo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "participantID": { "type": "string" },
+          "uploadedBy": { "type": "string" },
+          "path": { "type": "string" },
+          "previewPath": { "type": "string" },
+          "subStudy": { "type": "string" },
+          "submittedAt": { "type": "integer" },
+          "fileType": { "type": "string" },
+          "visibleToParticipant": { "type": "boolean" },
+          "name": { "type": "string" },
+          "size": { "type": "integer" },
+          "referencedIn": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+        },
+        "additionalProperties": false,
+        "description": "File Info object"
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
       "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
@@ -471,8 +496,6 @@
       ,"ResponseList": {"type": "object", "properties": {"responses": {"type": "array", "items": {"$ref": "#/components/schemas/Response"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["responses"], "additionalProperties": false}
       ,"ParticipantList": {"type": "object", "properties": {"participants": {"type": "array", "items": {"$ref": "#/components/schemas/Participant"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["participants"], "additionalProperties": false}
       ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
-  ,"FileInfo": {"type": "object", "properties": {"fileID": {"type": "string"}, "name": {"type": "string"}, "size": {"type": "integer"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
-  ,"StudyFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/FileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
   ,"ScheduledEmailList": {"type": "object", "properties": {"emails": {"type": "array", "items": {"$ref": "#/components/schemas/ScheduledEmail"}}}, "required": ["emails"], "additionalProperties": false}
   ,"ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
   ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
