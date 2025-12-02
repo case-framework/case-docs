@@ -15,8 +15,8 @@
     { "name": "study-permissions", "description": "Permissions for a study" },
     { "name": "notifications", "description": "Notification subscriptions" },
     { "name": "code-lists", "description": "Study code lists" },
-    { "name": "participants", "description": "Participant operations (admin)" },
-    { "name": "reports", "description": "Participant reports (admin)" },
+    { "name": "participants", "description": "Participant operations" },
+    { "name": "reports", "description": "Participant reports" },
     { "name": "responses", "description": "Response exports & queries" },
     { "name": "files", "description": "File management for studies" },
     { "name": "messaging", "description": "Messaging templates & scheduled emails" },
@@ -422,20 +422,54 @@
         "additionalProperties": false,
         "description": "Scheduled Email object"
       },
+      "Report": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "key": { "type": "string" },
+          "participantID": { "type": "string" },
+          "responseID": { "type": "string" },
+          "timestamp": { "type": "integer" },
+          "modifiedAt": { "type": "string", "format": "date-time" },
+          "data": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+        },
+        "additionalProperties": false,
+        "description": "Report object"
+      },
+      "ReportData": {
+        "type": "object",
+        "properties": {
+          "key": { "type": "string" },
+          "value": { "type": "string" },
+          "dtype": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time"  },
+          "createdBy": { "type": "string" },
+          "updatedAt": { "type": "string", "format": "date-time"  },
+          "status": { "type": "string" },
+          "targetCount": { "type": "integer" },
+          "processedCount": { "type": "integer" },
+          "resultFile": { "type": "string" },
+          "fileType": { "type": "string" },
+          "error": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
-      "Report": {"type": "object", "properties": {"key": {"type": "string"}, "timestamp": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter Report"},
-      "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true},
-      "Task": {"type": "object", "properties": {"id": {"type": "string"}, "status": {"type": "string"}, "totalCount": {"type": "integer"}, "processedCount": {"type": "integer"}}, "additionalProperties": true}
+      "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
       ,"StudyPermission": {"type": "object", "properties": {"subjectID": {"type": "string"}, "action": {"type": "string"}}, "additionalProperties": true}
       ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
       ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
       ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
-      ,"ReportCreateReq": {"type": "object", "properties": {"key": {"type": "string"}, "data": {"type": "object"}}, "required": ["key"], "additionalProperties": true}
-      ,"ReportInfo": {"type": "object", "properties": {"reportID": {"type": "string"}, "key": {"type": "string"}, "createdAt": {"type": "integer"}}, "additionalProperties": true}
       ,"ResponseList": {"type": "object", "properties": {"responses": {"type": "array", "items": {"$ref": "#/components/schemas/Response"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["responses"], "additionalProperties": false}
       ,"ParticipantList": {"type": "object", "properties": {"participants": {"type": "array", "items": {"$ref": "#/components/schemas/Participant"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["participants"], "additionalProperties": false}
-      ,"ReportList": {"type": "object", "properties": {"reports": {"type": "array", "items": {"$ref": "#/components/schemas/ReportInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["reports"], "additionalProperties": false}
       ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
   ,"FileInfo": {"type": "object", "properties": {"fileID": {"type": "string"}, "name": {"type": "string"}, "size": {"type": "integer"}, "uploadedAt": {"type": "integer"}}, "additionalProperties": true}
   ,"StudyFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/FileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}

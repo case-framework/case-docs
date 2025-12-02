@@ -5,6 +5,8 @@
                 "participants"
             ],
             "operationId": "participants_createVirtualParticipant",
+            "summary": "Create virtual participant",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -73,6 +75,8 @@
                 "participants"
             ],
             "operationId": "participants_listParticipantResponses",
+            "summary": "List participant responses",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -138,6 +142,8 @@
                 "participants"
             ],
             "operationId": "participants_submitParticipantResponse",
+            "summary": "Submit participant response",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -209,6 +215,8 @@
                 "participants"
             ],
             "operationId": "participants_submitParticipantEvent",
+            "summary": "Submit participant event",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -283,6 +291,8 @@
                 "reports"
             ],
             "operationId": "participants_submitParticipantReport",
+            "summary": "Submit participant report",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -306,26 +316,18 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../management-api.json#/components/schemas/ReportCreateReq"
+                            "$ref": "../management-api.json#/components/schemas/Report"
                         }
                     }
                 }
             },
             "responses": {
-                "201": {
+                "200": {
                     "description": "Submit participant report",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "report": {
-                                        "$ref": "../management-api.json#/components/schemas/ReportInfo"
-                                    }
-                                },
-                                "required": [
-                                    "report"
-                                ]
+                                "$ref": "../management-api.json#/components/schemas/Message"
                             }
                         }
                     }
@@ -335,12 +337,6 @@
                 },
                 "401": {
                     "$ref": "../management-api.json#/components/responses/Error401"
-                },
-                "403": {
-                    "$ref": "../management-api.json#/components/responses/Error403"
-                },
-                "404": {
-                    "$ref": "../management-api.json#/components/responses/Error404"
                 },
                 "500": {
                     "$ref": "../management-api.json#/components/responses/Error500"
@@ -354,6 +350,8 @@
                 "reports"
             ],
             "operationId": "participants_updateParticipantReport",
+            "summary": "Update participant report",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -384,8 +382,15 @@
                 "required": true,
                 "content": {
                     "application/json": {
-                        "schema": {
-                            "$ref": "../management-api.json#/components/schemas/ReportCreateReq"
+                        "schema": { 
+                            "type": "object",
+                            "properties": {
+                                "data": { "$ref": "../management-api.json#/components/schemas/ReportData" },
+                                "mode": { "type": "object", "additionalProperties": true }
+                                
+                               
+                            },
+                            "required": ["data", "mode"]
                         }
                     }
                 }
@@ -396,15 +401,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "report": {
-                                        "$ref": "../management-api.json#/components/schemas/ReportInfo"
-                                    }
-                                },
-                                "required": [
-                                    "report"
-                                ]
+                                "$ref": "../management-api.json#/components/schemas/Message"
                             }
                         }
                     }
@@ -414,12 +411,6 @@
                 },
                 "401": {
                     "$ref": "../management-api.json#/components/responses/Error401"
-                },
-                "403": {
-                    "$ref": "../management-api.json#/components/responses/Error403"
-                },
-                "404": {
-                    "$ref": "../management-api.json#/components/responses/Error404"
                 },
                 "500": {
                     "$ref": "../management-api.json#/components/responses/Error500"
@@ -433,6 +424,8 @@
                 "participants"
             ],
             "operationId": "participants_mergeParticipants",
+            "summary": "Merge participants",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
@@ -503,6 +496,8 @@
                 "participants"
             ],
             "operationId": "participants_editParticipant",
+            "summary": "Edit participant",
+            "security": [{"BearerAuth": []}],
             "parameters": [
                 {
                     "name": "studyKey",
