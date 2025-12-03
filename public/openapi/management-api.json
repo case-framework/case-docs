@@ -524,6 +524,15 @@
            "createdAt": { "type": "string", "format": "date-time" },
          },
        },
+       "SurveyVersionPreview": {
+         "type": "object",
+         "properties": {
+           "versionID": { "type": "string" },
+           "published": { "type": "integer" },
+           "unpublished": { "type": "integer" },
+           "questions": { "type": "object", "additionalProperties": true }
+         },
+       },
 
       "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
       "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},

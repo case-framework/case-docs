@@ -1410,98 +1410,306 @@
     "/v1/studies/{studyKey}/data-exporter/survey-info/": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getSurveyInfo",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Survey info", "content": {"application/json": {"schema": {"type": "object", "properties": {"surveys": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/SurveyInfo"}}}, "required": ["surveys"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "List survey info",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Survey info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "versions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/SurveyVersionPreview" } },
+                    "key": { "type": "string" },
+                  },
+                  "required": ["surveys"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/count": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getResponsesCount",
+        "summary": "Get responses count",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}},
+          {"name": "filter", "in": "query", "description": "bson.M object to filter files", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
-        "responses": {"200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "count": { "type": "integer" } },
+                  "required": ["count"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/": {
       "post": {
         "tags": ["responses"], "operationId": "dataExporter_generateResponsesExport",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "Start responses export task",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "surveyKey", "in": "query", "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "description": "page number (starting from 1)", "schema": { "type": "integer", "minimum": 1, "default": 1 } },
+          { "name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": { "type": "integer", "minimum": 1, "default": 10 } },
+          { "name": "filter", "in": "query", "description": "bson.M object to filter responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "sort", "in": "query", "description": "bson.M object to sort responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "shortKeys", "in": "query", "description": "return short keys for responses", "schema": { "type": "boolean", "default": false } },
+          { "name": "questionOptionSep", "in": "query", "description": "separator used in option keys", "schema": { "type": "string", "default": "-" } },
+          { "name": "format", "in": "query", "description": "response export format", "schema": { "type": "string", "default": "wide", "enum": ["wide", "long", "json"] } },
+          { "name": "extraContextColumns", "in": "query", "description": "comma-separated list of extra context columns", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Export started",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" } 
+                  },
+                  "required": ["task"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/task/{taskID}": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getResponsesTaskStatus",
+        "summary": "Get responses export task status",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Task status",
+            "content": {
+              "application/json": {
+                  "type": "object",
+                  "properties": { 
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" } 
+                  },
+                  "required": ["task"]
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/task/{taskID}/result": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getResponsesTaskResult",
+        "summary": "Get responses export task result",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Result",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "additionalProperties": true }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/daily-exports": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_listDailyResponseExports",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Exports", "content": {"application/json": {"schema": {"type": "object", "properties": {"exports": {"type": "array", "items": {"type": "object", "additionalProperties": true}}}, "required": ["exports"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "List daily response exports",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Exports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dailyExports": { "type": "array", "items": { "type": "string"} }
+                  },
+                  "required": ["dailyExports"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/responses/daily-exports/{exportID}": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getDailyResponseExport",
+        "summary": "Get daily response export by ID",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "exportID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Export",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "additionalProperties": true }
+              }
+            }
+          },
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/participants/count": {
       "get": {
         "tags": ["participants"], "operationId": "dataExporter_getParticipantsCount",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "properties": {"count": {"type": "integer"}}, "required": ["count"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "Get participants count",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "count": { "type": "integer" } },
+                  "required": ["count"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/participants/": {
       "post": {
         "tags": ["participants"], "operationId": "dataExporter_generateParticipantsExport",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "summary": "Start participants export task",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
         "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "202": {
+            "description": "Export started",
+            "content": {
+              "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Task" } }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/participants/task/{taskID}": {
       "get": {
         "tags": ["participants"], "operationId": "dataExporter_getParticipantsTaskStatus",
+        "summary": "Get participants export task status",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Task status",
+            "content": { "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Task" } } }
+          },
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/participants/task/{taskID}/result": {
       "get": {
         "tags": ["participants"], "operationId": "dataExporter_getParticipantsTaskResult",
+        "summary": "Get participants export task result",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Result",
+            "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
+          },
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/reports/count": {
@@ -1623,62 +1831,204 @@
     "/v1/studies/{studyKey}/data-exporter/confidential-responses/": {
       "post": {
         "tags": ["responses"], "operationId": "dataExporter_getConfidentialResponses",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Export started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "Start confidential responses export task",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "requestBody": {
+          "required": true, 
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object", 
+                "properties": {
+                  "participantIDs": { "type": "array", "items": { "type": "string" }},
+                  "keyFilter": { "type": "string"}
+                },
+                "required": ["participantIDs"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Export started",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                "type": "object",
+                "properties": { 
+                  "responses": { "type": "array", "items": { "type": "object", "additionalProperties": true }, "description": "Confidential survey response export entry", },
+                 },
+                "required": ["responses"]}
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       },
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_listConfidentialResponseExports",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "responses": {"200": {"description": "Exports", "content": {"application/json": {"schema": {"type": "object", "properties": {"exports": {"type": "array", "items": {"type": "object", "additionalProperties": true}}}, "required": ["exports"], "additionalProperties": false}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "List confidential response exports",
+        "security": [{"BearerAuth": []}],
+        "parameters": [
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Exports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "availableFiles": { "type": "array", "items": { "type": "string" } }
+                  },
+                  "required": ["availableFiles"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/confidential-responses/{exportID}": {
       "get": {
         "tags": ["responses"], "operationId": "dataExporter_getConfidentialResponseExport",
+        "summary": "Get confidential response export by ID",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "exportID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Export", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Export",
+            "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
+          },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
+          "401": {"$ref": "../management-api.json#/components/responses/Error401"},
+          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
+          "500": {"$ref": "../management-api.json#/components/responses/Error500"}
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/responses/": {
       "get": {
-        "tags": ["responses"], "operationId": "dataExplorer_listResponses",
-        "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
-          {"name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
-          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+        "tags": ["responses"],
+        "operationId": "dataExplorer_listResponses",
+        "summary": "List survey responses",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [        
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "surveyKey", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "shortKeys", "in": "query", "description": "whether to return short keys for responses", "required": false, "schema": { "type": "boolean", "default": false } },
+          { "name": "questionOptionSep", "in": "query", "description": "character used to seperate question options in response", "required": false, "schema": { "type": "string", "default": "-" } },
+          { "name": "format", "in": "query", "description": "format for survey responses", "required": false, "schema": { "type": "string", "default": "wide", "enum": ["wide", "long", "json"] } },
+          { "name": "page", "in": "query", "description": "page number (starting from 1)", "schema": { "type": "integer", "minimum": 1, "default": 1 } },
+          { "name": "limit", "in": "query", "description": "maximum number of responses per page", "schema": { "type": "integer", "minimum": 1, "default": 10 } },
+          { "name": "filter", "in": "query", "description": "bson.M object to filter responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "sort", "in": "query", "description": "bson.M object to sort responses", "schema": { "type": "object", "additionalProperties": { "type": "object" } } },
+          { "name": "extraContextColumns", "in": "query", "description": "comma-separated list of extra context columns to include in the response", "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Responses", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ResponseList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "List responses",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "responses": { "type": "array", "items": { "type": "object", "description": "Responses", "additionalProperties": { "type": "object" } } }, "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfo" } }, "required": ["responses","pagination"], "additionalProperties": false }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "delete": {
         "tags": ["responses"], "operationId": "dataExplorer_deleteResponses",
+        "summary": "Delete survey responses",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "surveyKey", "in": "query", "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "surveyKey", "in": "query", "schema": { "type": "string" } },
+          { "name": "controlField", "in": "query", "description": "field used to control deletion (should be equal to studyKey)", "schema": { "type": "string" } },
+          { "name": "filter", "in": "query", "description": "bson.M object to filter responses to delete", "schema": { "type": "object", "additionalProperties": { "type": "object" } } }
         ],
-        "responses": {"200": {"description": "Deleted summary", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ResponsesDeleteSummary"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Deleted summary",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/responses/{responseId}": {
       "get": {
         "tags": ["responses"], "operationId": "dataExplorer_getResponse",
+        "summary": "Get survey response by ID",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "responseId", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "responseId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "shortKeys", "in": "query", "description": "whether to return short keys for response", "required": false, "schema": { "type": "boolean", "default": false } },
+          { "name": "questionOptionSep", "in": "query", "description": "character used to seperate question options in response", "required": false, "schema": { "type": "string", "default": "-" } }
         ],
-        "responses": {"200": {"description": "Response", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Response"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Response",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object", 
+                  "properties": { 
+                  "response": { "type": "object", "description": "Response", "additionalProperties": { "type": "object" } }},
+                  "required": ["response"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       },
       "delete": {
         "tags": ["responses"], "operationId": "dataExplorer_deleteResponse",
+        "summary": "Delete survey response",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "responseId", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "responseId", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Deleted", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "../management-api.json#/components/schemas/Message" }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/participants/": {
@@ -1709,7 +2059,7 @@
         "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "pid", "in": "query", "schema": {"type": "string"}},
+          {"name": "pid", "in": "query","description": "Participant ID", "schema": {"type": "string"}},
           {"name": "from", "in": "query", "schema": {"type": "string"}},
           {"name": "until", "in": "query", "schema": {"type": "string"}}
         ],
@@ -1741,31 +2091,12 @@
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "reportKey", "in": "query", "schema": {"type": "string"}},
-          {"name": "pid", "in": "query", "description": "Profile ID", "schema": {"type": "string"}},
+          {"name": "pid", "in": "query", "description": "Participant ID", "schema": {"type": "string"}},
           {"name": "from", "in": "query", "description": "start date/time", "schema": {"type": "string"}},
           {"name": "until", "in": "query", "description": "end date/time", "schema": {"type": "string"}},
           {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
           {"name": "limit", "in": "query", "description": "maximum number of reports per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "bson.M object to filter reports",
-            "schema": {
-              "type": "object",
-              "additionalProperties": { 
-                "type": "object",
-                "properties": {
-                  "key": {"type": "string"},
-                  "participantID": {"type": "string"},
-                  "timestamp": {"type": "object", "additionalProperties": { "type": "object" }},
-                  "$lte": {"type": "integer" },
-                  "$gte": {"type": "integer" },
-                },
-                "additionalProperties": {"type": "object"},
-                "description": "Fallback values apply if the corresponding query parameters are not provided."
-              }
-            }
-          }
+          {"name": "filter", "in": "query", "description": "bson.M object to filter files", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
         "responses": {
           "200": {
