@@ -1332,79 +1332,307 @@
     "/v1/studies/{studyKey}/run-actions/participants/{participantID}": {
       "post": {
         "tags": ["actions"], "operationId": "actions_runOnParticipant",
+        "summary": "Run actions on a participant",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object",
+                "properties": {
+                  "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                }, 
+                "required": ["rules"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task started",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "participantCount": { "type": "integer" },
+                    "duration": { "type": "integer" },
+                    "ruleResults": { "type": "array", "items": { "type": "integer" } }
+                  },
+                  "required": ["participantCount", "duration", "ruleResults"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/participants/": {
       "post": {
         "tags": ["actions"], "operationId": "actions_runOnParticipants",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "Run actions on multiple participants",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": {
+          "required": true,
+          "content": { 
+            "application/json": { 
+              "schema": { 
+                "type": "object",
+                "properties": {
+                  "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                }, 
+                "required": ["rules"],
+                "additionalProperties": false
+              }
+            } 
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task started",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" }
+                  },
+                  "required": ["task"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/participants/task/{taskID}": {
       "get": {
         "tags": ["actions"], "operationId": "actions_getTaskStatus",
+        "summary": "Get actions task status",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Task status",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" }
+                  },
+                  "required": ["task"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/participants/task/{taskID}/result": {
       "get": {
         "tags": ["actions"], "operationId": "actions_getTaskResult",
+        "summary": "Get actions task result",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "result": {"type": "object", "additionalProperties": { "type": "object" } } 
+                  },
+                  "required": ["result"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/previous-responses/{participantID}": {
       "post": {
         "tags": ["actions"], "operationId": "actions_runPrevResponsesOnParticipant",
+        "summary": "Run actions on previous responses for a participant",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "participantID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "requestBody": { 
+          "required": true, 
+          "content": { 
+            "application/json": { 
+              "schema": { 
+                "type": "object", 
+                "properties": {
+                  "surveyKeys": { "type": "array", "items": { "type": "string" } },
+                  "from": { "type": "integer" },
+                  "to": { "type": "integer" },
+                  "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                }
+              } 
+            } 
+          } 
+        },
+        "responses": {
+          "200": {
+            "description": "Task started",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "participantCount": { "type": "integer" },
+                    "duration": { "type": "integer" },
+                    "ruleResults": { "type": "array", "items": { "type": "integer" } }
+                  },
+                  "required": ["participantCount", "duration", "ruleResults"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/previous-responses/": {
       "post": {
         "tags": ["actions"], "operationId": "actions_runPrevResponsesOnParticipants",
-        "parameters": [{"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
-        "responses": {"202": {"description": "Task started", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "400": {"$ref": "../management-api.json#/components/responses/Error400"}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "summary": "Run actions on previous responses for multiple participants",
+        "security": [{"BearerAuth": []}],
+        "parameters": [ { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { 
+          "required": true, 
+          "content": { 
+            "application/json": { 
+              "schema": { 
+                "type": "object", 
+                "properties": {
+                  "surveyKeys": { "type": "array", "items": { "type": "string" } },
+                  "from": { "type": "integer" },
+                  "to": { "type": "integer" },
+                  "rules": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                }
+              } 
+            } 
+          } 
+        },
+        "responses": {
+          "200": {
+            "description": "Task started",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" }
+                  },
+                  "required": ["task"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/previous-responses/task/{taskID}": {
       "get": {
         "tags": ["actions"], "operationId": "actions_getPrevResponsesTaskStatus",
+        "summary": "Get previous-responses actions task status",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Task status", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Task"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Task status",
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" }
+                  },
+                  "required": ["task"]
+                }
+              } 
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401"  },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/run-actions/previous-responses/task/{taskID}/result": {
       "get": {
         "tags": ["actions"], "operationId": "actions_getPrevResponsesTaskResult",
+        "summary": "Get previous-responses actions task result",
+        "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "taskID", "in": "path", "required": true, "schema": {"type": "string"}}
+          { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "taskID", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {"200": {"description": "Result", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "result": {"type": "object", "additionalProperties": { "type": "object" } } 
+                  },
+                  "required": ["result"]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
+          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-exporter/survey-info/": {
@@ -1943,7 +2171,22 @@
             "description": "List responses",
             "content": {
               "application/json": {
-                "schema": { "type": "object", "properties": { "responses": { "type": "array", "items": { "type": "object", "description": "Responses", "additionalProperties": { "type": "object" } } }, "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfo" } }, "required": ["responses","pagination"], "additionalProperties": false }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "responses": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "Responses",
+                        "additionalProperties": { "type": "object" }
+                      }
+                    },
+                    "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfo" }
+                  },
+                  "required": ["responses", "pagination"],
+                  "additionalProperties": false
+                }
               }
             }
           },
