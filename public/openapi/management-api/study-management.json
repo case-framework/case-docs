@@ -1851,7 +1851,8 @@
         "summary": "Get participants count",
         "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "filter", "in": "query", "description": "bson.M object to filter participants", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
         "responses": {
           "200": {
@@ -1867,9 +1868,8 @@
               }
             }
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -1880,20 +1880,27 @@
         "summary": "Start participants export task",
         "security": [{"BearerAuth": []}],
         "parameters": [
-          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}}
+          {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
+          {"name": "filter", "in": "query", "description": "bson.M object to filter participants", "schema": {"type": "object", "additionalProperties": {"type": "object"}}},
+          {"name": "sort", "in": "query", "description": "bson.M object to sort participants", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}},
         "responses": {
-          "202": {
+          "200": {
             "description": "Export started",
             "content": {
-              "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Task" } }
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": {  
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" } 
+                  },
+                  "required": ["task"]
+                }
+              }
             }
           },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
-          "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -1910,11 +1917,20 @@
         "responses": {
           "200": {
             "description": "Task status",
-            "content": { "application/json": { "schema": { "$ref": "../management-api.json#/components/schemas/Task" } } }
+            "content": { 
+              "application/json": { 
+                "schema": { 
+                  "type": "object",
+                  "properties": { 
+                    "task": { "$ref": "../management-api.json#/components/schemas/Task" } 
+                  } 
+                }
+              }
+            }
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
           "403": {"$ref": "../management-api.json#/components/responses/Error403"},
-          "404": {"$ref": "../management-api.json#/components/responses/Error404"},
           "500": {"$ref": "../management-api.json#/components/responses/Error500"}
         }
       }
@@ -1933,6 +1949,7 @@
             "description": "Result",
             "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
           },
+          "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
           "403": {"$ref": "../management-api.json#/components/responses/Error403"},
           "404": {"$ref": "../management-api.json#/components/responses/Error404"},
@@ -2182,7 +2199,7 @@
                         "additionalProperties": { "type": "object" }
                       }
                     },
-                    "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfo" }
+                    "pagination": { "$ref": "../management-api.json#/components/schemas/PaginationInfos" }
                   },
                   "required": ["responses", "pagination"],
                   "additionalProperties": false
@@ -2277,22 +2294,67 @@
     "/v1/studies/{studyKey}/data-explorer/participants/": {
       "get": {
         "tags": ["participants"], "operationId": "dataExplorer_listParticipants",
+        "summary": "List participants",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "page", "in": "query", "description": "page number (starting from 1)", "schema": {"type": "integer", "minimum": 1, "default": 1}},
           {"name": "limit", "in": "query", "description": "maximum number of participants per page", "schema": {"type": "integer", "minimum": 1, "default": 10}},
+          {"name": "filter", "in": "query", "description": "bson.M object to filter participants", "schema": {"type": "object", "additionalProperties": {"type": "object"}}},
+          {"name": "sort", "in": "query", "description": "bson.M object to sort participants", "schema": {"type": "object", "additionalProperties": {"type": "object"}}}
         ],
-        "responses": {"200": {"description": "Participants", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/ParticipantList"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Participants",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "participants": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/Participant"}},
+                    "pagination": {"$ref": "../management-api.json#/components/schemas/PaginationInfos"}
+                  },
+                  "required": ["participants", "pagination"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/participants/{participantID}": {
       "get": {
         "tags": ["participants"], "operationId": "dataExplorer_getParticipant",
+        "summary": "Get participant",
+        "security": [{"BearerAuth": []}],
         "parameters": [
           {"name": "studyKey", "in": "path", "required": true, "schema": {"type": "string"}},
           {"name": "participantID", "in": "path", "required": true, "schema": {"type": "string"}}
         ],
-        "responses": {"200": {"description": "Participant", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Participant"}}}}, "401": {"$ref": "../management-api.json#/components/responses/Error401"}, "403": {"$ref": "../management-api.json#/components/responses/Error403"}, "404": {"$ref": "../management-api.json#/components/responses/Error404"}, "500": {"$ref": "../management-api.json#/components/responses/Error500"}}
+        "responses": {
+          "200": {
+            "description": "Participant",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "participant": { "$ref": "../management-api.json#/components/schemas/Participant" }
+                  },
+                  "required": ["participant"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
+          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
+          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        }
       }
     },
     "/v1/studies/{studyKey}/data-explorer/reports/keys": {

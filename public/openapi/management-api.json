@@ -486,24 +486,6 @@
         "additionalProperties": false,
         "description": "File Info object"
       },
-      "ExtendSessionRequest": {
-        "type": "object",
-        "properties": {
-          "sessionID": { "type": "string" },
-          "instanceID": { "type": "string" }
-        },
-        "required": ["sessionID", "instanceID"],
-        "additionalProperties": true
-      },
-      "ExtendSessionResponse": {
-        "type": "object",
-        "properties": {
-          "renewToken": { "type": "string" },
-          "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" }
-        },
-        "required": ["expiresAt"],
-        "additionalProperties": true
-      },
       "RenewTokenResponse": {
         "type": "object",
         "properties": {
@@ -513,7 +495,7 @@
         "required": ["renewToken", "expiresAt"],
         "additionalProperties": true
       },
-       "AppRole": {
+      "AppRole": {
          "type": "object",
          "properties": {
            "id": { "type": "string", "description": "ObjectID" },
@@ -524,7 +506,7 @@
            "createdAt": { "type": "string", "format": "date-time" },
          },
        },
-       "SurveyVersionPreview": {
+      "SurveyVersionPreview": {
          "type": "object",
          "properties": {
            "versionID": { "type": "string" },
@@ -533,17 +515,58 @@
            "questions": { "type": "object", "additionalProperties": true }
          },
        },
-
-      "PaginationInfo": {"type": "object", "properties": {"page": {"type": "integer"}, "limit": {"type": "integer"}, "total": {"type": "integer"}}, "additionalProperties": false},
-      "Participant": {"type": "object", "properties": {"participantID": {"type": "string"}}, "additionalProperties": true, "description": "Platzhalter Teilnehmer"},
-      "ParticipantFileInfo": {"type": "object", "properties": {"id": {"type": "string"}, "path": {"type": "string"}}, "additionalProperties": true}
-      ,"Response": {"type": "object", "properties": {"responseId": {"type": "string"}, "participantID": {"type": "string"}, "surveyKey": {"type": "string"}, "submittedAt": {"type": "integer"}}, "additionalProperties": true, "description": "Platzhalter für eine einzelne Antwort"}
-      ,"ResponsesDeleteSummary": {"type": "object", "properties": {"deletedCount": {"type": "integer"}}, "required": ["deletedCount"], "additionalProperties": false}
-      ,"ParticipantCreateReq": {"type": "object", "properties": {"profile": {"type": "object"}, "contactInfos": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}
-      ,"ResponseList": {"type": "object", "properties": {"responses": {"type": "array", "items": {"$ref": "#/components/schemas/Response"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["responses"], "additionalProperties": false}
-      ,"ParticipantList": {"type": "object", "properties": {"participants": {"type": "array", "items": {"$ref": "#/components/schemas/Participant"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["participants"], "additionalProperties": false}
-      ,"ParticipantFileList": {"type": "object", "properties": {"files": {"type": "array", "items": {"$ref": "#/components/schemas/ParticipantFileInfo"}}, "pagination": {"$ref": "#/components/schemas/PaginationInfo"}}, "required": ["files"], "additionalProperties": false}
-  ,"ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
+      "Participant": {
+         "type": "object",
+         "description": "Participant object",
+         "properties": {
+           "id": { "type": "string", "description": "ObjectID" },
+           "participantId": { "type": "string" },
+           "currentStudySession": { "type": "string" },
+           "modifiedAt": { "type": "integer" },
+           "enteredAt": { "type": "integer" },
+           "studyStatus": { "type": "string" },
+           "flags": { "type": "object", "additionalProperties": { "type": "string" } },
+           "linkingCodes": { "type": "object", "additionalProperties": { "type": "string" } },
+          "assignedSurveys": { "type": "array", "items": { "$ref": "#/components/schemas/AssignedSurvey" } },
+           "lastSubmissions": { "type": "object", "additionalProperties": { "type": "integer" } },
+           "messages": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+         },
+         "required": ["id", "participantId"],
+         "additionalProperties": false
+       },
+        "AssignedSurvey": {
+          "type": "object",
+          "description": "Assigned survey object",
+          "properties": {
+            "studyKey": { "type": "string" },
+            "surveyKey": { "type": "string" },
+            "validFrom": { "type": "integer" },
+            "validUntil": { "type": "integer" },
+            "category": { "type": "string" },
+            "profileID": { "type": "string" }
+          },
+          "required": ["studyKey", "surveyKey"],
+          "additionalProperties": false
+        },
+      "SurveyResponse": {
+        "type": "object",
+        "description": "Survey response",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "key": { "type": "string" },
+          "participantId": { "type": "string" },
+          "versionId": { "type": "string" },
+          "openedAt": { "type": "integer" },
+          "submittedAt": { "type": "integer" },
+          "arrivedAt": { "type": "integer" },
+          "responses": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "context": { "type": "object", "additionalProperties": { "type": "string" } }
+        },
+        "required": ["id", "key"],
+        "additionalProperties": false
+      },
+    
+  "ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
   ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
   ,"PermissionList": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"], "additionalProperties": false}
   ,"AppRoleTemplateList": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "#/components/schemas/AppRoleTemplate"}}}, "required": ["templates"], "additionalProperties": false}
