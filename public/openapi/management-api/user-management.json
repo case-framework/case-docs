@@ -4,6 +4,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List management users",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listManagementUsers",
                 "responses": {
                     "200": {
@@ -11,16 +13,27 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/ManagementUserList"
+                                    "type": "object", 
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/ManagementUser"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "users"
+                                    ]
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -33,6 +46,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Get management user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_getManagementUser",
                 "parameters": [
                     {
@@ -63,14 +78,11 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -79,14 +91,14 @@
             },
             "delete": {
                 "tags": ["user-management"],
+                "summary": "Delete management user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteManagementUser",
                 "parameters": [ { "name": "userID", "in": "path", "required": true, "schema": { "type": "string" } } ],
                 "responses": {
                     "200": { "description": "Deleted management user", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
                     "400": { "$ref": "../management-api.json#/components/responses/Error400" },
                     "401": { "$ref": "../management-api.json#/components/responses/Error401" },
-                    "403": { "$ref": "../management-api.json#/components/responses/Error403" },
-                    "404": { "$ref": "../management-api.json#/components/responses/Error404" },
                     "500": { "$ref": "../management-api.json#/components/responses/Error500" }
                 }
             }
@@ -96,6 +108,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List user permissions",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listUserPermissions",
                 "parameters": [
                     {
@@ -113,19 +127,27 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/PermissionList"
+                                    "type": "object",
+                                    "properties": {
+                                        "permissions": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/Permission"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "permissions"
+                                    ]
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -136,6 +158,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Add permission to user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_addPermissionToUser",
                 "parameters": [
                     {
@@ -152,13 +176,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "../management-api.json#/components/schemas/PermissionCreateReq"
+                                "$ref": "../management-api.json#/components/schemas/Permission"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Added permission",
                         "content": {
                             "application/json": {
@@ -182,12 +206,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -199,6 +217,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete user permission",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteUserPermission",
                 "parameters": [
                     {
@@ -229,14 +249,11 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -249,6 +266,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Update permission limiter",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_updatePermissionLimiter",
                 "parameters": [
                     {
@@ -273,15 +292,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "limiter": {
-                                        "type": "object"
-                                    }
-                                },
-                                "required": [
-                                    "limiter"
-                                ]
+                                "$ref": "../management-api.json#/components/schemas/Permission"
                             }
                         }
                     }
@@ -292,15 +303,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "permission": {
-                                            "$ref": "../management-api.json#/components/schemas/Permission"
-                                        }
-                                    },
-                                    "required": [
-                                        "permission"
-                                    ]
+                                    "$ref": "../management-api.json#/components/schemas/Message"
                                 }
                             }
                         }
@@ -310,12 +313,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -328,6 +325,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List app roles for user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listUserAppRoles",
                 "parameters": [
                     {
@@ -345,19 +344,28 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/AppRoleList"
+                                    "type": "object",
+                                    "properties": {
+                                        "appRoles": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/AppRole"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "appRoles"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -370,6 +378,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Add app role to user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_addAppRoleToUser",
                 "parameters": [
                     {
@@ -428,6 +438,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Remove app role from user",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_removeUserAppRole",
                 "parameters": [
                     {
@@ -458,6 +470,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -478,6 +493,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List app role templates",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listAppRoleTemplates",
                 "responses": {
                     "200": {
@@ -489,6 +506,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
@@ -505,6 +525,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Create app role template",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_createAppRoleTemplate",
                 "requestBody": {
                     "required": true,
@@ -567,6 +589,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Get app role template",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_getAppRoleTemplate",
                 "parameters": [
                     {
@@ -597,6 +621,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -615,6 +642,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Update app role template",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_updateAppRoleTemplate",
                 "parameters": [
                     {
@@ -686,6 +715,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete app role template",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteAppRoleTemplate",
                 "parameters": [
                     {
@@ -708,6 +739,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -728,6 +762,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete app role templates for app",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteAppRoleTemplatesForApp",
                 "parameters": [
                     {
@@ -750,6 +786,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -770,6 +809,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List app roles",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listAppRoles",
                 "responses": {
                     "200": {
@@ -781,6 +822,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
@@ -799,6 +843,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete app roles for app",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteAppRolesForApp",
                 "parameters": [
                     {
@@ -821,6 +867,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -841,6 +890,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Request participant user deletion",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_requestParticipantUserDeletion",
                 "requestBody": {
                     "required": true,
@@ -883,6 +934,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List service accounts",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listServiceAccounts",
                 "responses": {
                     "200": {
@@ -894,6 +947,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
@@ -910,6 +966,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Create service account",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_createServiceAccount",
                 "requestBody": {
                     "required": true,
@@ -968,6 +1026,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Get service account",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_getServiceAccount",
                 "parameters": [
                     {
@@ -998,6 +1058,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -1016,6 +1079,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Update service account",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_updateServiceAccount",
                 "parameters": [
                     {
@@ -1082,16 +1147,52 @@
                 }
             },
             "delete": {
-                "tags": ["user-management"],
+                "tags": [
+                    "user-management"
+                ],
+                "summary": "Delete service account",
                 "operationId": "userManagement_deleteServiceAccount",
-                "security": [{"BearerAuth": []}],
-                "parameters": [ {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}} ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
-                    "200": { "description": "Deleted service account", "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/Message"}}}},
-                    "401": { "$ref": "../management-api.json#/components/responses/Error401" },
-                    "403": { "$ref": "../management-api.json#/components/responses/Error403" },
-                    "404": { "$ref": "../management-api.json#/components/responses/Error404" },
-                    "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+                    "200": {
+                        "description": "Deleted service account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
                 }
             }
         },
@@ -1100,6 +1201,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List service account API keys",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listServiceAccountAPIKeys",
                 "parameters": [
                     {
@@ -1140,6 +1243,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Create service account API key",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_createServiceAccountAPIKey",
                 "parameters": [
                     {
@@ -1203,6 +1308,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete API key",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteServiceAccountAPIKey",
                 "parameters": [
                     {
@@ -1233,6 +1340,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -1253,6 +1363,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "List service account permissions",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_listServiceAccountPermissions",
                 "parameters": [
                     {
@@ -1275,6 +1387,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
@@ -1293,6 +1408,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Add permission to service account",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_addPermissionToServiceAccount",
                 "parameters": [
                     {
@@ -1356,6 +1473,8 @@
                 "tags": [
                     "user-management"
                 ],
+                "summary": "Delete service account permission",
+                "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteServiceAccountPermission",
                 "parameters": [
                     {
@@ -1401,24 +1520,81 @@
                 }
             }
         },
-    "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}/limiter": {
-      "put": {
-        "tags": ["user-management"],
-        "operationId": "userManagement_updateServiceAccountPermissionLimiter",
-        "security": [{"BearerAuth": []}],
-        "parameters": [
-          {"name": "serviceAccountID", "in": "path", "required": true, "schema": {"type": "string"}},
-          {"name": "permissionID", "in": "path", "required": true, "schema": {"type": "string"}}
-        ],
-        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "../management-api.json#/components/schemas/PermissionLimiterUpdateReq"}}}},
-        "responses": {
-          "200": { "description": "Updated permission limiter", "content": {"application/json": {"schema": {"type": "object", "properties": {"permission": {"$ref": "../management-api.json#/components/schemas/Permission"}}, "required": ["permission"]}}}},
-          "400": { "$ref": "../management-api.json#/components/responses/Error400" },
-          "401": { "$ref": "../management-api.json#/components/responses/Error401" },
-          "403": { "$ref": "../management-api.json#/components/responses/Error403" },
-          "404": { "$ref": "../management-api.json#/components/responses/Error404" },
-          "500": { "$ref": "../management-api.json#/components/responses/Error500" }
+        "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}/limiter": {
+            "put": {
+                "tags": [
+                    "user-management"
+                ],
+                "summary": "Update service account permission limiter",
+                "operationId": "userManagement_updateServiceAccountPermissionLimiter",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "serviceAccountID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "permissionID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../management-api.json#/components/schemas/PermissionLimiterUpdateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated permission limiter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "permission": {
+                                            "$ref": "../management-api.json#/components/schemas/Permission"
+                                        }
+                                    },
+                                    "required": [
+                                        "permission"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "../management-api.json#/components/responses/Error401"
+                    },
+                    "403": {
+                        "$ref": "../management-api.json#/components/responses/Error403"
+                    },
+                    "404": {
+                        "$ref": "../management-api.json#/components/responses/Error404"
+                    },
+                    "500": {
+                        "$ref": "../management-api.json#/components/responses/Error500"
+                    }
+                }
+            }
         }
-      }
-    }
 }

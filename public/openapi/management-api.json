@@ -375,7 +375,7 @@
         },
         "additionalProperties": false
       },
-      StudyCodeListEntry: {
+      "StudyCodeListEntry": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "description": "ObjectID" },
@@ -564,10 +564,48 @@
         },
         "required": ["id", "key"],
         "additionalProperties": false
-      },
-    
-  "ManagementUser": {"type": "object", "properties": {"userID": {"type": "string"}, "email": {"type": "string"}}, "additionalProperties": true}
-  ,"ManagementUserList": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/ManagementUser"}}}, "required": ["users"], "additionalProperties": false}
+      },      
+      "ManagementUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "MongoDB ObjectID as hex string"
+          },
+          "sub": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "username": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "sub", "email", "username"],
+        "description": "Management User object"
+      }
+  
   ,"PermissionList": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"], "additionalProperties": false}
   ,"AppRoleTemplateList": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "#/components/schemas/AppRoleTemplate"}}}, "required": ["templates"], "additionalProperties": false}
   ,"ServiceAccountList": {"type": "object", "properties": {"serviceAccounts": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccount"}}}, "required": ["serviceAccounts"], "additionalProperties": false}
