@@ -1003,7 +1003,7 @@
                 "schema": { 
                   "type": "object",
                   "properties": {
-                    "variables": {"type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyVariable" }}
+                    "variables": {"type": "array", "items": { "$ref": "../management-api.json#/components/schemas/StudyVariables" }}
                   },
                   "additionalProperties": false
                 }
@@ -1027,7 +1027,7 @@
               "schema": { 
                   "type": "object",
                   "properties": {
-                    "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariable" }
+                    "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariables" }
                   },
                   "additionalProperties": false
                 }
@@ -1073,7 +1073,7 @@
                 "schema": { 
                   "type": "object",
                   "properties": { 
-                    "variable": { "$ref": "../management-api.json#/components/schemas/StudyVariable" }
+                    "variable": { "$ref": "../management-api.json#/components/schemas/StudyVariables" }
                   },
                   "additionalProperties": false,
                   "required": ["variable"]
@@ -1101,7 +1101,7 @@
               "schema": { 
                 "type": "object", 
                 "properties": {
-                  "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}
+                  "variableDef": {"$ref": "../management-api.json#/components/schemas/StudyVariables"}
                 }, 
                 "required": ["variableDef"], 
                 "additionalProperties": false
@@ -1168,7 +1168,7 @@
               "schema": { 
                 "type": "object", 
                 "properties": {
-                  "variable": {"$ref": "../management-api.json#/components/schemas/StudyVariable"}
+                  "variable": {"$ref": "../management-api.json#/components/schemas/StudyVariables"}
                 }, 
                 "required": ["variable"], 
                 "additionalProperties": false
