@@ -166,8 +166,10 @@
       },
       "Account": {
         "type": "object",
-        "properties": { "type": { "type": "string" }, "accountID": { "type": "string" } },
-        "additionalProperties": false
+        "properties": { 
+          "type": { "type": "string" }, 
+          "accountID": { "type": "string" } },
+        "additionalProperties": true
       },
       "Timestamps": {
         "type": "object",
@@ -251,7 +253,7 @@
         "additionalProperties": false,
         "description": "Survey object"
       },
-      "StudyVariable": {
+      "StudyVariables": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "description": "ObjectID" },
@@ -279,7 +281,6 @@
           "uiPriority": { "type": "integer" },
           "configs": { "type": "object", "additionalProperties": true }
         },
-        "required": ["id"],
         "additionalProperties": false,
         "description": "Study variable object"
       },
@@ -294,35 +295,41 @@
           "action": { "type": "string" },
           "limiter": { "type": "object", "additionalProperties": { "type": "string" } }
         },
-        "required": ["id"],
         "additionalProperties": false,
         "description": "Permission object"
       },
       "AppRoleTemplate": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
+          "id": { "type": "string", "description": "ObjectID" },
           "appName": { "type": "string" },
           "role": { "type": "string" },
-          "requiredPermissions": { "type": "array", "items": { "$ref": "#/components/schemas/Permission" } }
+          "requiredPermissions": { "type": "array", "items": { "$ref": "#/components/schemas/Permission" } },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        },
+        "additionalProperties": false,
+        "description": "App role template object"
+      },
+      "ServiceUser": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "ObjectID" },
+          "label": { "type": "string" },
+          "description": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
         },
         "additionalProperties": false
       },
-      "ServiceAccount": {
+      "ServiceUserAPIKey": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
-          "label": { "type": "string" },
-          "description": { "type": "string" }
-        },
-        "additionalProperties": true
-      },
-      "ServiceAccountAPIKey": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
+          "serviceUserID": { "type": "string" },
           "key": { "type": "string" },
-          "expiresAt": { "type": "integer", "description": "Unix timestamp" }
+          "expiresAt": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "lastUsedAt": { "type": "string", "format": "date-time" }
         },
         "additionalProperties": false
       },
@@ -486,15 +493,6 @@
         "additionalProperties": false,
         "description": "File Info object"
       },
-      "RenewTokenResponse": {
-        "type": "object",
-        "properties": {
-          "renewToken": { "type": "string" },
-          "expiresAt": { "type": "integer", "description": "Unix timestamp (seconds)" }
-        },
-        "required": ["renewToken", "expiresAt"],
-        "additionalProperties": true
-      },
       "AppRole": {
          "type": "object",
          "properties": {
@@ -531,7 +529,7 @@
            "lastSubmissions": { "type": "object", "additionalProperties": { "type": "integer" } },
            "messages": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
          },
-         "required": ["id", "participantId"],
+         "required": ["participantId"],
          "additionalProperties": false
        },
         "AssignedSurvey": {
@@ -562,7 +560,7 @@
           "responses": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
           "context": { "type": "object", "additionalProperties": { "type": "string" } }
         },
-        "required": ["id", "key"],
+        "required": ["key"],
         "additionalProperties": false
       },      
       "ManagementUser": {
@@ -602,26 +600,8 @@
           }
         },
         "additionalProperties": false,
-        "required": ["id", "sub", "email", "username"],
         "description": "Management User object"
       }
-  
-  ,"PermissionList": {"type": "object", "properties": {"permissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["permissions"], "additionalProperties": false}
-  ,"AppRoleTemplateList": {"type": "object", "properties": {"templates": {"type": "array", "items": {"$ref": "#/components/schemas/AppRoleTemplate"}}}, "required": ["templates"], "additionalProperties": false}
-  ,"ServiceAccountList": {"type": "object", "properties": {"serviceAccounts": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccount"}}}, "required": ["serviceAccounts"], "additionalProperties": false}
-  ,"APIKeyList": {"type": "object", "properties": {"apiKeys": {"type": "array", "items": {"$ref": "#/components/schemas/ServiceAccountAPIKey"}}}, "required": ["apiKeys"], "additionalProperties": false}
-  ,"APIKey": {"type": "object", "additionalProperties": true}
-  ,"StudyCounterList": {"type": "object", "properties": {"counters": {"type": "array", "items": {"$ref": "#/components/schemas/StudyCounter"}}}, "required": ["counters"], "additionalProperties": false}
-  ,"PermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
-  ,"PermissionLimiterUpdateReq": {"type": "object", "properties": {"limiter": {"type": "object", "additionalProperties": true}}, "required": ["limiter"], "additionalProperties": false}
-  ,"AppRoleList": {"type": "object", "properties": {"appRoles": {"type": "array", "items": {"$ref": "#/components/schemas/AppRole"}}}, "required": ["appRoles"], "additionalProperties": false}
-  ,"AppRoleTemplateCreateReq": {"type": "object", "properties": {"appName": {"type": "string"}, "role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "required": ["appName","role"], "additionalProperties": false}
-  ,"AppRoleTemplateUpdateReq": {"type": "object", "properties": {"role": {"type": "string"}, "requiredPermissions": {"type": "array", "items": {"$ref": "#/components/schemas/Permission"}}}, "additionalProperties": false}
-  ,"ServiceAccountCreateReq": {"type": "object", "properties": {"label": {"type": "string"}, "description": {"type": "string"}}, "required": ["label"], "additionalProperties": false}
-  ,"ServiceAccountUpdateReq": {"type": "object", "properties": {"label": {"type": "string"}, "description": {"type": "string"}}, "additionalProperties": false}
-  ,"ServiceAccountPermissionCreateReq": {"type": "object", "properties": {"resourceType": {"type": "string"}, "resourceKey": {"type": "string"}, "action": {"type": "string"}, "limiter": {"type": "object", "additionalProperties": true}}, "required": ["resourceType","action"], "additionalProperties": false}
-  ,"APIKeyCreateReq": {"type": "object", "properties": {"expiresAt": {"type": "integer", "description": "Unix timestamp"}}, "additionalProperties": false}
-  ,"ParticipantUserDeletionReq": {"type": "object", "properties": {"participantID": {"type": "string"}, "reason": {"type": "string"}}, "required": ["participantID"], "additionalProperties": false}
   }
   }
 }

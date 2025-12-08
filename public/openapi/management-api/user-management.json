@@ -400,32 +400,21 @@
                     }
                 ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Added app role",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "appRole": {
-                                            "$ref": "../management-api.json#/components/schemas/AppRole"
-                                        }
-                                    },
-                                    "required": [
-                                        "appRole"
-                                    ]
+                                    "$ref": "../management-api.json#/components/schemas/Message"
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -476,12 +465,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -502,7 +485,14 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/AppRoleTemplateList"
+                                    "type": "object", 
+                                    "properties": {
+                                        "appRoleTemplates": {
+                                            "type": "array", "items": {"$ref": "../management-api.json#/components/schemas/AppRoleTemplate"}
+                                        }
+                                    },
+                                    "required": ["appRoleTemplates"], 
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -512,9 +502,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -535,36 +522,32 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
                                     "appName": {
                                         "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "requiredPermissions": {
+                                        "type": "array",
+                                        "items": { "$ref": "../management-api.json#/components/schemas/Permission" }
                                     }
                                 },
                                 "required": [
-                                    "name",
-                                    "appName"
+                                    "appName",
+                                    "role"
                                 ]
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Created template",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "template": {
-                                            "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
-                                        }
-                                    },
-                                    "required": [
-                                        "template"
-                                    ]
+                                    "$ref": "../management-api.json#/components/schemas/Message"
                                 }
                             }
                         }
@@ -574,9 +557,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -610,12 +590,12 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "template": {
+                                        "appRoleTemplate": {
                                             "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
                                         }
                                     },
                                     "required": [
-                                        "template"
+                                        "appRoleTemplate"
                                     ]
                                 }
                             }
@@ -626,12 +606,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -662,12 +636,20 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "name": {
+                                    "appName": {
                                         "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "requiredPermissions": {
+                                        "type": "array",
+                                        "items": { "$ref": "../management-api.json#/components/schemas/Permission" }
                                     }
                                 },
                                 "required": [
-                                    "name"
+                                    "appName",
+                                    "role"
                                 ]
                             }
                         }
@@ -679,15 +661,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "template": {
-                                            "$ref": "../management-api.json#/components/schemas/AppRoleTemplate"
-                                        }
-                                    },
-                                    "required": [
-                                        "template"
-                                    ]
+                                    "$ref": "../management-api.json#/components/schemas/Message"
                                 }
                             }
                         }
@@ -697,12 +671,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -745,12 +713,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -792,12 +754,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -818,7 +774,12 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/AppRoleList"
+                                    "type": "object", 
+                                    "properties": {
+                                        "appRoles": {"type": "array", "items": {"$ref": "../management-api.json#/components/schemas/AppRole"}}
+                                    }, 
+                                    "required": ["appRoles"], 
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -828,9 +789,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -873,12 +831,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -898,7 +850,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "../management-api.json#/components/schemas/ParticipantUserDeletionReq"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                                
                             }
                         }
                     }
@@ -920,9 +882,6 @@
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
                     },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
                     }
@@ -943,7 +902,19 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/ServiceAccountList"
+                                    "type": "object",
+                                    "properties": {
+                                        "serviceAccounts": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/ServiceUser"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "serviceAccounts"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -953,9 +924,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -976,19 +944,24 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "name": {
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "description": {
                                         "type": "string"
                                     }
                                 },
+                                "additionalProperties": false,
                                 "required": [
-                                    "name"
+                                    "label",
+                                    "description"
                                 ]
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Created service account",
                         "content": {
                             "application/json": {
@@ -996,7 +969,7 @@
                                     "type": "object",
                                     "properties": {
                                         "serviceAccount": {
-                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                            "$ref": "../management-api.json#/components/schemas/ServiceUser"
                                         }
                                     },
                                     "required": [
@@ -1011,9 +984,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1048,7 +1018,7 @@
                                     "type": "object",
                                     "properties": {
                                         "serviceAccount": {
-                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                            "$ref": "../management-api.json#/components/schemas/ServiceUser"
                                         }
                                     },
                                     "required": [
@@ -1063,12 +1033,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1099,13 +1063,15 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "name": {
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "description": {
                                         "type": "string"
                                     }
                                 },
-                                "required": [
-                                    "name"
-                                ]
+                                "additionalProperties": false,
+                                "required": [ "label", "description" ]
                             }
                         }
                     }
@@ -1119,7 +1085,7 @@
                                     "type": "object",
                                     "properties": {
                                         "serviceAccount": {
-                                            "$ref": "../management-api.json#/components/schemas/ServiceAccount"
+                                            "$ref": "../management-api.json#/components/schemas/ServiceUser"
                                         }
                                     },
                                     "required": [
@@ -1134,12 +1100,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1173,7 +1133,16 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [
+                                        "success"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -1183,12 +1152,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1220,19 +1183,28 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/APIKeyList"
+                                    "type": "object",
+                                    "properties": {
+                                        "apiKeys": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/ServiceUserAPIKey"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "apiKeys"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1261,25 +1233,31 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "../management-api.json#/components/schemas/APIKeyCreateReq"
+                                "type": "object",
+                                "properties": {
+                                    "expiresAt": {
+                                        "type": "integer",
+                                    }
+                                },
+                                "additionalProperties": false
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Created API key",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "apiKey": {
-                                            "$ref": "../management-api.json#/components/schemas/APIKey"
+                                        "success": {
+                                            "type": "boolean"
                                         }
                                     },
                                     "required": [
-                                        "apiKey"
+                                        "success"
                                     ]
                                 }
                             }
@@ -1290,12 +1268,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1308,7 +1280,7 @@
                 "tags": [
                     "user-management"
                 ],
-                "summary": "Delete API key",
+                "summary": "Delete service account API key",
                 "security": [ { "BearerAuth": [] } ],
                 "operationId": "userManagement_deleteServiceAccountAPIKey",
                 "parameters": [
@@ -1335,7 +1307,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/Message"
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [
+                                        "success"
+                                    ]
                                 }
                             }
                         }
@@ -1345,12 +1325,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1382,7 +1356,19 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "../management-api.json#/components/schemas/PermissionList"
+                                    "type": "object",
+                                    "properties": {
+                                        "permissions": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../management-api.json#/components/schemas/Permission"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "permissions"
+                                    ],
+                                    "additionalProperties": false
                                 }
                             }
                         }
@@ -1392,12 +1378,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1426,13 +1406,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "../management-api.json#/components/schemas/ServiceAccountPermissionCreateReq"
+                                "$ref": "../management-api.json#/components/schemas/Permission"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Added permission",
                         "content": {
                             "application/json": {
@@ -1455,12 +1435,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1505,14 +1479,11 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "../management-api.json#/components/responses/Error400"
+                    },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
@@ -1555,7 +1526,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "../management-api.json#/components/schemas/PermissionLimiterUpdateReq"
+                                "$ref": "../management-api.json#/components/schemas/Permission"
                             }
                         }
                     }
@@ -1566,15 +1537,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "permission": {
-                                            "$ref": "../management-api.json#/components/schemas/Permission"
-                                        }
-                                    },
-                                    "required": [
-                                        "permission"
-                                    ]
+                                    "$ref": "../management-api.json#/components/schemas/Message"
                                 }
                             }
                         }
@@ -1584,12 +1547,6 @@
                     },
                     "401": {
                         "$ref": "../management-api.json#/components/responses/Error401"
-                    },
-                    "403": {
-                        "$ref": "../management-api.json#/components/responses/Error403"
-                    },
-                    "404": {
-                        "$ref": "../management-api.json#/components/responses/Error404"
                     },
                     "500": {
                         "$ref": "../management-api.json#/components/responses/Error500"
