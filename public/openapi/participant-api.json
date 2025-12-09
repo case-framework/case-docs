@@ -1087,6 +1087,62 @@
                     }
                 }
             }
+        },       
+        "/v1/study-service/studies/{studyKey}/code-lists/available-count": {
+            "get": {
+                "tags": ["study service studies"],
+                "summary": "Count available codes in a code list",
+                "operationId": "studyService_getStudyCodeListAvailableCount",
+                "parameters": [
+                {
+                    "name": "studyKey",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                },
+                {
+                    "name": "listKey",
+                    "in": "query",
+                    "required": true,
+                    "schema": { "type": "string" }
+                },
+                {
+                    "name": "instanceID",
+                    "in": "query",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "availableCount": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "availableCount"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"
+                    }
+                }
+            }
         },
         "/v1/study-service/studies/{studyKey}/variables": {
             "get": {
@@ -2751,6 +2807,47 @@
                                         "additionalProperties": true
                                     }
                                 }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageOk"
+                    },
+                     "400": {
+                        "$ref": "#/components/responses/Error400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Error401"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error500"   
+                    }
+                }
+            }
+        },
+        "v1/user/preferred-language": {
+            "put": {
+                "summary": "Update the account's preferred language",
+                "tags": ["user"],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "operationId": "user_updatePreferredLanguage",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "newLocale": { "type": "string", "description": "language code, e.g., en, de-DE" }
+                                },
+                                "required": ["newLocale"],
+                                "additionalProperties": false
                             }
                         }
                     }
