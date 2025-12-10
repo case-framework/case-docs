@@ -1646,17 +1646,26 @@
         ],
         "responses": {
           "200": {
-            "description": "Survey info",
+            "description": "File download (JSON or CSV)",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "versions": { "type": "array", "items": { "$ref": "../management-api.json#/components/schemas/SurveyVersionPreview" } },
-                    "key": { "type": "string" },
-                  },
-                  "required": ["surveys"],
-                  "additionalProperties": false
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -1775,10 +1784,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Result",
+            "description": "File download",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
-              "application/json": {
-                "schema": { "type": "object", "additionalProperties": true }
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -1831,10 +1851,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Export",
+            "description": "File download (JSON or CSV)",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
-                "schema": { "type": "object", "additionalProperties": true }
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -1946,8 +1983,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Result",
-            "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
+            "description": "File download",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
           },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
@@ -2063,8 +2115,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Result",
-            "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true}}}
+            "description": "File download",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
           },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
@@ -2155,8 +2222,29 @@
         ],
         "responses": {
           "200": {
-            "description": "Export",
-            "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } }
+            "description": "File download (JSON or CSV)",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Indicates the filename the client should save.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
           },
           "400": {"$ref": "../management-api.json#/components/responses/Error400"},
           "401": {"$ref": "../management-api.json#/components/responses/Error401"},
@@ -2503,8 +2591,17 @@
           "200": {
             "description": "File",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "../management-api.json#/components/schemas/FileInfo" }
+              "application/octet-stream": {
+                "schema": { 
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "Content-Disposition": {
+                "description": "The filename suggested for the download.",
+                "schema": { "type": "string" }
               }
             }
           },
