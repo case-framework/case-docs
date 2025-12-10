@@ -2827,7 +2827,7 @@
                 }
             }
         },
-        "v1/user/preferred-language": {
+        "/v1/user/preferred-language": {
             "put": {
                 "summary": "Update the account's preferred language",
                 "tags": ["user"],
