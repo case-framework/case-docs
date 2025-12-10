@@ -168,7 +168,8 @@
         "type": "object",
         "properties": { 
           "type": { "type": "string" }, 
-          "accountID": { "type": "string" } },
+          "accountID": { "type": "string" }
+        },
         "additionalProperties": true
       },
       "Timestamps": {
@@ -195,18 +196,23 @@
       },
       "ContactPreferences": {
         "type": "object",
-        "properties": { "sendNewsletterTo": { "type": "array", "items": { "type": "string" } } },
-        "additionalProperties": true
+        "properties": { 
+          "subscribedToNewsletter": { "type": "boolean" },
+          "sendNewsletterTo": { "type": "array", "items": { "type": "string" } },
+          "subscribedToWeekly": { "type": "boolean" },
+          "receiveWeeklyMessageDayOfWeek": { "type": "integer" }
+        },
+        "additionalProperties": false
       },
       "ContactInfo": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
           "type": { "type": "string", "enum": ["email", "phone"] },
-          "email": { "type": "string" },
-          "phone": { "type": "string" },
           "confirmedAt": { "type": "integer" },
-          "confirmationLinkSentAt": { "type": "integer" }
+          "confirmationLinkSentAt": { "type": "integer" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" }
         },
         "additionalProperties": false
       },
@@ -502,15 +508,6 @@
            "appName": { "type": "string" },
            "role": { "type": "string" },
            "createdAt": { "type": "string", "format": "date-time" },
-         },
-       },
-      "SurveyVersionPreview": {
-         "type": "object",
-         "properties": {
-           "versionID": { "type": "string" },
-           "published": { "type": "integer" },
-           "unpublished": { "type": "integer" },
-           "questions": { "type": "object", "additionalProperties": true }
          },
        },
       "Participant": {
