@@ -2836,7 +2836,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "operationId": "user_updatePreferredLanguage",
+                "operationId": "updatePreferredLanguage",
                 "requestBody": {
                     "required": true,
                     "content": {
