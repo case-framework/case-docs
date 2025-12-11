@@ -1092,7 +1092,7 @@
             "get": {
                 "tags": ["study service studies"],
                 "summary": "Count available codes in a code list",
-                "operationId": "studyService_getStudyCodeListAvailableCount",
+                "operationId": "getStudyCodeListAvailableCount",
                 "parameters": [
                 {
                     "name": "studyKey",
