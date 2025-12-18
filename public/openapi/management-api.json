@@ -830,7 +830,13 @@
           }
         },
         "additionalProperties": false,
-        "description": "Report object"
+        "description": "Report object",
+        "required": [
+          "key",
+          "participantID",
+          "responseID",
+           "timestamp"
+        ]
       },
       "ReportData": {
         "type": "object",
