@@ -803,7 +803,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "ObjectID"
+            "description": "MongoDB ObjectID as hex string"
           },
           "key": {
             "type": "string"
@@ -815,7 +815,8 @@
             "type": "string"
           },
           "timestamp": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Unix timestamp"
           },
           "modifiedAt": {
             "type": "string",
@@ -824,8 +825,7 @@
           "data": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": true
+              "$ref": "#/components/schemas/ReportData"
             }
           }
         },
@@ -841,15 +841,12 @@
       "ReportData": {
         "type": "object",
         "properties": {
-          "key": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          },
-          "dtype": {
-            "type": "string"
-          }
+          "key": { "type": "string" },
+          "value": { "type": "string" },
+          "dtype": { 
+            "type": "string", 
+            "enum": ["string", "float", "int", "string", "rawMessage", "keyList"]
+          }  
         },
         "additionalProperties": false
       },
