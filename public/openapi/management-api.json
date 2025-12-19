@@ -834,7 +834,6 @@
         "required": [
           "key",
           "participantID",
-          "responseID",
            "timestamp"
         ]
       },

@@ -3683,7 +3683,6 @@
                 "required": [
                     "key",
                     "participantID",
-                    "responseID",
                     "timestamp"
                 ],
                 "additionalProperties": false
