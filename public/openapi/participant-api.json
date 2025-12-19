@@ -3652,7 +3652,7 @@
                         "type": "string"
                     },
                     "participantID": {
-                        "type": "string",
+                        "type": "string"
                     },
                     "responseID": {
                         "type": "string"
@@ -3674,7 +3674,7 @@
                                 "value": { "type": "string" },
                                 "dtype": { 
                                     "type": "string", 
-                                    "enum": ["string", "float", "int", "string", "rawMessage", "keyList"]
+                                    "enum": ["date", "float", "int", "string", "rawMessage", "keyList"]
                                 }
                             }
                         }

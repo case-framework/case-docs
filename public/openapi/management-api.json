@@ -845,7 +845,7 @@
           "value": { "type": "string" },
           "dtype": { 
             "type": "string", 
-            "enum": ["string", "float", "int", "string", "rawMessage", "keyList"]
+            "enum": ["date", "float", "int", "string", "rawMessage", "keyList"]
           }  
         },
         "additionalProperties": false
