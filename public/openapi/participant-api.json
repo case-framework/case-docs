@@ -3674,10 +3674,10 @@
                                 "value": { "type": "string" },
                                 "dtype": { 
                                     "type": "string", 
-                                    "enum": ["date", "float", "int", "string", "rawMessage", "keyList"],
-                                    "additionalProperties": false
+                                    "enum": ["date", "float", "int", "string", "rawMessage", "keyList"]
                                 }
-                            }
+                            },
+                            "additionalProperties": false
                         }
                     }
                 },
