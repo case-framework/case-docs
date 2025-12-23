@@ -2746,6 +2746,153 @@
                 }
             }
         },
+        "/v1/study-service/participant-data/{studyKey}/files": {
+            "post": {
+                "tags": ["study service participant data"],
+                "summary": "Upload participant file",
+                "security": [ { "BearerAuth": [] } ],
+                "operationId": "uploadParticipantFile",
+                "parameters": [
+                    {
+                        "name": "studyKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                       "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileID": {
+                                    "type": "string",
+                                    "description": "ID of the profile"
+                                    },
+                                    "file": {
+                                    "type": "string",
+                                    "format": "binary",
+                                    "description": "File to upload. Only 'image/jpeg' and 'image/png' are allowed."
+                                    }
+                                },
+                                "required": ["profileID", "file"]
+                            },
+                            "encoding": {
+                                "file": {
+                                    "contentType": [
+                                    "image/jpeg",
+                                    "image/png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "File uploaded",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string", "description": "object ID of the uploaded file" },
+                                        "path": { "type": "string" },
+                                        "status": { "type": "string", "const": "ready" }
+                                    },
+                                    "required": ["id", "path", "status"],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "400": { "$ref": "#/components/responses/Error400" },
+                    "401": { "$ref": "#/components/responses/Error401" },
+                    "403": { "$ref": "#/components/responses/Error403" },
+                    "500": { "$ref": "#/components/responses/Error500" }
+                }
+            },
+            "get": {
+                "tags": ["study service participant data"],
+                "summary": "List participant files",
+                "security": [ { "BearerAuth": [] } ],
+                "operationId": "listParticipantFiles",
+                "parameters": [
+                    { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+                    { "name": "pid", "in": "query", "required": true, "description": "Profile ID", "schema": { "type": "string" } },
+                    { "name": "page", "in": "query", "description": "page number (starting from 1)", "schema": { "type": "integer", "minimum": 1, "default": 1 } },
+                    { "name": "limit", "in": "query", "description": "maximum number of files per page", "schema": { "type": "integer", "minimum": 1, "default": 10 } }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Files returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "files": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                                        "pagination": { "$ref": "#/components/schemas/PaginationInfos" }
+                                    },
+                                    "required": ["files", "pagination"],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "400": { "$ref": "#/components/responses/Error400" },
+                    "401": { "$ref": "#/components/responses/Error401" },
+                    "500": { "$ref": "#/components/responses/Error500" }
+                }
+            }
+        },
+        "/v1/study-service/participant-data/{studyKey}/files/{fileID}": {
+            "get": {
+                "tags": ["study service participant data"],
+                "summary": "Download participant file",
+                "security": [ { "BearerAuth": [] } ],
+                "operationId": "getParticipantFile",
+                "parameters": [
+                    { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+                    { "name": "fileID", "in": "path", "required": true, "schema": { "type": "string" } },
+                    { "name": "pid", "in": "query", "required": true, "description": "Profile ID", "schema": { "type": "string" } }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary file stream",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": { "type": "string", "format": "binary" }
+                            }
+                        }
+                    },
+                    "400": { "$ref": "#/components/responses/Error400" },
+                    "401": { "$ref": "#/components/responses/Error401" },
+                    "404": { "$ref": "#/components/responses/Error404" },
+                    "500": { "$ref": "#/components/responses/Error500" }
+                }
+            },
+            "delete": {
+                "tags": ["study service participant data"],
+                "summary": "Delete participant file",
+                "security": [ { "BearerAuth": [] } ],
+                "operationId": "deleteParticipantFile",
+                "parameters": [
+                    { "name": "studyKey", "in": "path", "required": true, "schema": { "type": "string" } },
+                    { "name": "fileID", "in": "path", "required": true, "schema": { "type": "string" } },
+                    { "name": "pid", "in": "query", "required": true, "description": "Profile ID", "schema": { "type": "string" } }
+                ],
+                "responses": {
+                    "200": { "description": "Deleted", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Message" } } } },
+                    "400": { "$ref": "#/components/responses/Error400" },
+                    "401": { "$ref": "#/components/responses/Error401" },
+                    "404": { "$ref": "#/components/responses/Error404" },
+                    "500": { "$ref": "#/components/responses/Error500" }
+                }
+            }
+        },
         "/v1/user/": {
             "get": {
                 "tags": ["user"],
@@ -3443,6 +3590,16 @@
             },
             "Error401": {
                 "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "Error403": {
+                "description": "Forbidden",
                 "content": {
                     "application/json": {
                         "schema": {
