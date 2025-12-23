@@ -3619,7 +3619,21 @@
             "PaginationInfos": {
                 "type": "object",
                 "description": "Pagination information",
-                "additionalProperties": true
+                "properties": {
+                "totalCount": {
+                    "type": "integer"
+                },
+                "currentPage": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                }
+                },
+                "additionalProperties": false
             },
             "SubmissionHistory": {
                 "type": "object",
@@ -3628,8 +3642,51 @@
             },
             "Report": {
                 "type": "object",
-                "description": "report object",
-                "additionalProperties": true
+                "description": "Report object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "MongoDB ObjectID as hex string"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "participantID": {
+                        "type": "string"
+                    },
+                    "responseID": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer",
+                        "description": "Unix timestamp"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "key": { "type": "string" },
+                                "value": { "type": "string" },
+                                "dtype": { 
+                                    "type": "string", 
+                                    "enum": ["date", "float", "int", "string", "rawMessage", "keyList"]
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "key",
+                    "participantID",
+                    "timestamp"
+                ],
+                "additionalProperties": false
             },
             "Participant": {
                 "type": "object",

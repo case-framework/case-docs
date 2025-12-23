@@ -38,6 +38,10 @@ A "report" is a data entry for a participant with the following fields in the da
       type: 'number',
       required: true,
     },
+    modifiedAt: {
+      description: 'Date-time format of the last modification of the report',
+      type: 'string'
+    },
     data: {
       description: 'Optional list of key/value data points attached to the report',
       type: 'Array<ReportDataItem> (optional)',
