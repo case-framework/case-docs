@@ -2833,7 +2833,7 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "files": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+                                        "fileInfos": { "type": "array", "items": { "$ref": "#/components/schemas/FileInfo" } },
                                         "pagination": { "$ref": "#/components/schemas/PaginationInfos" }
                                     },
                                     "required": ["files", "pagination"],
@@ -2861,7 +2861,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Binary file stream",
+                        "description": "File",
                         "content": {
                             "application/octet-stream": {
                                 "schema": { "type": "string", "format": "binary" }
@@ -3608,6 +3608,16 @@
                     }
                 }
             },
+            "Error404": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                        "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
             "Error429": {
                 "description": "Too many requests",
                 "content": {
@@ -3772,6 +3782,52 @@
                     "survey"
                 ],
                 "additionalProperties": false
+            },
+            "FileInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ObjectID"
+                    },
+                    "participantID": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "uploadedBy": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "previewPath": {
+                        "type": "string"
+                    },
+                    "submittedAt": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fileType": {
+                        "type": "string"
+                    },
+                    "visibleToParticipant": {
+                        "type": "boolean"
+                    },
+                    "size": {
+                        "type": "integer"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "File Info object"
             },
             "PaginationInfos": {
                 "type": "object",
