@@ -897,6 +897,9 @@
           "participantID": {
             "type": "string"
           },
+          "status": {
+            "type": "string"
+          },
           "uploadedBy": {
             "type": "string"
           },
@@ -906,11 +909,16 @@
           "previewPath": {
             "type": "string"
           },
-          "subStudy": {
-            "type": "string"
-          },
           "submittedAt": {
             "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           },
           "fileType": {
             "type": "string"
@@ -918,18 +926,8 @@
           "visibleToParticipant": {
             "type": "boolean"
           },
-          "name": {
-            "type": "string"
-          },
           "size": {
             "type": "integer"
-          },
-          "referencedIn": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": true
-            }
           }
         },
         "additionalProperties": false,
