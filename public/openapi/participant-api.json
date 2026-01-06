@@ -2836,7 +2836,7 @@
                                         "fileInfos": { "type": "array", "items": { "$ref": "#/components/schemas/FileInfo" } },
                                         "pagination": { "$ref": "#/components/schemas/PaginationInfos" }
                                     },
-                                    "required": ["files", "pagination"],
+                                    "required": ["fileInfos", "pagination"],
                                     "additionalProperties": false
                                 }
                             }
@@ -3826,6 +3826,11 @@
                         "type": "integer"
                     }
                 },
+                "required": [
+                    "id",
+                    "participantID",
+                    "path",
+                ],
                 "additionalProperties": false,
                 "description": "File Info object"
             },
