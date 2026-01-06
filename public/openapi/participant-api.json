@@ -3829,7 +3829,7 @@
                 "required": [
                     "id",
                     "participantID",
-                    "path",
+                    "path"
                 ],
                 "additionalProperties": false,
                 "description": "File Info object"
