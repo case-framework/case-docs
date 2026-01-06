@@ -2778,14 +2778,6 @@
                                     }
                                 },
                                 "required": ["profileID", "file"]
-                            },
-                            "encoding": {
-                                "file": {
-                                    "contentType": [
-                                    "image/jpeg",
-                                    "image/png"
-                                    ]
-                                }
                             }
                         }
                     }
