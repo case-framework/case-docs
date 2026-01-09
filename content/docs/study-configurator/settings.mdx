@@ -3,11 +3,94 @@ title: Settings Workspace
 description: Configure study-wide settings such as status, visibility, labels, and access controls.
 ---
 
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import codeListsAddEntriesImg from './images/code-lists2.png';
+
+
 [← Back to Study Configurator Overview](/docs/study-configurator/configurator-overview)
 
-Configure study-wide settings.
+## Overview
 
-- **Status & Visibility**: Set the study as `active`, `inactive`, or other available states.
-- **Labels & Descriptions**: Manage public-facing names and descriptions.
-- **Access Controls**: Define who can view or manage the study components.
+The Settings workspace provides access to various configuration options for your study. Settings are organized into different categories accessible through the left sidebar.
 
+## General
+
+The General tab contains the core configuration settings for your study.
+
+![Settings General](./images/settings-general.png)
+
+### Study Status
+
+Study status defines whether the study is visible to participants and whether data collection is active.
+
+- **Current status**: Select from the dropdown to set the study status:
+  - `active`: Study is visible and collecting data
+  - `inactive`: Study is not visible to participants
+
+![Settings General](./images/study-status.png)
+
+### Default Study
+
+Configure whether this study should be the default study for your instance.
+
+- **Default Study**: When enabled, all participants will be automatically assigned to this study by default once they log in. If the study is not the default study, participants need to join the study manually.
+
+### Display Texts
+
+If the instance supports study selection, the display texts define how the study appears to participants when they choose which study to join.
+
+Click **"Edit Display Texts"** to open the editor where you can configure:
+
+![Display Texts Editor](./images/display-texts.png)
+
+- **Study Name**: A short title for the study card (e.g., "Infectieradar")
+- **Study Description**: A brief description of the study shown on the study card
+- **Tags**: Optional tags to categorize the study (e.g., "tekenradar")
+- **Language Support**: Edit texts for each supported language using the language selector in the top right
+
+Changes are applied by clicking the **"Apply"** button.
+
+### File Upload
+
+Toggle this option to configure whether participants are allowed to upload files as part of their study participation.
+
+## Code Lists
+
+The Code Lists tab allows you to manage available codes for the study. These can be used to validate participant data, for example when participants need to enter specific codes to join the study or access certain features.
+
+![Code Lists](./images/code-lists1.png)
+
+### Managing Code Lists
+
+Each code list displays:
+- **List name**: The identifier for the code list (e.g., "list1")
+- **Code entries**: Shows the codes with their creation date (e.g., "9.1.2026")
+- **Entry count**: Indicates how many codes are shown (e.g., "Showing 2 of 2")
+- **Delete option**: Each code has an X button to remove it from the list
+
+### Adding Codes
+
+Click the **+** button in the top right to add new codes to a list.
+
+
+In the "Add Code List Entries" dialog:
+
+<Steps>
+<Step>
+**Select code list**: Choose an existing list from the dropdown or create a new one by entering a new name.
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl'
+src={codeListsAddEntriesImg}
+width={400}
+height={200}
+alt="Add Code List Entries" 
+/>
+
+</Step><Step>
+**Enter codes**: Add codes in the text area, one per line
+</Step><Step>
+**Upload**: Click "Upload codes" to add the codes to the selected list
+</Step>
+</Steps>
