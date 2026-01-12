@@ -57,7 +57,7 @@ Toggle this option to configure whether participants are allowed to upload files
 
 ## Code Lists
 
-The Code Lists tab allows you to manage available codes for the study. These can be used to validate participant data, for example when participants need to enter specific codes to join the study or access certain features.
+The Code lists tab allows you to manage available codes for the study. These can be used to validate participant data, for example when participants need to enter specific codes to join the study or access certain features.
 
 ![Code Lists](./images/code-lists1.png)
 
@@ -94,3 +94,82 @@ alt="Add Code List Entries"
 **Upload**: Click "Upload codes" to add the codes to the selected list
 </Step>
 </Steps>
+
+## Notifications
+
+The Notifications tab allows you to configure email notification subscriptions for study events. This controls which email addresses will receive notifications when specific study events occur.
+
+![Notifications](./images/notifications.png)
+
+<Callout type="info">
+To trigger a message topic, you need to explicitly add this into the study rules.
+</Callout>
+
+### Managing Notification Subscriptions
+
+Each notification topic shows:
+- **Topic name**: The identifier for the notification topic (e.g., "topic1")
+- **Subscribed emails**: Email addresses that will receive notifications for this topic, displayed as icons
+- **Delete option**: Remove email addresses from the subscription
+
+### Adding a New Topic Subscription
+
+Click **"New topic subscription"** to create a new notification subscription.
+
+![New Topic Subscription](./images/notifications2.png)
+
+In the "New topic subscription" dialog:
+
+1. **Message type**: Select the type of notification (e.g., "reminder")
+2. **Email**: Enter the email address that should receive notifications for this topic
+3. **Add**: Click the "Add" button to create the subscription
+
+The email address will then receive notifications whenever this topic is triggered through the study rules.
+
+## Access Control
+
+The Access Control tab allows you to manage user permissions for this study. Here you can grant specific users explicit permissions to perform certain actions on the study.
+
+![Access Control](./images/access.png)
+
+<Callout type="info">
+Admins or users with access to all studies are not listed here, as they already have full access.
+</Callout>
+
+### Managing Permissions
+
+The permissions list shows all users who have been granted explicit permissions to this study. If no permissions have been configured, you'll see "No permissions found".
+
+### Adding a New Permission
+
+Click **"Add a new permission"** to grant a user access to the study.
+
+In the "Add a new permission" form:
+
+1. **User**: Select the user from the dropdown to whom the permission will be granted
+2. **Action**: Select the action that this user is allowed to perform on the study
+3. **Add permission**: Click the button to grant the permission
+
+Once added, the user will be able to perform the specified action on this study.
+
+## Advanced
+
+The Advanced tab contains critical actions that can permanently affect your study data. These operations should be performed with caution.
+
+![Advanced Settings](./images/advanced.png)
+
+### Danger Zone
+
+<Callout type="warning">
+Actions in this section can permanently result in data loss.
+</Callout>
+
+#### Delete Study
+
+If the study is not needed anymore, you can permanently delete it.
+
+<Callout type="danger">
+This is an irreversible action. You won't be able to access the study anymore. All study data, surveys, rules, and participant information will be permanently deleted.
+</Callout>
+
+Click the red **"Delete study"** button to permanently remove the study from the system.
