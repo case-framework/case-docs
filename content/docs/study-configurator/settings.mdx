@@ -114,7 +114,7 @@ Each notification topic shows:
 
 ### Adding a New Topic Subscription
 
-Click **"New topic subscription"** to create a new notification subscription.
+Click **"+ New topic subscription"** to create a new notification subscription.
 
 ![New Topic Subscription](./images/notifications2.png)
 
@@ -142,15 +142,58 @@ The permissions list shows all users who have been granted explicit permissions 
 
 ### Adding a New Permission
 
-Click **"Add a new permission"** to grant a user access to the study.
+Click **"+ Add a new permission"** to grant a user access to the study.
 
 In the "Add a new permission" form:
 
 1. **User**: Select the user from the dropdown to whom the permission will be granted
-2. **Action**: Select the action that this user is allowed to perform on the study
+2. **Action**: Select the action that this user is allowed to perform on the study. Use `*` to grant all available actions.
 3. **Add permission**: Click the button to grant the permission
 
 Once added, the user will be able to perform the specified action on this study.
+
+## Import / Export
+
+The Import/Export tab allows you to export your study configuration for backup or sharing, and to import configurations from other studies or systems.
+
+![Import Export](./images/import-export.png)
+
+### Export Study Configuration
+
+Prepare your study configuration for export by selecting which components to include:
+
+- **Include study configuration**: Export general study settings
+- **Include surveys**: Export all survey definitions and versions
+- **Include rules**: Export study rules and logic
+
+Click **"Prepare and download study configuration"** to generate and download a JSON file containing the selected components.
+
+### Import Study Configuration
+
+Click **"Open Importer"** to import a study configuration from a JSON file.
+
+![Study Config Importer](./images/importer-study-config2.png)
+
+The importer guides you through three steps:
+
+<Steps>
+<Step>
+**Select study configuration file**: Upload a JSON configuration file by clicking to browse or dragging and dropping the file
+</Step>
+<Step>
+**What to import**: Select which parts of the configuration to import (available after file selection):
+  - **Override study configuration**: Replace current study settings with those from the imported file
+  - **Override surveys**: Replace all current surveys with those from the imported file
+  - **Override rules**: Replace current study rules with those from the imported file
+</Step>
+<Step>
+**Confirm import**: Review your selections and click "Import" to override the current study configuration with the selected parts
+</Step>
+</Steps>
+
+<Callout type="warning">
+Importing a configuration will override the current study configuration with the selected parts of the imported file. Make sure to export your current configuration first if you want to keep a backup.
+</Callout>
 
 ## Advanced
 
@@ -173,3 +216,4 @@ This is an irreversible action. You won't be able to access the study anymore. A
 </Callout>
 
 Click the red **"Delete study"** button to permanently remove the study from the system.
+
