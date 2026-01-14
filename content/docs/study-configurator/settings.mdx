@@ -6,6 +6,7 @@ description: Configure study-wide settings such as status, visibility, labels, a
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import codeListsAddEntriesImg from './images/code-lists2.png';
+import notificationsNewTopicImg from './images/notifications2.png';
 
 
 [← Back to Study Configurator Overview](/docs/study-configurator/configurator-overview)
@@ -102,13 +103,13 @@ The Notifications tab allows you to configure email notification subscriptions f
 ![Notifications](./images/notifications.png)
 
 <Callout type="info">
-To trigger a message topic, you need to explicitly add this into the study rules.
+To trigger a message topic, you need to use the [Notify researchers (Email)](/docs/study-rules-editor/basics/study-rules#6-notify-researchers-email) action in the Study Rules Editor when defining event handlers.
 </Callout>
 
 ### Managing Notification Subscriptions
 
 Each notification topic shows:
-- **Topic name**: The identifier for the notification topic (e.g., "topic1")
+- **Topic name**: The identifier for the notification topic (e.g., "topic1"). This is identical to the **message type** attribute used in email templates.
 - **Subscribed emails**: Email addresses that will receive notifications for this topic, displayed as icons
 - **Delete option**: Remove email addresses from the subscription
 
@@ -116,15 +117,25 @@ Each notification topic shows:
 
 Click **"+ New topic subscription"** to create a new notification subscription.
 
-![New Topic Subscription](./images/notifications2.png)
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl'
+src={notificationsNewTopicImg}
+width={400}
+height={200}
+alt="New Topic Subscription" 
+/>
 
 In the "New topic subscription" dialog:
 
-1. **Message type**: Select the type of notification (e.g., "reminder")
+1. **Message type**: Enter the type of notification (e.g., "reminder"). Use `*` to subscribe to all message types.
 2. **Email**: Enter the email address that should receive notifications for this topic
 3. **Add**: Click the "Add" button to create the subscription
 
 The email address will then receive notifications whenever this topic is triggered through the study rules.
+
+<Callout type="info">
+To subscribe multiple email addresses to the same topic, repeat this process for each email address individually.
+</Callout>
 
 ## Access Control
 
