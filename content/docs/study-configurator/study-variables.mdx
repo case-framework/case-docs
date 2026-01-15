@@ -14,15 +14,25 @@ import studyVariablesConfig2Img from './images/variable-config-2.png';
 ![Study variables empty](./images/study-variables-empty.png)
 </div>
 
-
 ## Introduction
 
-### Study Variables
-Study variables allow study administrators to dynamically steer the behavior of the study system, without needing to change the study rules or questionnaires.
-While "participant flags" provide a way for individualized logic, study variables provide a simple way to control dynamic "global" (study-specific) behavior.
+The Variables tab in the Study Configurator provides tools to manage two important concepts for controlling study behavior: **Study Variables** and **Study Counters**. These can be integrated into study rules and questionnaires to control the survey logic based on their values.
 
-A study variable has a **reference key** (unique within the study), a **value** and a **value type**.
-The value type can be one of the following: `string`, `integer`, `float`, `boolean`, `date`.
+## Study Variables
+
+### What are Study Variables?
+
+Study variables are configurable parameters that can be referenced in study rules and questionnaires to control study behavior. By changing the value of a study variable, administrators can dynamically adjust the logic without modifying the rules or questionnaires themselves.
+While "participant flags" control individualized logic at the participant level, study variables provide a way to control "global" (study-wide) behavior.
+
+A study variable has a **study-unique reference key**, a **value** and a **value type**.
+
+The value type can be one of the following:
+- `string`
+- `integer`
+- `float`
+- `boolean`
+- `date`
 
 Each study can have its own set of study variables. The study administrator can manage them (create, edit value or configuration, delete).
 For improved readability, the study administrator can also assign a human-readable label and description to each study variable.
@@ -34,40 +44,11 @@ For improved readability, the study administrator can also assign a human-readab
 - **Threshold:** Set a threshold for a numeric value to trigger a specific action (e.g., if study-counter reaches the threshold, send a researcher notification.)
 </ExampleBox>
 
-### Counters
-
-A study counter is always an integer number and can be incremented by study rules or study actions [(see also)](/docs/study-rules-editor/basics/study-rules/#4-increment-and-get-study-counter-value). Each counter has a scope key, which is used to identify the counter within the study.
-
-
-<TypeTable
-  type={{
-    scope: {
-      description: 'Scope of the counter within the study',
-      type: 'string',
-      required: true,
-    },
-    value: {
-      description: 'Current value of the counter',
-      type: 'integer',
-      default: '0',
-    },
-  }}
-/>
-
-
-Counters can be used to track different aspects of the study, and their values can be accessed by study expressions in the study engine [(see also)](/docs/study-rules-editor/basics/study-rules/#3-get-current-study-counter-value).
-
-<ExampleBox title="Use Cases">
-- **Event count:** Track the number of events that have occurred in the study. E.g., if a participant sends in a specific combination of answers, increment the counter.
-- **Participant counter:** Track the number of participants in the study. Count all or eligible participants. This was used for example to assign a unique study code to each participant.
-</ExampleBox>
-
-## Managing Study Variables
+### Managing Study Variables
 
 The management of study variables is available in the **"Study Configurator"** module, under the **"Variables"** tab.
 
-
-### Creating a Study Variable
+#### Creating a Study Variable
 
 To create a new study variable, click the **"Create variable"** button. This will open a modal with the editor interface for the study variable.
 
@@ -120,9 +101,7 @@ Click **"Create"** or **"Save"** to add or update the study variable.
 </Step>
 </Steps>
 
-
-
-### Editing a Study Variable
+#### Editing a Study Variable
 
 - To edit the "value" of a study variable, you can use the value input controller in the variable list directly. Depending on the value type, this might be a simple switch, a datepicker or a text/number input.
 - To edit the "configuration" of a study variable, use the three-dot menu on the right of the variable's card, and select **"Edit configs"**.
@@ -132,7 +111,7 @@ Click **"Create"** or **"Save"** to add or update the study variable.
 ![Study variables with entries](./images/study-variables-with-entries.png)
 </div>
 
-## Using Study Variables
+### Using Study Variables
 
 Values of the study variables can be used in the following places:
 #### **Study rules/study actions** (server-side):
@@ -145,9 +124,38 @@ Values of the study variables can be used in the following places:
 
 Other applications specific usage might be available if the application supports it.
 
-## Managing Counters
+## Study Counters
+
+### What are Study Counters?
+
+A study counter is always an integer number and can be incremented by study rules or study actions [(see also)](/docs/study-rules-editor/basics/study-rules/#4-increment-and-get-study-counter-value). Each counter has a scope key, which is used to identify the counter within the study.
+
+<TypeTable
+  type={{
+    scope: {
+      description: 'Scope of the counter within the study',
+      type: 'string',
+      required: true,
+    },
+    value: {
+      description: 'Current value of the counter',
+      type: 'integer',
+      default: '0',
+    },
+  }}
+/>
+
+Counters can be used to track different aspects of the study, and their values can be accessed by study expressions in the study engine [(see also)](/docs/study-rules-editor/basics/study-rules/#3-get-current-study-counter-value).
+
+<ExampleBox title="Use Cases">
+- **Event count:** Track the number of events that have occurred in the study. E.g., if a participant sends in a specific combination of answers, increment the counter.
+- **Participant counter:** Track the number of participants in the study. Count all or eligible participants. This was used for example to assign a unique study code to each participant.
+</ExampleBox>
+
+### Managing Study Counters
 
 The view to manage study counters is available in the **"Study Configurator"** module, under the **"Variables"** tab, next to the study variables.
+
 Currently supported are the following features:
 - View all counters with their scope key and value
 - Initialize a new counter for a scope with a specific starting value
