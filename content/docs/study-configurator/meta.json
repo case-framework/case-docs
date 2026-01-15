@@ -2,5 +2,13 @@
     "title": "Study Configurator",
     "description": "Create and configure study settings",
     "root": true,
-    "icon": "FolderCog"
+    "icon": "FolderCog",
+    "pages": [
+        "starting-page",
+        "configurator-overview",
+        "surveys",
+        "rules",
+        "study-variables",
+        "settings"
+    ]
 }
