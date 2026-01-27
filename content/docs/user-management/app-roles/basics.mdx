@@ -1,26 +1,43 @@
 ---
 title: App Role Basics
-description: What are app roles and how to use them
+description: Understanding app roles and app role templates
 ---
 
-## Terminology
+## What are App Roles?
 
-* **App Role Template**: Admin users can create app role templates which will be used to assign app roles to the `management users`.
-A template contains three parts:
-  - `app name`: The name of the application in which the app role is used. It can be something generic if you are creating a template to be used as permission list template - e.g. "study-manager-app" or "admin-ui", or something specific if the app name is required - e.g. "study-nurse-portal".
-  - `role`: The role the user will have in the application. One user can have multiple roles for the same app.
-  - `required permissions`: The permissions required for a user with this role to use the application via the API for the intended purpose. The core system’s Management API uses permissions to authorize actions on resources.
+App roles are assignments given to management users that define their role and permissions within specific applications or templates. Each app role consists of:
 
+- **App name**: The name of the application (e.g., "study-nurse-portal", "admin-ui")
+- **Role**: The specific role the user has in that application (e.g., "nurse", "data-manager")
 
-* **App role**: Management users can get app roles assigned by admin users, defined by the `app name` and `role`. These app roles can be used by specialized extra applications/tools to authorize access to certain modules or actions.
+Administrators can assign multiple app roles to management users. These app roles serve two main purposes (see also below):
 
+1. **Access control for extra applications**: Specialized tools and applications can use app roles to control which modules and actions a user can access
+2. **Permission templates**: App roles can bundle commonly needed permissions, making it easier to assign standard permission sets to users
 
+## What are App Role Templates?
 
-### Use cases for app roles
+App role templates are pre-configured blueprints that administrators create to standardize app role assignments. A template defines:
 
-- Access control for extra applications/tools and their feature modules: For example, the study has an extra application called "study-nurse-portal" with modules for data managers or nurses; you can use app roles to authorize access to these modules. While both groups may have similar permissions, their module access can differ.
+- **App name**: The application this template applies to
+- **Role**: The role name within that application  
+- **Required permissions**: A list of permissions that users with this role need to perform their tasks via the Management API. The core system’s Management API uses permissions to authorize actions on resources.
 
-- Use as a permission-list template: Within the base application, certain user groups commonly require a standard set of permissions. App role templates let admins add these permissions to a user without manually selecting each one.
+When an app role template is assigned to a management user, they receive both the app role assignment (app name + role) and all the associated permissions defined in the template.
 
+## Use Cases
 
+### Access Control for Extra Applications and Tools
 
+Extra applications can check a user's app roles to determine access to specific features and modules. For example:
+
+- A "study-nurse-portal" application might have modules for different user groups (nurses, data managers)
+- Even if both groups may have similar permissions, the access to feature modules can differ for each group
+
+### Permission List Templates
+
+Within the base system, certain user groups typically need a standard set of permissions. App role templates simplify this:
+
+- Instead of manually selecting dozens of individual permissions for each new user
+- Administrators can assign a template (e.g., "study-manager" or "admin-ui") that automatically grants all necessary permissions
+- This ensures consistency and reduces the chance of missing critical permissions
