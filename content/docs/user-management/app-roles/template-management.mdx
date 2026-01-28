@@ -1,12 +1,13 @@
 ---
-title: App Role Templates
-description: How to manage app role templates
+title: Managing Templates
+description: Create, edit, and delete app role templates
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-This page describes how to manage (add, edit, delete) app role templates.
-The functionality is available only for admin users in the "User Management" module. After logging in, go to the **"User Management"** module and use the **"Available App Roles"** tab.
+## Overview
+
+App role templates can be created, edited, and deleted in the **Available App Roles** tab of the **User Management** module. This functionality is available only for admin users.
 
 ![Empty app role templates](./images/empty-app-role-templates.png)
 
@@ -15,7 +16,7 @@ The functionality is available only for admin users in the "User Management" mod
 <Steps>
 
 <Step>
-Click the `+` button in the top right corner of the "Available App Roles" card. This will open a modal window.
+Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window.
 
 ![Add app role template modal](./images/create-new-app-role-empty.png)
 
@@ -23,7 +24,7 @@ Click the `+` button in the top right corner of the "Available App Roles" card. 
 
 <Step>
 
-Fill in the "App name" and "Role" fields. Add the required permissions by clicking the `+ Add Permission` button in the "Required Permissions" section.
+Fill in the **"App name"** and **"Role"** fields. Add the required permissions by clicking the `+ Add Permission` button in the **"Required Permissions"** section.
 You can remove a permission by clicking the `x` button on the right side of each list item.
 ![Add app role template modal](./images/create-new-app-role-populated.png)
 
@@ -37,25 +38,25 @@ Click the `Create template` button to save the app role template.
 
 </Steps>
 
-## Copy/Paste an app role template
+## Copy and Paste an app role template
 
 This can be particularly useful if you want to migrate an app role template from one environment to another.
 
 <Steps>
 
 <Step>
-In the "source environment": Click the `Copy` option in the three-dot menu on the right side of the app role template card.
+In the **"source environment"**: Click the `Copy` option in the three-dot menu on the right side of the app role template card.
 
 ![Copy app role template](./images/app-role-item-menu.png)
 </Step>
 
 <Step>
-In the "target environment": Click the `+` button in the top right corner of the "Available App Roles" card. This will open a modal window with the option to paste value into the form.
+In the **"target environment"**: Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window with the option to paste value into the form.
 ![Create new app role template paste](./images/create-new-app-role-template-paste.png)
 </Step>
 </Steps>
 
-Alternatively, you can use the Download button to save the app role template to a file and populate the form with the values from the file using the `Upload JSON` button.
+Alternatively, you can use the `Download JSON` option to save the app role template to a file and populate the form with the values from the file using the `Upload JSON` button.
 
 
 ## Edit an app role template
@@ -67,19 +68,15 @@ Click `Edit` (pencil) in the three-dot menu on the right side of the app role te
 
 ![Edit app role template](./images/app-role-item-menu.png)
 </Step>
-
 <Step>
-
-When you’re done, click "Save changes" to update the template.
+Make your changes. When you’re done, click `Save changes` to update the template.
 </Step>
-
-
 </Steps>
 
 ## Delete an app role template
 
-You can delete app roles individually or all at once for an "app name". Use the corresponding buttons and confirm the deletion in the popup.
+You can delete app roles individually or all at once for an **"app name"**. Use the corresponding buttons and confirm the deletion in the popup.
 
-When deleting app roles for an "app name", this will also remove the added app roles from all management users that have this app role (not the permissions though).
+When deleting app roles for an **"app name"**, this will also remove the added app roles from all management users that have this app role (not the permissions though).
 
 > Note: Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed.
