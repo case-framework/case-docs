@@ -4,10 +4,13 @@ description: Create, edit, and delete app role templates
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Overview
 
 App role templates can be created, edited, and deleted in the **Available App Roles** tab of the **User Management** module. This functionality is available only for admin users.
+
+Once you have created templates, you can assign them to management users to grant specific permissions. For more information, see [Assigning Roles](/docs/user-management/management-users/assigning-roles).
 
 ![Empty app role templates](./images/empty-app-role-templates.png)
 
@@ -79,4 +82,6 @@ You can delete app roles individually or all at once for an **"app name"**. Use 
 
 When deleting app roles for an **"app name"**, this will also remove the added app roles from all management users that have this app role (not the permissions though).
 
-> Note: Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed.
+<Callout type="warning">
+Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed.
+</Callout>
