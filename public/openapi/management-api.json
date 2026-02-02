@@ -65,6 +65,18 @@
     {
       "name": "user-management",
       "description": "Management users, service accounts & app roles"
+    },
+    {
+      "name": "service-accounts",
+      "description": "Service account management"
+    },
+    {
+      "name": "app-roles",
+      "description": "App role templates & assignments"
+    },
+    {
+      "name": "actions",
+      "description": "Run actions on participants"
     }
   ],
   "components": {
@@ -6865,19 +6877,33 @@
           {
             "name": "reportKey",
             "in": "query",
+            "description": "filter by report key",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "filter",
+            "name": "pid",
             "in": "query",
-            "description": "bson.M object to filter reports",
+            "description": "filter by participant ID",
             "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "object"
-              }
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "filter by timestamp (greater than or equal to this value)",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "description": "filter by timestamp (less than or equal to this value)",
+            "schema": {
+              "type": "integer"
             }
           }
         ],
@@ -6937,19 +6963,45 @@
           {
             "name": "reportKey",
             "in": "query",
+            "description": "filter by report key",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "filter",
+            "name": "pid",
             "in": "query",
-            "description": "bson.M object to filter reports",
+            "description": "filter by participant ID",
             "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "object"
-              }
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "filter by timestamp (greater than or equal to this value)",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "description": "filter by timestamp (less than or equal to this value)",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "export type: 'csv' to download as table, 'raw' to export as JSON",
+            "schema": {
+              "type": "string",
+              "enum": ["raw", "csv"],
+              "default": "raw"
             }
           }
         ],
@@ -7875,7 +7927,7 @@
           {
             "name": "pid",
             "in": "query",
-            "description": "Participant ID",
+            "description": "filter by participant ID",
             "schema": {
               "type": "string"
             }
@@ -7883,6 +7935,7 @@
           {
             "name": "from",
             "in": "query",
+            "description": "filter by timestamp (greater than or equal to this value)",
             "schema": {
               "type": "string"
             }
@@ -7890,6 +7943,7 @@
           {
             "name": "until",
             "in": "query",
+            "description": "filter by timestamp (less than or equal to this value)",
             "schema": {
               "type": "string"
             }
@@ -7954,6 +8008,7 @@
           {
             "name": "reportKey",
             "in": "query",
+            "description": "filter by report key",
             "schema": {
               "type": "string"
             }
@@ -7961,7 +8016,7 @@
           {
             "name": "pid",
             "in": "query",
-            "description": "Participant ID",
+            "description": "filter by participant ID",
             "schema": {
               "type": "string"
             }
@@ -7969,7 +8024,7 @@
           {
             "name": "from",
             "in": "query",
-            "description": "start date/time",
+            "description": "filter by timestamp (greater than or equal to this value)",
             "schema": {
               "type": "string"
             }
@@ -7977,7 +8032,7 @@
           {
             "name": "until",
             "in": "query",
-            "description": "end date/time",
+            "description": "filter by timestamp (less than or equal to this value)",
             "schema": {
               "type": "string"
             }
@@ -8700,7 +8755,7 @@
     "/v1/user-management/management-users/{userID}/app-roles": {
       "get": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "List app roles for user",
         "security": [
@@ -8757,7 +8812,7 @@
     "/v1/user-management/management-users/{userID}/app-roles/{appRoleTemplateID}": {
       "post": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Add app role to user",
         "security": [
@@ -8810,7 +8865,7 @@
     "/v1/user-management/management-users/{userID}/app-roles/{appRoleID}": {
       "delete": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Remove app role from user",
         "security": [
@@ -8863,7 +8918,7 @@
     "/v1/user-management/app-roles/templates/": {
       "get": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "List app role templates",
         "security": [
@@ -8908,7 +8963,7 @@
       },
       "post": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Create app role template",
         "security": [
@@ -8971,7 +9026,7 @@
     "/v1/user-management/app-roles/templates/{appRoleTemplateID}": {
       "get": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Get app role template",
         "security": [
@@ -9022,7 +9077,7 @@
       },
       "put": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Update app role template",
         "security": [
@@ -9095,7 +9150,7 @@
     "/v1/user-management/app-roles/templates/delete/{appRoleTemplateID}": {
       "delete": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Delete app role template",
         "security": [
@@ -9140,7 +9195,7 @@
     "/v1/user-management/app-roles/templates/delete-for-app/{appName}": {
       "delete": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Delete app role templates for app",
         "security": [
@@ -9185,7 +9240,7 @@
     "/v1/user-management/app-roles/": {
       "get": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "List app roles",
         "security": [
@@ -9232,7 +9287,7 @@
     "/v1/user-management/app-roles/delete/{appName}": {
       "delete": {
         "tags": [
-          "user-management"
+          "app-roles"
         ],
         "summary": "Delete app roles for app",
         "security": [
@@ -9331,7 +9386,7 @@
     "/v1/user-management/service-accounts/": {
       "get": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "List service accounts",
         "security": [
@@ -9376,7 +9431,7 @@
       },
       "post": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Create service account",
         "security": [
@@ -9442,7 +9497,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}": {
       "get": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Get service account",
         "security": [
@@ -9493,7 +9548,7 @@
       },
       "put": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Update service account",
         "security": [
@@ -9567,7 +9622,7 @@
       },
       "delete": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Delete service account",
         "operationId": "userManagement_deleteServiceAccount",
@@ -9621,7 +9676,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}/api-keys": {
       "get": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "List service account API keys",
         "security": [
@@ -9676,7 +9731,7 @@
       },
       "post": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Create service account API key",
         "security": [
@@ -9745,7 +9800,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}/api-keys/{apiKeyID}": {
       "delete": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Delete service account API key",
         "security": [
@@ -9806,7 +9861,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}/permissions": {
       "get": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "List service account permissions",
         "security": [
@@ -9861,7 +9916,7 @@
       },
       "post": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Add permission to service account",
         "security": [
@@ -9924,7 +9979,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}": {
       "delete": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Delete service account permission",
         "security": [
@@ -9977,7 +10032,7 @@
     "/v1/user-management/service-accounts/{serviceAccountID}/permissions/{permissionID}/limiter": {
       "put": {
         "tags": [
-          "user-management"
+          "service-accounts"
         ],
         "summary": "Update service account permission limiter",
         "operationId": "userManagement_updateServiceAccountPermissionLimiter",
