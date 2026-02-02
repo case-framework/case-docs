@@ -5,7 +5,9 @@ description: View user details and delete management user accounts
 
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 import userDetailsImg from './images/user-details.png';
+import addPermissionImg from './images/add-permission.png';
 
 ## Overview
 
@@ -45,9 +47,52 @@ The User Details section displays:
 - **sub from IdP**: The unique subject identifier received from the Identity Provider 
 - **User ID**: The unique internal identifier for this user in the application
 
-### Managing Permissions and App Roles
+### Managing App Roles
 
-You can assign permissions and app roles to this user, see [Assigning Roles](/docs/user-management/management-users/assigning-roles).
+You can assign app roles to this user to grant them specific sets of permissions. For detailed instructions, see [Assigning Roles](/docs/user-management/management-users/assigning-roles).
+
+### Managing Permissions
+
+Permissions define which actions the user is allowed to perform in the system. If no permissions are configured, you'll see the message "This user has no permissions."
+
+#### Adding Permissions
+
+Click the `+ Add Permission` button to grant the user access to specific actions or resources.
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl'
+src={addPermissionImg}
+width={400}
+height={200}
+alt="Add permission dialog" 
+/>
+
+In the permission dialog, you can configure:
+
+<Steps>
+<Step>
+**Resource Type**: Select the type of resource. Options are: `Study`, `Messaging`, or `Participant Users`.
+</Step>
+
+<Step>
+**Resource Key**: Specify the resource identifier depending on the resource type:
+   - For **Study**: Enter a study key (e.g., "tekenradar") or use "*" for all studies
+   - For **Messaging**: Select a resource ID from: `global-email-templates`, `study-email-templates`, `scheduled-emails`, or `sms-templates`
+   - For **Participant Users**: Only `*` is available (applies to all participant users)
+</Step>
+<Step>
+**Action**: Select the action the user is allowed to perform (e.g., "get-reports")
+</Step>
+<Step>
+**Limiter** (available for specific actions): Define additional constraints in JSON format. For example, to limit access to specific reports, use the format `[{"reportKey": "report1"}]`
+</Step>
+</Steps>
+
+After configuring the permission, click **"Add Permission"** to grant it to the user.
+
+<Callout type="warning">
+Review permissions regularly and remove any that are no longer needed to maintain security.
+</Callout>
 
 ## Delete User
 
