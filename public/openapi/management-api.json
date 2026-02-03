@@ -64,7 +64,7 @@
     },
     {
       "name": "user-management",
-      "description": "Management users, service accounts & app roles"
+      "description": "Management user accounts and permissions"
     },
     {
       "name": "service-accounts",
@@ -339,8 +339,7 @@
             "additionalProperties": true
           },
           "nextTimerEvent": {
-            "type": "integer",
-            "format": "int64"
+            "type": "integer"
           },
           "rules": {
             "type": "array",
@@ -389,12 +388,10 @@
             "type": "boolean"
           },
           "published": {
-            "type": "integer",
-            "format": "int64"
+            "type": "integer"
           },
           "unpublished": {
-            "type": "integer",
-            "format": "int64"
+            "type": "integer"
           },
           "surveyDefinition": {
             "type": "object",
@@ -6981,8 +6978,7 @@
             "in": "query",
             "description": "filter by timestamp (greater than or equal to this value)",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "integer"
             }
           },
           {
@@ -6990,8 +6986,7 @@
             "in": "query",
             "description": "filter by timestamp (less than or equal to this value)",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "integer"
             }
           },
           {
@@ -7937,7 +7932,7 @@
             "in": "query",
             "description": "filter by timestamp (greater than or equal to this value)",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -7945,7 +7940,7 @@
             "in": "query",
             "description": "filter by timestamp (less than or equal to this value)",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -8026,7 +8021,7 @@
             "in": "query",
             "description": "filter by timestamp (greater than or equal to this value)",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -8034,7 +8029,7 @@
             "in": "query",
             "description": "filter by timestamp (less than or equal to this value)",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {

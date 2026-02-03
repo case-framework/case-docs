@@ -2335,7 +2335,7 @@
                 "parameters": [
                     {
                         "name": "studyKey",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
