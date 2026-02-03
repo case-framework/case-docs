@@ -7,8 +7,8 @@ description: Understanding app roles and app role templates
 
 App roles are assignments given to management users that define their role and permissions within specific applications or templates. Each app role consists of:
 
-- **App name**: The name of the application (e.g., "study-nurse-portal", "admin-ui")
-- **Role**: The specific role the user has in that application (e.g., "nurse", "data-manager")
+- **App name**: The name of the application (e.g., **"study-nurse-portal"**, **"admin-ui"**)
+- **Role**: The specific role the user has in that application (e.g., **"nurse"**, **"data-manager"**)
 
 Administrators can assign multiple app roles to management users. These app roles serve two main purposes (see also below):
 
@@ -23,7 +23,7 @@ App role templates are pre-configured blueprints that administrators create to s
 - **Role**: The role name within that application  
 - **Required permissions**: A list of permissions that users with this role need to perform their tasks via the Management API. The core system’s Management API uses permissions to authorize actions on resources.
 
-When an app role template is assigned to a management user, they receive both the app role assignment (app name + role) and all the associated permissions defined in the template.
+When an app role template is assigned to a management user, they receive both the app role assignment (app name **and** role) and all the associated permissions defined in the template.
 
 ## Use Cases
 
@@ -31,7 +31,7 @@ When an app role template is assigned to a management user, they receive both th
 
 Extra applications can check a user's app roles to determine access to specific features and modules. For example:
 
-- A "study-nurse-portal" application might have modules for different user groups (nurses, data managers)
+- A **"study-nurse-portal"** application might have modules for different user groups (nurses, data managers)
 - Even if both groups may have similar permissions, the access to feature modules can differ for each group
 
 ### Permission List Templates
@@ -39,5 +39,5 @@ Extra applications can check a user's app roles to determine access to specific 
 Within the base system, certain user groups typically need a standard set of permissions. App role templates simplify this:
 
 - Instead of manually selecting dozens of individual permissions for each new user
-- Administrators can assign a template (e.g., "study-manager" or "admin-ui") that automatically grants all necessary permissions
+- Administrators can assign a template (e.g., **"study-manager"** or **"admin-ui"**) that automatically grants all necessary permissions
 - This ensures consistency and reduces the chance of missing critical permissions
