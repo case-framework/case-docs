@@ -871,7 +871,7 @@
         },
         "/v1/study-service/studies/": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "List studies by status",
                 "operationId": "getStudiesByStatus",
                 "parameters": [
@@ -947,7 +947,7 @@
         },
         "/v1/study-service/studies/{studyKey}": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "Get study by key",
                 "operationId": "getStudy",
                 "parameters": [
@@ -1020,7 +1020,7 @@
         },
         "/v1/study-service/studies/{studyKey}/code-lists/has-code": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "Check if a code exists in a code list",
                 "operationId": "studyHasCodeListCode",
                 "parameters": [
@@ -1090,7 +1090,7 @@
         },       
         "/v1/study-service/studies/{studyKey}/code-lists/available-count": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "Count available codes in a code list",
                 "operationId": "getStudyCodeListAvailableCount",
                 "parameters": [
@@ -1146,7 +1146,7 @@
         },
         "/v1/study-service/studies/{studyKey}/variables": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "List variables for a study",
                 "operationId": "getStudyVariables",
                 "parameters": [
@@ -1203,7 +1203,7 @@
         },
         "/v1/study-service/studies/{studyKey}/variables/{variableKey}": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "Get a study variable",
                 "operationId": "getStudyVariable",
                 "parameters": [
@@ -1265,7 +1265,7 @@
         },
         "/v1/study-service/studies/participating": {
             "get": {
-                "tags": ["study service studies"],
+                "tags": ["studies"],
                 "summary": "List studies the user participates in",
                 "security": [
                     {
@@ -1309,7 +1309,7 @@
         },
         "/v1/study-service/events/{studyKey}/enter": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Enter a study",
                 "security": [
                     {
@@ -1381,7 +1381,7 @@
         },
         "/v1/study-service/events/{studyKey}/custom": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Trigger a custom study event",
                 "security": [
                     {
@@ -1461,7 +1461,7 @@
         },
         "/v1/study-service/events/{studyKey}/submit": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Submit survey response",
                 "security": [
                     {
@@ -1539,7 +1539,7 @@
         },
         "/v1/study-service/events/{studyKey}/leave": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Leave a study",
                 "security": [
                     {
@@ -1611,7 +1611,7 @@
         },
         "/v1/study-service/events/{studyKey}/merge-temporary-participant": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Merge temporary participant into user profile",
                 "security": [
                     {
@@ -1687,7 +1687,7 @@
         },
         "/v1/study-service/events/{studyKey}/merge-virtual-participant": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Merge a virtual participant into user profile by linking code",
                 "security": [
                     {
@@ -1772,7 +1772,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/surveys": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get assigned surveys for profiles",
                 "security": [
                     {
@@ -1824,7 +1824,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/survey/{surveyKey}": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get a specific survey with context",
                 "security": [
                     {
@@ -1892,7 +1892,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/participant-state": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get participant state",
                 "security": [
                     {
@@ -1952,7 +1952,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/linking-code": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get a linking code by key",
                 "security": [
                     {
@@ -2021,7 +2021,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/responses": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get survey responses for a profile",
                 "security": [
                     {
@@ -2179,7 +2179,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/confidential-response": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get confidential responses by key",
                 "security": [
                     {
@@ -2253,7 +2253,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/submission-history": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get submission history for profiles",
                 "security": [
                     {
@@ -2324,7 +2324,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/reports": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get reports for a profile",
                 "security": [
                     {
@@ -2335,7 +2335,7 @@
                 "parameters": [
                     {
                         "name": "studyKey",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -2422,7 +2422,7 @@
         },
         "/v1/study-service/temp-participant/register": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Register a temporary participant",
                 "operationId": "registerTempParticipant",
                 "requestBody": {
@@ -2480,7 +2480,7 @@
         },
         "/v1/study-service/temp-participant/surveys": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get assigned surveys for a temporary participant",
                 "operationId": "getTempParticipantSurveys",
                 "parameters": [
@@ -2535,7 +2535,7 @@
         },
         "/v1/study-service/temp-participant/survey": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get a survey with context for a temporary participant",
                 "operationId": "getTempParticipantSurveyWithContext",
                 "parameters": [
@@ -2606,7 +2606,7 @@
         },
         "/v1/study-service/temp-participant/submit-response": {
             "post": {
-                "tags": ["study service events"],
+                "tags": ["events"],
                 "summary": "Submit a survey response for a temporary participant",
                 "operationId": "submitTempParticipantResponse",
                 "requestBody": {
@@ -2676,7 +2676,7 @@
         },
         "/v1/study-service/virtual-participants/{studyKey}/": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Get virtual participants by linking code",
                 "security": [
                     {
@@ -2748,7 +2748,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/files": {
             "post": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Upload participant file",
                 "security": [ { "BearerAuth": [] } ],
                 "operationId": "uploadParticipantFile",
@@ -2807,7 +2807,7 @@
                 }
             },
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "List participant files",
                 "security": [ { "BearerAuth": [] } ],
                 "operationId": "listParticipantFiles",
@@ -2842,7 +2842,7 @@
         },
         "/v1/study-service/participant-data/{studyKey}/files/{fileID}": {
             "get": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Download participant file",
                 "security": [ { "BearerAuth": [] } ],
                 "operationId": "getParticipantFile",
@@ -2867,7 +2867,7 @@
                 }
             },
             "delete": {
-                "tags": ["study service participant data"],
+                "tags": ["participant-data"],
                 "summary": "Delete participant file",
                 "security": [ { "BearerAuth": [] } ],
                 "operationId": "deleteParticipantFile",
@@ -4031,15 +4031,15 @@
             "description": "Password endpoints"
         },
          {
-            "name": "study service events",
+            "name": "events",
             "description": "Study service events endpoints"
         },
          {
-            "name": "study service participant data",
+            "name": "participant-data",
             "description": "Endpoints getting participant data in study service"
         },
          {
-            "name": "study service studies",
+            "name": "studies",
             "description": "Endpoints getting study data in study service"
         },
         {
