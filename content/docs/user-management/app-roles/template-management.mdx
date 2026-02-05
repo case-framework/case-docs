@@ -60,18 +60,18 @@ Click the `Create template` button to save the app role template.
 
 ## Copy and Paste an App Role Template
 
-This can be particularly useful if you want to migrate an app role template from one environment to another.
+This feature allows you to copy an existing app role template and paste it in another location. This is particularly useful for migrating templates between different environments (e.g., from test to production).
 
 <Steps>
 
 <Step>
-In the **"source environment"**: Click the `Copy` option in the three-dot menu on the right side of the app role template card.
+In the **source environment**: Click the `Copy` option in the three-dot menu on the right side of the app role template card.
 
 ![Copy app role template](./images/app-role-item-menu.png)
 </Step>
 
 <Step>
-In the **"target environment"**: Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window with the option to paste value into the form.
+In the **target environment**: Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window. Click the `Paste from clipboard` button to paste the copied template into the form.
 
 <ImageZoom
 className='p-2 bg-neutral-200 rounded-xl mx-auto'
@@ -105,10 +105,13 @@ Make your changes. When you’re done, click `Save changes` to update the templa
 
 ## Delete an App Role Template
 
-You can delete app role templates individually or all at once for an **"app name"**. Use the corresponding buttons and confirm the deletion in the popup.
+You can delete app role templates in two ways:
 
-When deleting app roles for an **"app name"**, this will also remove the added app roles from all management users that have this app role (not the permissions though).
+![Delete app role options](./images/delete-template.png)
+
+1. **Delete all**: Click the `Delete all` button next to the app name to remove all templates for that app. This also removes these app roles from all management users.
+2. **Delete single template**: Click the three-dot menu on a template card and select `Delete` to remove only that specific template. This also removes the template from any users it was assigned to, but other templates for the same app remain unaffected.
 
 <Callout type="warning">
-Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed.
+Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed!
 </Callout>
