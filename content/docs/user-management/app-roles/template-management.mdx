@@ -5,6 +5,10 @@ description: Create, edit, and delete app role templates
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import createNewAppRoleEmptyImg from './images/create-new-app-role-empty.png';
+import createNewAppRolePopulatedImg from './images/create-new-app-role-populated.png';
+import createNewAppRoleTemplatePasteImg from './images/create-new-app-role-template-paste.png';
 
 ## Overview
 
@@ -15,13 +19,19 @@ Once you have created templates, you can assign them to management users to gran
 ![Empty app role templates](./images/empty-app-role-templates.png)
 
 
-## Add a new app role template
+## Add a new App Role Template
 <Steps>
 
 <Step>
 Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window.
 
-![Add app role template modal](./images/create-new-app-role-empty.png)
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRoleEmptyImg}
+width={400}
+height={200}
+alt="Add app role template modal"
+/>
 
 </Step>
 
@@ -29,7 +39,14 @@ Click the `+` button in the top right corner of the **"Available App Roles"** ca
 
 Fill in the **"App name"** and **"Role"** fields. Add the required permissions by clicking the `+ Add Permission` button in the **"Required Permissions"** section.
 You can remove a permission by clicking the `x` button on the right side of each list item.
-![Add app role template modal](./images/create-new-app-role-populated.png)
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRolePopulatedImg}
+width={400}
+height={200}
+alt="Add app role template modal populated"
+/>
 
 </Step>
 
@@ -41,7 +58,7 @@ Click the `Create template` button to save the app role template.
 
 </Steps>
 
-## Copy and Paste an app role template
+## Copy and Paste an App Role Template
 
 This can be particularly useful if you want to migrate an app role template from one environment to another.
 
@@ -55,7 +72,15 @@ In the **"source environment"**: Click the `Copy` option in the three-dot menu o
 
 <Step>
 In the **"target environment"**: Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window with the option to paste value into the form.
-![Create new app role template paste](./images/create-new-app-role-template-paste.png)
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRoleTemplatePasteImg}
+width={400}
+height={200}
+alt="Create new app role template paste"
+/>
+
 </Step>
 </Steps>
 
@@ -64,7 +89,7 @@ You can also use `Download JSON` to export an app role template as a file, then 
 </Callout>
 
 
-## Edit an app role template
+## Edit an App Role Template
 
 <Steps>
 
@@ -78,7 +103,7 @@ Make your changes. When you’re done, click `Save changes` to update the templa
 </Step>
 </Steps>
 
-## Delete an app role template
+## Delete an App Role Template
 
 You can delete app role templates individually or all at once for an **"app name"**. Use the corresponding buttons and confirm the deletion in the popup.
 
