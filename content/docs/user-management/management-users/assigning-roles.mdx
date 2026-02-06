@@ -1,6 +1,6 @@
 ---
-title: Assigning Roles
-description: Using app roles to management users
+title: Working with App Roles
+description: Assign and remove app roles to management users
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
@@ -68,18 +68,18 @@ alt="Assign app role dialog populated"
 
 ![Populated permissions and roles](./images/populated-permissions-and-roles.png)
 
-## Remove an App Role from a management user
+## Remove an App Role from a Management User
 Click the trash icon next to the role to remove it from the user. Removing a role does not remove its permissions; you must remove permissions separately.
 
 <Callout type="warning">
 To avoid leaving residual privileges, review and remove any permissions that are no longer needed after removing an app role.
 </Callout>
 
-## Throubleshooting
+## Troubleshooting
 
 ### Permissions that do not belong to a Role
 
-The permissions list shows to which roles a permission is needed. This helps you determine if a permission is still needed after removing a role.
+The permissions list shows which roles require each permission. This helps you determine if a permission is still needed after removing a role.
 
 ![Permissions that do not belong to a role](./images/permissions-without-role.png)
 
