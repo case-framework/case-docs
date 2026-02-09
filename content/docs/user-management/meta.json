@@ -2,5 +2,11 @@
     "title": "User Management",
     "description": "Functionality for managing user accounts and permissions",
     "root": true,
-    "icon": "ShieldUser"
+    "icon": "ShieldUser",
+    "pages": [
+        "participant-users",
+        "management-users",
+        "service-accounts",
+        "app-roles"
+    ]
 }

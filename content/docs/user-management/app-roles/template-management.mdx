@@ -1,0 +1,117 @@
+---
+title: Managing Templates
+description: Create, edit, and delete app role templates
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import createNewAppRoleEmptyImg from './images/create-new-app-role-empty.png';
+import createNewAppRolePopulatedImg from './images/create-new-app-role-populated.png';
+import createNewAppRoleTemplatePasteImg from './images/create-new-app-role-template-paste.png';
+
+## Overview
+
+App role templates can be created, edited, and deleted in the **"Available App Roles"** tab of the **"User Management"** module. This functionality is available only for admin users.
+
+Once you have created templates, you can assign them to management users to grant specific permissions. For more information, see [Assigning Roles](/docs/user-management/management-users/assigning-roles).
+
+![Empty app role templates](./images/empty-app-role-templates.png)
+
+
+## Add a new App Role Template
+<Steps>
+
+<Step>
+Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window.
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRoleEmptyImg}
+width={400}
+height={200}
+alt="Add app role template modal"
+/>
+
+</Step>
+
+<Step>
+
+Fill in the **"App name"** and **"Role"** fields. Add the required permissions by clicking the `+ Add Permission` button in the **"Required Permissions"** section.
+You can remove a permission by clicking the `x` button on the right side of each list item.
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRolePopulatedImg}
+width={400}
+height={200}
+alt="Add app role template modal populated"
+/>
+
+</Step>
+
+<Step>
+Click the `Create template` button to save the app role template.
+
+![App role template created](./images/app-role-template-created.png)
+</Step>
+
+</Steps>
+
+## Copy and Paste an App Role Template
+
+This feature allows you to copy an existing app role template and paste it in another location. This is particularly useful for migrating templates between different environments (e.g., from test to production).
+
+<Steps>
+
+<Step>
+In the **source environment**: Click the `Copy` option in the three-dot menu on the right side of the app role template card.
+
+![Copy app role template](./images/app-role-item-menu.png)
+</Step>
+
+<Step>
+In the **target environment**: Click the `+` button in the top right corner of the **"Available App Roles"** card. This will open a modal window. Click the `Paste from clipboard` button to paste the copied template into the form.
+
+<ImageZoom
+className='p-2 bg-neutral-200 rounded-xl mx-auto'
+src={createNewAppRoleTemplatePasteImg}
+width={400}
+height={200}
+alt="Create new app role template paste"
+/>
+
+</Step>
+</Steps>
+
+<Callout type="info">
+You can also use `Download JSON` to export an app role template as a file, then `Upload JSON` to import it and automatically populate the form.
+</Callout>
+
+
+## Edit an App Role Template
+
+<Steps>
+
+<Step>
+Click `Edit` (pencil) in the three-dot menu on the right side of the app role template card to open a modal.
+
+![Edit app role template](./images/app-role-item-menu.png)
+</Step>
+<Step>
+Make your changes. When you’re done, click `Save changes` to update the template.
+</Step>
+</Steps>
+
+## Delete an App Role Template
+
+You can delete app role templates in two ways:
+
+![Delete app role options](./images/delete-template.png)
+
+1. **Delete all**: Click the `Delete all` button next to the app name to remove all templates for that app. This also removes these app roles from all management users.
+2. **Delete single template**: Click the three-dot menu on a template card and select `Delete` to remove only that specific template. This also removes the template from any users it was assigned to, but other templates for the same app remain unaffected.
+
+<Callout type="warning">
+Deleting templates does not revoke permissions previously granted via those roles. Review and clean up permissions as needed!
+</Callout>
