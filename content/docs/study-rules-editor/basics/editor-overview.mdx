@@ -3,11 +3,17 @@ title: Study Rules Editor Overview
 description: Overview of the study rules editor interface
 ---
 
+## Introduction
+
+**Study rules** define automated actions that are applied to participants during different stages of a study. They are executed when specific **events** are triggered (e.g., when a participant enters or leaves the study, or when a survey is submitted). Study rules enable you to:
+
+- **Scheduling**: Configure when surveys become available or expire based on time or participant actions
+- **Event handlers**: Define actions based on study events (entry, survey submission, timers, etc.)
+- **Conditions**: Use variables and participant state to control study behavior and flow
+
 ## Study Rules Editor Dashboard
 
-The **Study Rules Editor** allows you to define rules that are applied to participants during different stages of a study.
-Rules are executed when specific **events** are triggered (e.g., when a participant enters or leaves the study, or when a survey is submitted).
-This makes it possible to automate study workflows and participant management.
+The **Study Rules Editor** is a graphical interface that allows you to create and manage these rules. It provides tools to define event handlers, configure contexts, and automate study workflows and participant management.
 
 ![Overview of study rules dashboard](../images/dashboardOverview.png)
 
@@ -62,7 +68,7 @@ Rules defined here are applied **when a temporary (or virtual)participant is mer
 - "Virtual participants" created by researcher accept invitation and sign up with their own account
 </ExampleBox>
 
-#### 4. Custom Event Handler
+#### 4. Custom event handler
 Rules defined here are executed **when a custom event is triggered**, for example, when a participant clicks a button to order a test kit. Used for small, occasional actions that don't require a survey response.
 <ExampleBox title="The handler typically contains methods for">
 - Creating a report
@@ -71,7 +77,7 @@ Rules defined here are executed **when a custom event is triggered**, for exampl
 - Enabling an external event handler
 </ExampleBox>
 
-#### 5. Timer Event Handler
+#### 5. Timer event handler
 Rules defined here are executed **when a study timer event occurs** (e.g., at scheduled intervals or specific times).
 
 <ExampleBox title="Typical use cases">
@@ -171,3 +177,6 @@ Send data to external systems or trigger external workflows.
 ### Options Menu
 - Use the **“Options”** button in the top-right corner to save your context to file or open a new context from file.
 
+---
+
+For a complete list of available expressions and actions you can use in your study rules, see the [Methods of the study engine](/docs/study-rules-editor/basics/study-rules).
