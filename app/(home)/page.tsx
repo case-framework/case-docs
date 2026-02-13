@@ -1,5 +1,4 @@
 import { Card } from 'fumadocs-ui/components/card';
-import Link from 'next/link';
 import { BookUser, FolderCog, GitFork, PencilRuler, ShieldUser, LayoutPanelTop, Shield, Globe, Mail } from 'lucide-react';
 
 export default function HomePage() {
