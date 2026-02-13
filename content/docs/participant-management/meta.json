@@ -2,5 +2,13 @@
     "title": "Participant Management",
     "description": "Tools to interact with participant data",
     "root": true,
-    "icon": "BookUser"
+    "icon": "BookUser",
+    "pages": [
+        "participants",
+        "responses",
+        "reports",
+        "files",
+        "actions"
+    ]
+
 }
