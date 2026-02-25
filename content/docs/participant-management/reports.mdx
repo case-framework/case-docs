@@ -5,6 +5,7 @@ description: Documentation for reports
 
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Callout } from 'fumadocs-ui/components/callout';
 import downloadOptionsImg from './images/download-options.png';
 import optionalFiltersImg from './images/optional-filters.png';
 import reportKeySelectionImg from './images/report-key-selection.png';
@@ -70,14 +71,23 @@ Each entry in `data` has the following structure:
   }}
 />
 
+Example:
+
+```json
+{
+  "key": "studyID",
+  "value": "028"
+}
+```
+
 
 ### Use cases for reports
 
-- Data projection: when the participant submits a response to a survey, we can extract some information from it and store it in a report. It's possible to generate multiple reports (with different keys) from the same response.
+- Data projection: when a participant submits a survey response, selected information can be extracted and stored in a report. Multiple reports (with different keys) can be generated from the same response.
 
-- Reference earlier responses for the user: when we want to ask questions about which earlier response the user is referring to, we can use reports to minimize the expose information.
+- Reference earlier responses for the participant: reports can be used to ask about previously submitted responses while minimizing the exposed information.
 
-- Event logging: when the participant performs an action, we can store it in a report. For example, when the participant clicks a button, we can store it in a report. (E.g., Order test kit through the website)
+- Event logging: participant actions can be stored as reports. For example, clicking a button can create a report entry (e.g., ordering a test kit through the website).
 
 
 ## Accessing reports in the UI
@@ -87,7 +97,10 @@ Each entry in `data` has the following structure:
 To access the reports for a study, go to the **"Participants"** module, select a study if necessary, and click the **"Reports"** option in the left sidebar.
 On this page, you can see a paginated list of reports for the study.
 
-> Note: Simplified table view: flat report structure -> data attributes are included as columns in the table, without the dtype field. Use the bulk download in raw format to get the full report structure.
+<Callout type="info">
+In the simplified table view, reports are shown in a flattened format. Data attributes appear as separate table columns, and the `dtype` field is not included.
+Use the bulk download in raw format if you need the complete report structure.
+</Callout>
 
 <div className='block mx-auto w-fit'>
 ![Reports page](./images/reports-page.png)
@@ -118,7 +131,6 @@ alt="Additional filters"
 
 
 
-
 #### Pagination / Load more
 
 The table initially shows 100 reports (starting from the most recent). You can load more reports by clicking the "Load more" button at the bottom of the table (center).
@@ -138,26 +150,20 @@ alt="Download options"
 
 
 
-### Bulk download in raw format
+### Bulk download (CSV or Raw)
 
 On the top right corner of the "Reports" card, use the "Open Exporter" button to open the exporter mode.
 
-Use the search field to filter the reports by participant ID, report key, or timestamp. The search term should be a MongoDB query in JSON format.
-Clicking the "Start Export" button will start the export process.
+Use the exporter form to configure your download:
 
+- **Report key**: Select one report key or keep **All report keys**.
+- **Export Type**: Choose **CSV** or **Raw**.
+- **Filters** (optional): Use the filter panel to narrow results by **Participant ID** and date range (**From** / **Until**).
 
-**Examples:**
-
-```json
-{ "participantID": "89f30cc949cfb380994eb609d83d820be0710d0923b03520" }
-```
-
-```json
-{ "key": "test_kit_ordered", "timestamp": { "$gte": 1725130000, "$lte": 1727818400 } }
-```
+The UI shows how many reports match the current selection. Click **"Start Export"** to start the export process.
 
 <div className='block mx-auto w-fit'>
-![Open Exporter button](./images/bulk-download.png)
+![Open Exporter button](./images/reports-download.png)
 </div>
 
 
