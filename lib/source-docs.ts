@@ -1,5 +1,5 @@
-import { docs } from '@/.source';
 import { loader } from 'fumadocs-core/source';
+import { docs } from 'fumadocs-mdx:collections/server';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
