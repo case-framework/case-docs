@@ -6,6 +6,7 @@ import Video, { VideoProps } from './components/content-items/video';
 import { joinPath } from './components/utils';
 import ExampleBox, { ExampleBoxProps } from './components/content-items/example-box';
 import ApiDoc from './components/api-doc';
+import { APIPage } from '@/components/api-page';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -24,6 +25,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     />,
     ExampleBox: (props) => <ExampleBox {...(props as ExampleBoxProps)} />,
     ApiDoc: (props) => <ApiDoc {...props} />,
+    APIPage,
     ...components,
   };
 }
