@@ -2,5 +2,11 @@
     "title": "Survey Editor",
     "description": "Documentation for using the graphical survey editor",
     "root": true,
-    "icon": "PencilRuler"
+    "icon": "PencilRuler",
+    "pages": [
+        "editor-overview",
+        "item-structure",
+        "conditions",
+        "guides"
+    ]
 }
