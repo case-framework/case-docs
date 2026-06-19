@@ -53,50 +53,6 @@ type GeneratedGroupEntry = {
 
 type GeneratedEntry = GeneratedLeafEntry | GeneratedGroupEntry;
 
-type OpenAPISchema = {
-    type?: string;
-    format?: string;
-    description?: string;
-    required?: string[];
-    properties?: Record<string, unknown>;
-    additionalProperties?: boolean | Record<string, unknown>;
-    enum?: unknown[];
-    items?: unknown;
-};
-
-function escapeHtml(value: string): string {
-    return value
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
-
-function renderAdditionalProperties(additionalProperties: OpenAPISchema['additionalProperties']): string {
-    if (additionalProperties === true) return 'yes';
-    if (additionalProperties === false) return 'no';
-    if (typeof additionalProperties === 'object') return 'schema-defined';
-    return '-';
-}
-
-function renderPropertyRows(schema: OpenAPISchema): string {
-    const properties = schema.properties ?? {};
-    const propertyEntries = Object.entries(properties);
-
-    if (propertyEntries.length === 0) {
-        return '<li><strong>Properties:</strong> -</li>';
-    }
-
-    const rows = propertyEntries.map(([name, value]) => {
-        const property = value as { type?: string; description?: string; format?: string };
-        const type = property.type ?? 'object';
-        const format = property.format ? ` (${property.format})` : '';
-        const description = property.description ? ` - ${property.description}` : '';
-        return `<li><code>${escapeHtml(name)}</code>: ${escapeHtml(type + format + description)}</li>`;
-    });
-
-    return `<li><strong>Properties:</strong><ul>${rows.join('')}</ul></li>`;
-}
-
 const methodBadgeClass: Record<string, string> = {
     GET: 'text-emerald-600',
     POST: 'text-blue-600',
@@ -120,7 +76,16 @@ async function generateForProfile(profile: DocsProfile) {
     const primarySchema = Object.values(schemas)[0];
     const indexTitle = primarySchema?.dereferenced.info?.title ?? 'API';
     const indexDescription = primarySchema?.dereferenced.info?.description ?? 'All available pages';
-    const schemaMap = (primarySchema?.dereferenced.components?.schemas ?? {}) as Record<string, OpenAPISchema>;
+    const declaredTags = Array.isArray(primarySchema?.dereferenced.tags)
+        ? primarySchema.dereferenced.tags
+        : [];
+    const tagOrderMap = new Map<string, number>();
+
+    declaredTags.forEach((tag, index) => {
+        if (tag && typeof tag === 'object' && 'name' in tag && typeof (tag as { name?: unknown }).name === 'string') {
+            tagOrderMap.set((tag as { name: string }).name, index);
+        }
+    });
 
     await generateFiles({
         per: 'operation',
@@ -178,11 +143,27 @@ async function generateForProfile(profile: DocsProfile) {
                 return `<Card href="${href}" title={<span>${entry.info.title} <span className=\"${methodClass}\">${method}</span></span>} ${description} />`;
             };
 
-            const groupSections = topEntries.map((entry) => {
-                if (entry.type !== 'group') {
-                    return '';
-                }
+            const groupedEntries = topEntries
+                .filter((entry): entry is GeneratedGroupEntry => entry.type === 'group')
+                .sort((left, right) => {
+                    const leftTag = left.tag?.name ?? '';
+                    const rightTag = right.tag?.name ?? '';
+                    const leftOrder = tagOrderMap.get(leftTag);
+                    const rightOrder = tagOrderMap.get(rightTag);
 
+                    if (leftOrder !== undefined && rightOrder !== undefined) {
+                        return leftOrder - rightOrder;
+                    }
+
+                    if (leftOrder !== undefined) return -1;
+                    if (rightOrder !== undefined) return 1;
+
+                    const leftTitle = left.info?.title ?? left.tag?.name ?? 'Untagged';
+                    const rightTitle = right.info?.title ?? right.tag?.name ?? 'Untagged';
+                    return leftTitle.localeCompare(rightTitle);
+                });
+
+            const groupSections = groupedEntries.map((entry) => {
                 const groupTitle = entry.info?.title ?? entry.tag?.name ?? 'Untagged';
                 const groupDescription = entry.info?.description
                     ? `\n\n${entry.info.description}`
@@ -191,6 +172,30 @@ async function generateForProfile(profile: DocsProfile) {
 
                 return `\n### ${groupTitle}${groupDescription}\n\n<Cards>\n${cards.join('\n')}\n</Cards>`;
             }).filter(Boolean);
+
+            const orderedGroupPageIds = groupedEntries
+                .map((entry) => entry.path ?? entry.tag?.name)
+                .filter((value): value is string => Boolean(value));
+
+            const topLevelMetaFile = files.find((file) => file.path === 'meta.json');
+            if (topLevelMetaFile) {
+                try {
+                    const parsed = JSON.parse(topLevelMetaFile.content) as { pages?: unknown };
+                    const existingPages = Array.isArray(parsed.pages)
+                        ? parsed.pages.filter((value): value is string => typeof value === 'string')
+                        : [];
+
+                    const orderedPages = [
+                        ...orderedGroupPageIds.filter((page) => existingPages.includes(page)),
+                        ...existingPages.filter((page) => !orderedGroupPageIds.includes(page)),
+                    ];
+
+                    parsed.pages = orderedPages;
+                    topLevelMetaFile.content = `${JSON.stringify(parsed, null, 2)}\n`;
+                } catch {
+                    // keep generated meta as-is when unexpected content shape is encountered
+                }
+            }
 
             const ungroupedCards = topEntries
                 .filter((entry): entry is GeneratedLeafEntry => entry.type !== 'group')
@@ -207,31 +212,7 @@ async function generateForProfile(profile: DocsProfile) {
                     : '',
             ].filter(Boolean).join('\n\n');
 
-            const schemaBlocks = Object.entries(schemaMap).map(([name, schema]) => {
-                const description = (schema.description ?? '-')
-                    .replace(/\r?\n/g, ' ')
-                    .trim();
-                const required = schema.required?.length ? schema.required.join(', ') : '-';
-                const enumValues = schema.enum?.length ? schema.enum.map((item) => JSON.stringify(item)).join(', ') : '-';
-                const type = schema.type ?? 'object';
-                const format = schema.format ?? '-';
-                const additionalProperties = renderAdditionalProperties(schema.additionalProperties);
-                const itemType = schema.items && typeof schema.items === 'object'
-                    ? ((schema.items as { type?: string }).type ?? 'object')
-                    : '-';
-
-                const summaryText = description !== '-'
-                    ? `<code>${escapeHtml(name)}</code> - ${escapeHtml(description)}`
-                    : `<code>${escapeHtml(name)}</code>`;
-
-                return `<details>\n<summary>${summaryText}</summary>\n<ul>\n<li><strong>Type:</strong> ${escapeHtml(type)}</li>\n<li><strong>Format:</strong> ${escapeHtml(format)}</li>\n<li><strong>Required:</strong> ${escapeHtml(required)}</li>\n<li><strong>Enum:</strong> ${escapeHtml(enumValues)}</li>\n<li><strong>Array item type:</strong> ${escapeHtml(itemType)}</li>\n<li><strong>Additional properties:</strong> ${escapeHtml(additionalProperties)}</li>\n${renderPropertyRows(schema)}\n</ul>\n</details>`;
-            });
-
-            const schemaSection = schemaBlocks.length > 0
-                ? `\n## Schemas\n\nClick a schema to expand details.\n\n${schemaBlocks.join('\n\n')}\n`
-                : '';
-
-            indexFile.content = `---\ntitle: ${indexTitle}\ndescription: ${indexDescription}\n---\n\n{/* This file was generated by Fumadocs. Do not edit this file directly. Any changes should be made by running the generation command again. */}\n\n${endpointSection}\n${schemaSection}`;
+            indexFile.content = `---\ntitle: ${indexTitle}\ndescription: ${indexDescription}\n---\n\n{/* This file was generated by Fumadocs. Do not edit this file directly. Any changes should be made by running the generation command again. */}\n\n${endpointSection}`;
         },
     });
 }
