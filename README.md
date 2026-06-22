@@ -36,16 +36,70 @@ Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
 
 ## For API Documentation
 
-Include the openapi spec file in the `public/openapi` directory.
+OpenAPI docs are generated from profiles defined in `scripts/doc-profiles.ts`.
 
-Add a new page with the name `api.mdx` in the `content/tech-docs/[api-name]` directory with the following content:
+### 1. Add the OpenAPI spec
 
-```mdx
----
-title: My API
-description: My API Description
----
+Place your spec file in the `openapi` directory, for example:
+
+- `openapi/my-api.yaml`
+
+### 2. Add or update a docs profile
+
+In `scripts/doc-profiles.ts`, add a new profile entry:
+
+```ts
+{
+  id: 'my-api',
+  input: './openapi/my-api.yaml',
+  outputDir: 'content/tech-docs/my-api/api',
+  baseUrl: '/tech-docs/my-api/api',
+  groupByTag: true,
+}
 ```
+
+`groupByTag: true` groups endpoints by OpenAPI tags in the generated docs.
+
+Current profiles:
+
+- `management-api` (`openapi/management-api.yaml`, `groupByTag: true`)
+- `participant-api` (`openapi/participant-api.yaml`, `groupByTag: true`)
+- `smtp-bridge` (`openapi/smtp-bridge.yaml`, `groupByTag: false`)
+
+### 3. Add the Tech Docs section (only for a new API)
+
+Create `content/tech-docs/my-api` with:
+
+- `overview.mdx` (landing page)
+- `meta.json` with `"pages": ["overview", "api"]`
+
+Then add `my-api` to `content/tech-docs/meta.json` so the section appears in the sidebar.
+
+### 4. Generate the API docs
+
+List available profiles:
+
+```bash
+pnpm exec tsx --no-cache scripts/generate-docs.ts --list
+```
+
+Generate one profile:
+
+```bash
+pnpm exec tsx --no-cache scripts/generate-docs.ts my-api
+```
+
+Generate all profiles:
+
+```bash
+pnpm exec tsx --no-cache scripts/generate-docs.ts --all
+```
+
+### 5. Result
+
+Generated API pages are written to `content/tech-docs/<api-id>/api` (including `index.mdx` and `meta.json`).
+
+Note: these files are generated and should not be edited manually. Re-run the generator after spec changes.
 
 ## Learn More
 
