@@ -1,0 +1,11 @@
+{
+  "title": "Study rules",
+  "description": "Study rules",
+  "pages": [
+    "studyRules_getCurrent",
+    "studyRules_publishNewVersion",
+    "studyRules_listVersions",
+    "studyRules_getVersion",
+    "studyRules_deleteVersion"
+  ]
+}

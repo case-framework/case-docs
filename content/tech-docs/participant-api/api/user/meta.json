@@ -1,0 +1,20 @@
+{
+  "title": "User",
+  "description": "User endpoints",
+  "pages": [
+    "getUser",
+    "deleteUser",
+    "updatePreferredLanguage",
+    "addProfile",
+    "updateProfile",
+    "removeProfile",
+    "changePassword",
+    "changeAccountEmail",
+    "changePhoneNumber",
+    "requestPhoneNumberVerification",
+    "getUserAttributes",
+    "setUserAttribute",
+    "deleteUserAttribute",
+    "updateContactPreferences"
+  ]
+}

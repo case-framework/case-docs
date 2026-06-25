@@ -1,0 +1,12 @@
+{
+  "title": "Study variables",
+  "description": "Study variables",
+  "pages": [
+    "studyVariables_listVariables",
+    "studyVariables_addVariable",
+    "studyVariables_getVariable",
+    "studyVariables_deleteVariable",
+    "studyVariables_updateVariableDef",
+    "studyVariables_updateVariableValue"
+  ]
+}

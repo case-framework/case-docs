@@ -1,0 +1,21 @@
+{
+  "title": "Participant data",
+  "description": "Endpoints getting participant data in study service",
+  "pages": [
+    "getAssignedSurveys",
+    "getSurveyWithContext",
+    "getParticipantState",
+    "getLinkingCode",
+    "getStudyResponsesForProfile",
+    "getConfidentialResponse",
+    "getSubmissionHistory",
+    "getReports",
+    "getTempParticipantSurveys",
+    "getTempParticipantSurveyWithContext",
+    "getVirtualParticipantsByLinkingCode",
+    "listParticipantFiles",
+    "uploadParticipantFile",
+    "getParticipantFile",
+    "deleteParticipantFile"
+  ]
+}

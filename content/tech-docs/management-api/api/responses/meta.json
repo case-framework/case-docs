@@ -1,0 +1,20 @@
+{
+  "title": "Responses",
+  "description": "Response exports & queries",
+  "pages": [
+    "dataExporter_getSurveyInfo",
+    "dataExporter_getResponsesCount",
+    "dataExporter_generateResponsesExport",
+    "dataExporter_getResponsesTaskStatus",
+    "dataExporter_getResponsesTaskResult",
+    "dataExporter_listDailyResponseExports",
+    "dataExporter_getDailyResponseExport",
+    "dataExporter_listConfidentialResponseExports",
+    "dataExporter_getConfidentialResponses",
+    "dataExporter_getConfidentialResponseExport",
+    "dataExplorer_listResponses",
+    "dataExplorer_deleteResponses",
+    "dataExplorer_getResponse",
+    "dataExplorer_deleteResponse"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Study permissions",
+  "description": "Permissions for a study",
+  "pages": [
+    "studyPermissions_listPermissions",
+    "studyPermissions_addPermission",
+    "studyPermissions_removePermission"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Code lists",
+  "description": "Study code lists",
+  "pages": [
+    "codeLists_getListKeys",
+    "codeLists_getCodes",
+    "codeLists_addCodes",
+    "codeLists_removeCode"
+  ]
+}

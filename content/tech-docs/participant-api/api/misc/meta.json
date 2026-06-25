@@ -1,0 +1,8 @@
+{
+  "title": "Misc",
+  "description": "Miscellaneous",
+  "pages": [
+    "getHealth",
+    "unsubscribeNewsletter"
+  ]
+}

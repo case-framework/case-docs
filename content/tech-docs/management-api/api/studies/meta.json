@@ -1,0 +1,15 @@
+{
+  "title": "Studies",
+  "description": "Study management",
+  "pages": [
+    "studies_listStudies",
+    "studies_createStudy",
+    "studies_getStudy",
+    "studies_deleteStudy",
+    "studies_exportConfig",
+    "studies_updateIsDefault",
+    "studies_updateStatus",
+    "studies_updateDisplayProps",
+    "studies_updateFileUploadRule"
+  ]
+}

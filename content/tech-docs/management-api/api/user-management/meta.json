@@ -1,0 +1,14 @@
+{
+  "title": "User management",
+  "description": "Management user accounts and permissions",
+  "pages": [
+    "userManagement_listManagementUsers",
+    "userManagement_getManagementUser",
+    "userManagement_deleteManagementUser",
+    "userManagement_listUserPermissions",
+    "userManagement_addPermissionToUser",
+    "userManagement_deleteUserPermission",
+    "userManagement_updatePermissionLimiter",
+    "userManagement_requestParticipantUserDeletion"
+  ]
+}

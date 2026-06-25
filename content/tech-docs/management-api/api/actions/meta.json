@@ -1,0 +1,14 @@
+{
+  "title": "Actions",
+  "description": "Run actions on participants",
+  "pages": [
+    "actions_runOnParticipant",
+    "actions_runOnParticipants",
+    "actions_getTaskStatus",
+    "actions_getTaskResult",
+    "actions_runPrevResponsesOnParticipant",
+    "actions_runPrevResponsesOnParticipants",
+    "actions_getPrevResponsesTaskStatus",
+    "actions_getPrevResponsesTaskResult"
+  ]
+}

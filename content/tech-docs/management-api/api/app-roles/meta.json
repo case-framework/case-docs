@@ -1,0 +1,17 @@
+{
+  "title": "App roles",
+  "description": "App role templates & assignments",
+  "pages": [
+    "userManagement_listUserAppRoles",
+    "userManagement_addAppRoleToUser",
+    "userManagement_removeUserAppRole",
+    "userManagement_listAppRoleTemplates",
+    "userManagement_createAppRoleTemplate",
+    "userManagement_getAppRoleTemplate",
+    "userManagement_updateAppRoleTemplate",
+    "userManagement_deleteAppRoleTemplate",
+    "userManagement_deleteAppRoleTemplatesForApp",
+    "userManagement_listAppRoles",
+    "userManagement_deleteAppRolesForApp"
+  ]
+}

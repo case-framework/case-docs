@@ -1,0 +1,14 @@
+{
+  "title": "Events",
+  "description": "Study service events endpoints",
+  "pages": [
+    "enterStudy",
+    "customStudyEvent",
+    "submitSurveyEvent",
+    "leaveStudyEvent",
+    "mergeTempParticipant",
+    "mergeVirtualParticipant",
+    "registerTempParticipant",
+    "submitTempParticipantResponse"
+  ]
+}

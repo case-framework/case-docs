@@ -1,0 +1,8 @@
+{
+  "title": "Notifications",
+  "description": "Notification subscriptions",
+  "pages": [
+    "notifications_getSubscriptions",
+    "notifications_updateSubscriptions"
+  ]
+}

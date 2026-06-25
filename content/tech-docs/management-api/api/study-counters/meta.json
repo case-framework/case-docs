@@ -1,0 +1,10 @@
+{
+  "title": "Study counters",
+  "description": "Study counters",
+  "pages": [
+    "studyCounters_listValues",
+    "studyCounters_saveValue",
+    "studyCounters_removeValue",
+    "studyCounters_incrementValue"
+  ]
+}

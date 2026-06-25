@@ -1,6 +1,6 @@
 {
     "title": "Participant API",
-    "description": "TODO",
+    "description": "API for participant-facing operations",
     "root": true,
     "icon": "Globe",
     "pages": [

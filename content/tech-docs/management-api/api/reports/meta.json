@@ -1,0 +1,15 @@
+{
+  "title": "Reports",
+  "description": "Participant reports",
+  "pages": [
+    "participants_submitParticipantReport",
+    "participants_updateParticipantReport",
+    "dataExporter_getReportsCount",
+    "dataExporter_generateReportsExport",
+    "dataExporter_getReportsTaskStatus",
+    "dataExporter_getReportsTaskResult",
+    "dataExplorer_listReportKeys",
+    "dataExplorer_listReports",
+    "dataExplorer_getReport"
+  ]
+}

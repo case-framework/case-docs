@@ -1,0 +1,10 @@
+{
+  "title": "Auth",
+  "description": "Authentication & Session",
+  "pages": [
+    "auth_signinWithIdp",
+    "auth_extendSession",
+    "auth_renewToken",
+    "auth_listPermissions"
+  ]
+}
