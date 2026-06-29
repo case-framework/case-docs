@@ -26,6 +26,8 @@ tags:
   description: Study code lists
 - name: participants
   description: Participant operations
+- name: accounts
+  description: Account tracking and identification
 - name: reports
   description: Participant reports
 - name: responses
@@ -1166,6 +1168,65 @@ paths:
                 required:
                 - message
                 - result
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  "/v1/studies/{studyKey}/participants/{participantID}/remove-session":
+    post:
+      tags:
+      - participants
+      operationId: participants_removeStudySession
+      summary: Remove or replace a participant study session
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: studyKey
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: participantID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionToRemove:
+                  type: string
+                replacementSession:
+                  type: string
+                  description: Optional replacement session; if empty, the session association is removed.
+              required:
+              - sessionToRemove
+              additionalProperties: false
+      responses:
+        '200':
+          description: Session removed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  participant:
+                    "$ref": "#/components/schemas/Participant"
+                  responsesUpdated:
+                    type: integer
+                required:
+                - message
+                - participant
+                - responsesUpdated
+                additionalProperties: false
         '400':
           "$ref": "#/components/responses/Error400"
         '401':
@@ -6289,6 +6350,56 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Message"
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  /v1/studies/{studyKey}/track-account:
+    put:
+      operationId: updateStudyTrackAccount
+      tags:
+        - accounts
+      summary: Update study track-account flag
+      description: >
+        Updates whether account tracking is enabled for the given study.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: studyKey
+          in: path
+          required: true
+          description: Unique key of the study
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trackAccount:
+                  type: boolean
+            examples:
+              enable:
+                summary: Enable tracking
+                value:
+                  trackAccount: true
+              disable:
+                summary: Disable tracking
+                value:
+                  trackAccount: false
+      responses:
+        "200":
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Message"
+              example:
+                message: study track account updated
         '400':
           "$ref": "#/components/responses/Error400"
         '401':
