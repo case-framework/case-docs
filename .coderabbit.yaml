@@ -1,0 +1,5 @@
+reviews:
+  path_filters:
+    - "!case-docs/content/tech-docs/management-api/api/**"
+    - "!case-docs/content/tech-docs/participant-api/api/**"
+    - "!case-docs/content/tech-docs/smtp-bridge/api/**"
