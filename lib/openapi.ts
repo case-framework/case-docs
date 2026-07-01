@@ -1,6 +1,10 @@
 import { createOpenAPI } from 'fumadocs-openapi/server';
 
-export const defaultOpenAPIInput = './openapi/management-api.yaml';
+export const defaultOpenAPIInputs = [
+    './openapi/management-api.yaml',
+    './openapi/participant-api.yaml',
+    './openapi/smtp-bridge.yaml',
+];
 
 export function createDocsOpenAPI(input: string | string[]) {
     const normalizedInput = Array.isArray(input) ? input : [input];
@@ -10,4 +14,4 @@ export function createDocsOpenAPI(input: string | string[]) {
     });
 }
 
-export const openapi = createDocsOpenAPI(defaultOpenAPIInput);
+export const openapi = createDocsOpenAPI(defaultOpenAPIInputs);
