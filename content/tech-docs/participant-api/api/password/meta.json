@@ -1,0 +1,9 @@
+{
+  "title": "Password",
+  "description": "Password endpoints",
+  "pages": [
+    "initiatePasswordReset",
+    "getPasswordResetInfos",
+    "resetPassword"
+  ]
+}

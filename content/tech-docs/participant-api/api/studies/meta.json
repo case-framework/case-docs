@@ -1,0 +1,13 @@
+{
+  "title": "Studies",
+  "description": "Endpoints getting study data in study service",
+  "pages": [
+    "getStudiesByStatus",
+    "getStudy",
+    "studyHasCodeListCode",
+    "getStudyCodeListAvailableCount",
+    "getStudyVariables",
+    "getStudyVariable",
+    "getParticipatingStudies"
+  ]
+}

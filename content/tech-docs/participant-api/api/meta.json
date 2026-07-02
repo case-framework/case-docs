@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "auth",
+    "password",
+    "events",
+    "participant-data",
+    "studies",
+    "user",
+    "misc"
+  ]
+}

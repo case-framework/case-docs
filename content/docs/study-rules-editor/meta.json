@@ -2,5 +2,10 @@
     "title": "Study Rules Editor",
     "description": "Documentation for using the graphical study rules editor",
     "root": true,
-    "icon": "GitFork"
+    "icon": "GitFork",
+    "pages": [
+        "editor-overview",
+        "study-rules",
+        "guide"
+    ]
 }

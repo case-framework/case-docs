@@ -1,0 +1,14 @@
+{
+  "title": "Surveys",
+  "description": "Survey management",
+  "pages": [
+    "surveys_listSurveyInfos",
+    "surveys_createSurvey",
+    "surveys_getLatestSurvey",
+    "surveys_updateSurvey",
+    "surveys_unpublishSurvey",
+    "surveys_listSurveyVersions",
+    "surveys_getSurveyVersion",
+    "surveys_deleteSurveyVersion"
+  ]
+}

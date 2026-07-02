@@ -1,0 +1,18 @@
+{
+  "title": "Service accounts",
+  "description": "Service account management",
+  "pages": [
+    "userManagement_listServiceAccounts",
+    "userManagement_createServiceAccount",
+    "userManagement_getServiceAccount",
+    "userManagement_deleteServiceAccount",
+    "userManagement_updateServiceAccount",
+    "userManagement_listServiceAccountAPIKeys",
+    "userManagement_createServiceAccountAPIKey",
+    "userManagement_deleteServiceAccountAPIKey",
+    "userManagement_listServiceAccountPermissions",
+    "userManagement_addPermissionToServiceAccount",
+    "userManagement_deleteServiceAccountPermission",
+    "userManagement_updateServiceAccountPermissionLimiter"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Accounts",
+  "description": "Account tracking and identification",
+  "pages": [
+    "updateStudyTrackAccount"
+  ]
+}

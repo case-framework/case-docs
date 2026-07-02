@@ -1,6 +1,6 @@
 {
     "title": "SMTP Bridge",
-    "description": "TODO",
+    "description": "Email service integration",
     "root": true,
     "icon": "Mail",
     "pages": [

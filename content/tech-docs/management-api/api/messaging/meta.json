@@ -1,0 +1,21 @@
+{
+  "title": "Messaging",
+  "description": "Messaging templates & scheduled emails",
+  "pages": [
+    "messaging_listGlobalEmailTemplates",
+    "messaging_saveGlobalEmailTemplate",
+    "messaging_getGlobalEmailTemplate",
+    "messaging_deleteGlobalEmailTemplate",
+    "messaging_listAllStudyEmailTemplates",
+    "messaging_listStudyEmailTemplates",
+    "messaging_saveStudyEmailTemplate",
+    "messaging_getStudyEmailTemplate",
+    "messaging_deleteStudyEmailTemplate",
+    "messaging_saveSmsTemplate",
+    "messaging_getSmsTemplate",
+    "messaging_listScheduledEmails",
+    "messaging_createScheduledEmail",
+    "messaging_getScheduledEmail",
+    "messaging_deleteScheduledEmail"
+  ]
+}

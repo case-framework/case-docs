@@ -1,0 +1,19 @@
+{
+  "title": "Participants",
+  "description": "Participant operations",
+  "pages": [
+    "participants_createVirtualParticipant",
+    "participants_listParticipantResponses",
+    "participants_submitParticipantResponse",
+    "participants_submitParticipantEvent",
+    "participants_removeStudySession",
+    "participants_mergeParticipants",
+    "participants_editParticipant",
+    "dataExporter_getParticipantsCount",
+    "dataExporter_generateParticipantsExport",
+    "dataExporter_getParticipantsTaskStatus",
+    "dataExporter_getParticipantsTaskResult",
+    "dataExplorer_listParticipants",
+    "dataExplorer_getParticipant"
+  ]
+}

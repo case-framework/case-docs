@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "auth",
+    "studies",
+    "surveys",
+    "study-rules",
+    "study-variables",
+    "study-counters",
+    "study-permissions",
+    "notifications",
+    "code-lists",
+    "participants",
+    "accounts",
+    "reports",
+    "responses",
+    "files",
+    "messaging",
+    "user-management",
+    "service-accounts",
+    "app-roles",
+    "actions"
+  ]
+}

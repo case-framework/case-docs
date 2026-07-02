@@ -19,7 +19,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold mb-6">User Guides</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card
-              href="/docs/survey-editor/basics/editor-overview"
+              href="/docs/survey-editor/editor-overview"
               title="Survey Editor"
               description="Documentation for using the graphical survey editor"
               icon={<PencilRuler className="w-6 h-6" />}
@@ -33,7 +33,7 @@ export default function HomePage() {
               className="[&_div:has(svg)]:shadow"
             />
             <Card
-              href="/docs/study-rules-editor/basics/editor-overview"
+              href="/docs/study-rules-editor/editor-overview"
               title="Study Rules Editor"
               description="Documentation for using the study rules editor"
               icon={<GitFork className="w-6 h-6" />}

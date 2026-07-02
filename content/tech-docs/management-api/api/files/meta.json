@@ -1,0 +1,9 @@
+{
+  "title": "Files",
+  "description": "File management for studies",
+  "pages": [
+    "dataExplorer_listFiles",
+    "dataExplorer_getFile",
+    "dataExplorer_deleteFile"
+  ]
+}
