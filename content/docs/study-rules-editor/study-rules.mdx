@@ -238,6 +238,8 @@ Use these when you want rules to trigger only if study data falls inside or outs
 
 Some expressions return numbers and dates that can e.g. be used for comparisons. Note that Dates are always represented in **Unix timestamp format**, which means they are also integer numbers.
 
+Since a Unix timestamp itself has no timezone, any expression that derives calendar-based information from it (e.g., the start of a day, week, or month) does so using the **local timezone of the server process** running the study engine, not the participant's timezone.
+
 ### Variables
 
 #### 1. **Date picker**
@@ -330,18 +332,28 @@ Some expressions return numbers and dates that can e.g. be used for comparisons.
 
 #### 1. **Get ISO week for timestamp**
 * **Meaning:** Returns the ISO week number for a given timestamp.
-* **Use Case:** Helpful when rules depend on the calendar week (e.g., weekly schedules or reporting).
+* **Use Case:** Helpful when rules depend on the calendar week (e.g., weekly schedules or reporting). 
 * **How it works:** Provide a timestamp.
 
-#### 2. **Get timestamp for next occurrence of an ISO week**
+#### 2. **Get timestamp for start of ISO week**
+* **Meaning:** Calculates the timestamp for the start of the ISO week containing a given timestamp.
+* **Use Case:** Useful whenever a rule needs a stable weekly boundary, e.g., to query responses submitted since the beginning of the current week.
+* **How it works:** Optionally provide a timestamp. If no timestamp is provided, the current timestamp is used.
+
+#### 3. **Get timestamp for next occurrence of an ISO week**
 * **Meaning:** Calculates the timestamp for the next occurrence of a specified ISO week number.
 * **Use Case:** Useful for scheduling events or reminders based on calendar weeks.
-* **How it works:** Provide an ISO week number (e.g., 42), and the expression returns the timestamp for the start of that week in the current or next year.
+* **How it works:** Provide an ISO week number (e.g., 42) and optionally a reference timestamp. If no reference timestamp is provided, the current timestamp is used. Since not every year has an ISO week 53, requesting week 53 can resolve to a year several years in the future rather than the current or next year. 
 
-#### 3. **Get timestamp for next occurrence of a start of month**
+#### 4. **Get timestamp for next occurrence of a start of month**
 * **Meaning:** Returns the timestamp for the next start of a specified month.
 * **Use Case:** Ideal for monthly scheduling, e.g., sending out surveys at the beginning of each month.
-* **How it works:** Specify the month (e.g., March), and the expression calculates the timestamp for the next occurrence of the first day of that month.
+* **How it works:** Specify the month (e.g., March) and optionally a reference timestamp. If no reference timestamp is provided, the current timestamp is used. If the reference time falls within the specified month (except for its exact first instant, midnight on the 1st), the next occurrence a year later is returned. 
+
+#### 5. **Get timestamp difference**
+* **Meaning:** Calculates the difference between two timestamps, in seconds.
+* **Use Case:** Useful for measuring durations, e.g., time elapsed since the last submission or time remaining until a deadline.
+* **How it works:** Provide two timestamps. The result can be negative if the first timestamp is earlier than the second.
 
 
 ### Response Checkers
